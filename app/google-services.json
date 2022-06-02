@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "421918705654",
+    "project_id": "attendance-c5abe",
+    "storage_bucket": "attendance-c5abe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421918705654:android:2674bb763ab27b733b29d7",
+        "android_client_info": {
+          "package_name": "com.surya.miniproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "421918705654-t7qo6ueliv9dvg953f0olo6fduo4c76t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.surya.miniproject",
+            "certificate_hash": "da23cb0da8ffe0ef104653ceb75020533311cf45"
+          }
+        },
+        {
+          "client_id": "421918705654-faki75a4figggdp3tta7taj57v7stjmk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWnbxWu5IiWwGhH905LpnhjmkxJToN2hw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "421918705654-faki75a4figggdp3tta7taj57v7stjmk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

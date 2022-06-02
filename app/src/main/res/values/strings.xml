@@ -6,4 +6,20 @@
     <string name="str_enter_user_name">Enter the UserName</string>
     <string name="str_password">Enter Password</string>
     <string name="str_login">Login</string>
+    <string name="str_fab_four">THE FAB FOUR</string>
+
+    <!-- Class Attendance Activity -->
+    <string name="str_month">Monthly Attendance</string>
+
+    <!-- AttendanceMarking activity -->
+    <string name="str_mark">Mark the Attendance</string>
+    <string name="str_edit">Edited By:</string>
+    <string name="str_update">Update Attendance</string>
+    <string name="str_absent">Absentees</string>
+    <string name="str_no_absent">No absentees today!</string>
+
+    <!-- Menu -->
+    <string name="str_attendance">Attendance</string>
+    <string name="str_log">Log</string>
+    <string name="str_export">Export</string>
 </resources>

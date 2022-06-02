@@ -9,9 +9,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Custom colors -->
-    <color name="main_color">#4C0027</color>
+    <color name="main_color">@color/purple_700</color>
     <color name="card_bg_color">#FF7272</color>
-    <color name="table_row_1">#FAD4D4</color>
-    <color name="table_row_2">#EF9F9F</color>
-    <color name="fb_color">#F68989</color>
 </resources>

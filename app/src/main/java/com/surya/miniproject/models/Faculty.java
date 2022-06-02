@@ -6,22 +6,28 @@ public class Faculty {
     // attributes of a Faculty
     private String facultyName;
     private String facultyGender;
-    private boolean isTheFacultyAClassAdvisor;
-    private String userName;
-    private String password;
+    private String facultyDepartment;
+    private String facultyPushId;
+    private String facultyUserName;
+    private String facultyPassword;
 
-    // list of all faculties
-    public static final ArrayList<Faculty> allFacultyList = new ArrayList<>();
+    // list of all the Faculties
+    public static ArrayList<Faculty> allFacultiesList = new ArrayList<>();
 
     // Constructor
-    public Faculty(String facultyName, String facultyGender, boolean isTheFacultyAClassAdvisor) {
+    public Faculty() {
+
+    }
+
+    public Faculty(String facultyName, String facultyGender, String facultyDepartment) {
         this.facultyName = facultyName;
         this.facultyGender = facultyGender;
-        this.isTheFacultyAClassAdvisor = isTheFacultyAClassAdvisor;
+        this.facultyDepartment = facultyDepartment;
 
         // setting the initial username and password
-        userName = facultyName.split(" ")[0].trim().toLowerCase();
-        password = "123456";
+        // staffName is in the format, "Mr. Viswanath Shenoi"
+        facultyUserName = facultyName.split(" ")[1].toLowerCase(); // viswanath
+        facultyPassword = "123456";
     }
 
     // getter and setter methods
@@ -41,27 +47,35 @@ public class Faculty {
         this.facultyGender = facultyGender;
     }
 
-    public boolean isTheFacultyAClassAdvisor() {
-        return isTheFacultyAClassAdvisor;
+    public String getFacultyPushId() {
+        return facultyPushId;
     }
 
-    public void setTheFacultyAClassAdvisor(boolean theFacultyAClassAdvisor) {
-        isTheFacultyAClassAdvisor = theFacultyAClassAdvisor;
+    public void setFacultyPushId(String facultyPushId) {
+        this.facultyPushId = facultyPushId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getFacultyUserName() {
+        return facultyUserName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setFacultyUserName(String facultyUserName) {
+        this.facultyUserName = facultyUserName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getFacultyPassword() {
+        return facultyPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setFacultyPassword(String facultyPassword) {
+        this.facultyPassword = facultyPassword;
+    }
+
+    public String getFacultyDepartment() {
+        return facultyDepartment;
+    }
+
+    public void setFacultyDepartment(String facultyDepartment) {
+        this.facultyDepartment = facultyDepartment;
     }
 }

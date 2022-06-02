@@ -1,0 +1,130 @@
+package com.surya.miniproject.activities;
+
+import static com.surya.miniproject.activities.DashBoard.facultyName;
+import static com.surya.miniproject.adapters.AttendanceMarkingAdapter.attendance;
+import static com.surya.miniproject.constants.Strings.ATTENDANCE;
+import static com.surya.miniproject.constants.Strings.CLASS_NAME;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.FirebaseDatabase;
+import com.surya.miniproject.R;
+import com.surya.miniproject.adapters.AttendanceMarkingAdapter;
+import com.surya.miniproject.details.Data;
+import com.surya.miniproject.models.Attendance;
+
+import java.time.LocalDateTime;
+import java.util.Date;
+
+public class AttendanceMarking extends AppCompatActivity {
+
+    // UI Elements
+    private TextView classNameText, editBy, absentText, absenteesNumber;
+    private RecyclerView recyclerView, absentees;
+    private Button update;
+
+    // adapter
+    private AttendanceMarkingAdapter attendanceMarkingAdapter;
+
+    // Back button functionality
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_attendance_marking);
+
+        // getting the data from the intent
+        String className = getIntent().getStringExtra(CLASS_NAME);
+
+        // method to initialise the UI Elements
+        initialiseUIElements();
+
+        // setting the title of the Action bar
+        getSupportActionBar().setTitle(className);
+
+        // changing the name
+        classNameText.setText(className);
+        editBy.setText(facultyName);
+
+        // setting up the recycler view
+        attendanceMarkingAdapter = new AttendanceMarkingAdapter(AttendanceMarking.this, absentees, absentText, absenteesNumber);
+        recyclerView.setAdapter(attendanceMarkingAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(AttendanceMarking.this, 5));
+
+        // on click listener for the update button
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // creating an Attendance object
+                Attendance a = new Attendance(new Date(), className, attendance);
+                a.setEditedBy(facultyName);
+
+                ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo.State mobile = conMan.getNetworkInfo(0).getState();
+                NetworkInfo.State wifi = conMan.getNetworkInfo(1).getState();
+
+                if (mobile == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTED) {
+                    // updating the attendance in the database
+                    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                    firebaseDatabase.getReference()
+                            .child(ATTENDANCE)
+                            .child(className)
+                            .child(new Date().getMonth()+"")
+                            .child(new Date().getDay()+"")
+                            .setValue(a)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    // do exactly what the back button does
+                                    onBackPressed();
+                                }
+                            });
+                }
+                else{
+                    // telling the user to turn on the mobile data/wifi
+                    Toast.makeText(AttendanceMarking.this, "Turn on the Mobile Data/Wifi to Update", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    // method to initialise the UI Elements
+    private void initialiseUIElements() {
+        // text view
+        classNameText = findViewById(R.id.marking_class_name);
+        editBy = findViewById(R.id.marking_edit_by);
+        absentText = findViewById(R.id.no_absent_text);
+        absenteesNumber = findViewById(R.id.number_absentees);
+
+        // recycler view
+        recyclerView = findViewById(R.id.marking_rec_view);
+        absentees = findViewById(R.id.marking_absent_rec_view);
+
+        // button
+        update = findViewById(R.id.marking_update);
+
+        // hiding the absentees recycler view and absentees number at first
+        absentText.setVisibility(View.GONE);
+        absenteesNumber.setVisibility(View.GONE);
+    }
+}
