@@ -123,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
                                                             DashBoard.facultyName = faculty.getFacultyName();
                                                             DashBoard.facultyPushId = faculty.getFacultyPushId();
                                                             DashBoard.facultyUserName = faculty.getFacultyUserName();
-                                                            DashBoard.facultyPushId = faculty.getFacultyPushId();
                                                             DashBoard.facultyGender = faculty.getFacultyGender();
 
                                                             // updating the shared preferences
