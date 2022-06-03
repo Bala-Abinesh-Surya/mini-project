@@ -1,39 +1,36 @@
 package com.surya.miniproject.models;
 
+import com.google.gson.Gson;
+
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Hashtable;
 
 public class Attendance {
-    // attributes of an Attendance
-    private Date date;
+    // attribute of an Attendance
     private String className;
-    private String pushId;
-    private ArrayList<String> attendance = new ArrayList<>();
     private String editedBy;
+    private Hashtable<String, String> table;
+    private String json;
+    private String date;
+    private Month month;
+    private int day;
 
     // Constructor
     public Attendance() {
 
     }
 
-    public Attendance(Date date, String className, ArrayList<String> attendance) {
-        this.date = date;
+    public Attendance(String className, String date) {
         this.className = className;
-        this.attendance = attendance;
+        this.date = date;
 
-        // pushId is same as the className
-        pushId = className;
+        month = LocalDateTime.now().getMonth();
+        day = LocalDateTime.now().getDayOfMonth();
     }
 
     // getter and setter methods
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public String getClassName() {
         return className;
     }
@@ -42,27 +39,51 @@ public class Attendance {
         this.className = className;
     }
 
-    public String getPushId() {
-        return pushId;
-    }
-
-    public void setPushId(String pushId) {
-        this.pushId = pushId;
-    }
-
-    public ArrayList<String> getAttendance() {
-        return attendance;
-    }
-
-    public void setAttendance(ArrayList<String> attendance) {
-        this.attendance = attendance;
-    }
-
     public String getEditedBy() {
         return editedBy;
     }
 
     public void setEditedBy(String editedBy) {
         this.editedBy = editedBy;
+    }
+
+    public Hashtable<String, String> getTable() {
+        return table;
+    }
+
+    public void setTable(Hashtable<String, String> table) {
+        this.table = table;
+    }
+
+    public String getJson() {
+        return json;
+    }
+
+    public void setJson(String json) {
+        this.json = json;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Month getMonth() {
+        return month;
+    }
+
+    public void setMonth(Month month) {
+        this.month = month;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
     }
 }

@@ -1,6 +1,7 @@
 package com.surya.miniproject.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,19 @@ public class PresentAbsentAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if(holder.getClass() == PresentAbsentViewHolder.class){
             // displaying the data
-            ((PresentAbsentViewHolder) holder).result.setText(attendance.get(position));
+            String date = attendance.get(position);
+
+            if(date.contains("-")){
+                // displaying the data
+                String[] temp = date.split("-"); // 3, 6, 2022
+                String ans = temp[0] + "/" + temp[1]; // 3/6
+
+                ((PresentAbsentViewHolder) holder).result.setText(ans);
+            }
+            else{
+                // displaying the data
+                ((PresentAbsentViewHolder) holder).result.setText(date);
+            }
         }
     }
 

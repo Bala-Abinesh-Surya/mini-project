@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -59,6 +60,7 @@ public class AttendanceMarkingAdapter extends RecyclerView.Adapter {
             ((AttendanceMarkingViewHolder) holder).regNo.setText(regNo.substring(regNo.length() - 3));
 
             // on click listener for the image view
+            // to mark either P or A
             ((AttendanceMarkingViewHolder) holder).imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -70,9 +72,7 @@ public class AttendanceMarkingAdapter extends RecyclerView.Adapter {
                         ((AttendanceMarkingViewHolder) holder).imageView.setBackgroundResource(R.drawable.circle_red);
 
                         // adding the student to the absentees array list
-                        absentees.add(student);
-
-                        absentees.size();
+                        addIfNotAlreadyExists(student);
 
                         // making the recycler view visible and absentees text GONE
                         absentText.setVisibility(View.GONE);
@@ -119,6 +119,15 @@ public class AttendanceMarkingAdapter extends RecyclerView.Adapter {
                     }
                 }
             });
+
+            // to show ths studentName
+            ((AttendanceMarkingViewHolder) holder).imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Toast.makeText(context, student.getStudentName(), Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            });
         }
     }
 
@@ -154,5 +163,13 @@ public class AttendanceMarkingAdapter extends RecyclerView.Adapter {
         }
 
         return dummy;
+    }
+
+    // method to check if the student object is already present in the array list
+    // if present, student object should not be added once again
+    private void addIfNotAlreadyExists(Student student){
+        if(! (absentees.contains(student))){
+            absentees.add(student);
+        }
     }
 }

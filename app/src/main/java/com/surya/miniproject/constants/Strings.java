@@ -3,6 +3,9 @@ package com.surya.miniproject.constants;
 public class Strings {
     // class contains all the String constants used in this project
 
+    public static final String FACULTY_SIGNED_IN = "FacultySignedIn";
+    public static final String APP_DEFAULTS = "AppDefaults";
+
     public static final String GENDER = "Gender";
     public static final String MALE = "Male";
     public static final String FEMALE = "Female";
@@ -13,6 +16,9 @@ public class Strings {
     public static final String CLASSES = "Classes";
     public static final String FACULTY_NAME = "FacultyName";
     public static final String FACULTY_PUSH_ID = "FacultyPushId";
+    public static final String FACULTY_GENDER = "Gender";
+    public static final String FACULTY_USER_NAME = "FacultyUserName";
+
     public static final String CLASS_NAME = "ClassName";
     public static final String CLASS_PUSH_ID = "ClassPushId";
     public static final String CLASS_ADVISOR = "ClassAdvisor";

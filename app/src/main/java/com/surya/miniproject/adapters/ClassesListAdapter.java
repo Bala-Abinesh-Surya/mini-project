@@ -1,5 +1,6 @@
 package com.surya.miniproject.adapters;
 
+import static com.surya.miniproject.activities.DashBoard.facultyName;
 import static com.surya.miniproject.constants.Strings.CLASS_ADVISOR;
 import static com.surya.miniproject.constants.Strings.CLASS_NAME;
 import static com.surya.miniproject.constants.Strings.CLASS_PUSH_ID;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,16 +23,19 @@ import com.surya.miniproject.activities.ClassAttendance;
 import com.surya.miniproject.models.Class;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class ClassesListAdapter extends RecyclerView.Adapter {
 
     private ArrayList<Class> classes;
     private Context context;
+    private Hashtable<String, String> advisors;
 
     // Constructor
-    public ClassesListAdapter(ArrayList<Class> classes, Context context) {
+    public ClassesListAdapter(ArrayList<Class> classes, Context context, Hashtable<String, String> advisors) {
         this.classes = classes;
         this.context = context;
+        this.advisors = advisors;
     }
 
     @NonNull
@@ -62,6 +67,12 @@ public class ClassesListAdapter extends RecyclerView.Adapter {
                     context.startActivity(intent);
                 }
             });
+
+            // checking if the currently signed in faculty is the class advisor of this class
+            // if so, making the tick VISIBLE
+            if(facultyName.equals(advisors.get(classx.getClassName()))){
+                ((ClassesListViewHolder) holder).tick.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -75,6 +86,7 @@ public class ClassesListAdapter extends RecyclerView.Adapter {
         // UI Elements
         private TextView className;
         private ConstraintLayout constraintLayout;
+        private ImageView tick;
 
         public ClassesListViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,6 +97,12 @@ public class ClassesListAdapter extends RecyclerView.Adapter {
 
             // constraint layout
             constraintLayout = itemView.findViewById(R.id.class_list_layout);
+
+            // image view
+            tick = itemView.findViewById(R.id.tick);
+
+            // hiding the tick by default
+            tick.setVisibility(View.GONE);
         }
     }
 }

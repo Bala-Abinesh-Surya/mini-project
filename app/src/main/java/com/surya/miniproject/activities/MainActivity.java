@@ -1,17 +1,23 @@
 package com.surya.miniproject.activities;
 
+import static com.surya.miniproject.constants.Strings.APP_DEFAULTS;
 import static com.surya.miniproject.constants.Strings.FACULTIES;
+import static com.surya.miniproject.constants.Strings.FACULTY_GENDER;
 import static com.surya.miniproject.constants.Strings.FACULTY_NAME;
 import static com.surya.miniproject.constants.Strings.FACULTY_PUSH_ID;
+import static com.surya.miniproject.constants.Strings.FACULTY_SIGNED_IN;
+import static com.surya.miniproject.constants.Strings.FACULTY_USER_NAME;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Half;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,10 +39,28 @@ public class MainActivity extends AppCompatActivity {
     private TextInputLayout userName, password;
     private Button login;
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // checking if the user has already signed in
+        // if so, passing the suer to the DashBoard
+        sharedPreferences = getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE);
+
+        if(sharedPreferences.getBoolean(FACULTY_SIGNED_IN, false)){
+            // getting the signed in facultyName, pushId
+            DashBoard.facultyName = sharedPreferences.getString(FACULTY_NAME, null);
+            DashBoard.facultyPushId = sharedPreferences.getString(FACULTY_PUSH_ID, null);
+            DashBoard.facultyUserName = sharedPreferences.getString(FACULTY_USER_NAME, null);
+            DashBoard.facultyGender = sharedPreferences.getString(FACULTY_GENDER, null);
+
+            Intent intent = new Intent(MainActivity.this, DashBoard.class);
+            startActivity(intent);
+            finish();
+        }
 
         // hiding the Action bar
         getSupportActionBar().hide();
@@ -95,9 +119,22 @@ public class MainActivity extends AppCompatActivity {
                                                             // user's credentials exist
                                                             // passing the user to dashboard activity
                                                             Intent intent = new Intent(MainActivity.this, DashBoard.class);
-                                                            // passing the staffName, pushId as the intent
-                                                            intent.putExtra(FACULTY_NAME, faculty.getFacultyName());
-                                                            intent.putExtra(FACULTY_PUSH_ID, faculty.getFacultyPushId());
+
+                                                            DashBoard.facultyName = faculty.getFacultyName();
+                                                            DashBoard.facultyPushId = faculty.getFacultyPushId();
+                                                            DashBoard.facultyUserName = faculty.getFacultyUserName();
+                                                            DashBoard.facultyPushId = faculty.getFacultyPushId();
+                                                            DashBoard.facultyGender = faculty.getFacultyGender();
+
+                                                            // updating the shared preferences
+                                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                            editor.putBoolean(FACULTY_SIGNED_IN, true);
+                                                            editor.putString(FACULTY_NAME, faculty.getFacultyName());
+                                                            editor.putString(FACULTY_PUSH_ID, faculty.getFacultyPushId());
+                                                            editor.putString(FACULTY_GENDER, faculty.getFacultyGender());
+                                                            editor.putString(FACULTY_USER_NAME, faculty.getFacultyUserName());
+                                                            editor.apply();
+
                                                             startActivity(intent);
                                                             finishAffinity();
                                                             return;

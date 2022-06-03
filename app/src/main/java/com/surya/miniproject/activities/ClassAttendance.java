@@ -1,6 +1,7 @@
 package com.surya.miniproject.activities;
 
 import static com.surya.miniproject.activities.DashBoard.facultyName;
+import static com.surya.miniproject.constants.Strings.ATTENDANCE;
 import static com.surya.miniproject.constants.Strings.CLASSES;
 import static com.surya.miniproject.constants.Strings.CLASS_ADVISOR;
 import static com.surya.miniproject.constants.Strings.CLASS_NAME;
@@ -21,13 +22,19 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.surya.miniproject.R;
 import com.surya.miniproject.adapters.AttendanceAdapter;
 import com.surya.miniproject.details.Data;
+import com.surya.miniproject.models.Attendance;
 import com.surya.miniproject.models.Class;
 import com.surya.miniproject.models.Student;
 
+import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class ClassAttendance extends AppCompatActivity {
 
@@ -35,11 +42,14 @@ public class ClassAttendance extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TextView name;
     private FloatingActionButton floatingActionButton;
+    private ArrayList<Attendance> result = new ArrayList<>();
+    private ArrayList<String> dates = new ArrayList<>();
 
     // adapter
     private AttendanceAdapter attendanceAdapter;
 
-    private ArrayList<Student> students = new ArrayList<Student>();
+    public static ArrayList<Student> students = new ArrayList<Student>();
+    private ArrayList<Attendance> attendance = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +86,42 @@ public class ClassAttendance extends AppCompatActivity {
                             students = classx.getStudents();
                         }
 
-                        // setting up the recycler view
-                        attendanceAdapter = new AttendanceAdapter(ClassAttendance.this, className);
-                        AttendanceAdapter.students = students;
-                        recyclerView.setAdapter(attendanceAdapter);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(ClassAttendance.this));
+                        firebaseDatabase.getReference()
+                                .child(ATTENDANCE)
+                                .child(className)
+                                .child("JUNE")
+                                .addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if(snapshot.exists()){
+                                            // clearing the hash table
+                                            result.clear();
+                                            dates.clear();
+                                            int index = 0;
+
+                                            for(DataSnapshot snapshot1 : snapshot.getChildren()){
+                                                Attendance a = snapshot1.getValue(Attendance.class);
+                                                dates.add(snapshot1.getKey().toString());
+
+                                                // adding the hash table to the array list
+                                                result.add(index, a);
+
+                                                index++;
+                                            }
+                                        }
+
+                                        // setting up the recycler view
+                                        attendanceAdapter = new AttendanceAdapter(ClassAttendance.this, className, result, dates);
+                                        AttendanceAdapter.students = students;
+                                        recyclerView.setAdapter(attendanceAdapter);
+                                        recyclerView.setLayoutManager(new LinearLayoutManager(ClassAttendance.this));
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
                     }
 
                     @Override

@@ -23,13 +23,17 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 import com.surya.miniproject.R;
 import com.surya.miniproject.adapters.AttendanceMarkingAdapter;
 import com.surya.miniproject.details.Data;
 import com.surya.miniproject.models.Attendance;
+import com.surya.miniproject.utility.Functions;
 
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Hashtable;
 
 public class AttendanceMarking extends AppCompatActivity {
 
@@ -76,7 +80,23 @@ public class AttendanceMarking extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // creating an Attendance object
-                Attendance a = new Attendance(new Date(), className, attendance);
+                Attendance a = new Attendance(className, new Functions().date());
+
+                class Compute{
+                    private String json(){
+                        // computing the hashtable
+                        Hashtable<String, String> table = new Hashtable<>();
+
+                        for(int i = 0; i < ClassAttendance.students.size(); i++){
+                            table.put(ClassAttendance.students.get(i).getStudentName(), attendance.get(i));
+                        }
+
+                        // converting the hashtable into json string
+                        return new Gson().toJson(table);
+                    }
+                }
+
+                a.setJson(new Compute().json());
                 a.setEditedBy(facultyName);
 
                 ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -89,8 +109,8 @@ public class AttendanceMarking extends AppCompatActivity {
                     firebaseDatabase.getReference()
                             .child(ATTENDANCE)
                             .child(className)
-                            .child(new Date().getMonth()+"")
-                            .child(new Date().getDay()+"")
+                            .child(LocalDateTime.now().getMonth()+"")
+                            .child("6-6-2022")
                             .setValue(a)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
