@@ -16,4 +16,9 @@
         android:name="com.surya.miniproject.fragments.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/menu_notifications"
+        android:name="com.surya.miniproject.fragments.NotificationFragment"
+        android:label="Notifications"
+        tools:layout="@layout/fragment_notification" />
 </navigation>

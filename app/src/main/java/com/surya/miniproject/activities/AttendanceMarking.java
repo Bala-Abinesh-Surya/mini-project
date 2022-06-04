@@ -3,7 +3,10 @@ package com.surya.miniproject.activities;
 import static com.surya.miniproject.activities.DashBoard.facultyName;
 import static com.surya.miniproject.adapters.AttendanceMarkingAdapter.attendance;
 import static com.surya.miniproject.constants.Strings.ATTENDANCE;
+import static com.surya.miniproject.constants.Strings.CLASS_DEPARTMENT;
 import static com.surya.miniproject.constants.Strings.CLASS_NAME;
+import static com.surya.miniproject.constants.Strings.NOTIFICATIONS;
+import static com.surya.miniproject.constants.Strings.NOTIFICATION_UPDATE;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +31,7 @@ import com.surya.miniproject.R;
 import com.surya.miniproject.adapters.AttendanceMarkingAdapter;
 import com.surya.miniproject.details.Data;
 import com.surya.miniproject.models.Attendance;
+import com.surya.miniproject.models.Notification;
 import com.surya.miniproject.utility.Functions;
 
 import java.time.LocalDateTime;
@@ -59,6 +63,7 @@ public class AttendanceMarking extends AppCompatActivity {
 
         // getting the data from the intent
         String className = getIntent().getStringExtra(CLASS_NAME);
+        String department = getIntent().getStringExtra(CLASS_DEPARTMENT);
 
         // method to initialise the UI Elements
         initialiseUIElements();
@@ -109,14 +114,36 @@ public class AttendanceMarking extends AppCompatActivity {
                     firebaseDatabase.getReference()
                             .child(ATTENDANCE)
                             .child(className)
-                            .child(LocalDateTime.now().getMonth()+"")
-                            .child("6-6-2022")
+                            .child(LocalDateTime.now().getMonth()+"") // LocalDateTime.now().getMonth()+""
+                            .child(new Functions().date())
                             .setValue(a)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    // do exactly what the back button does
-                                    onBackPressed();
+                                    if(task.isSuccessful()){
+                                        // creating a notification
+                                        Notification notification = new Notification(department, facultyName, className, new Functions().date());
+                                        notification.setCategory(NOTIFICATION_UPDATE);
+
+                                        // uploading the notification in the database
+                                        firebaseDatabase.getReference()
+                                                .child(NOTIFICATIONS)
+                                                .child(department)
+                                                .push()
+                                                .setValue(notification)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        // do exactly what the back button does
+                                                        onBackPressed();
+                                                    }
+                                                });
+
+                                    }
+                                    else{
+                                        // attendance has not been updated
+                                        Toast.makeText(AttendanceMarking.this, "Failed... Try Again", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
                 }

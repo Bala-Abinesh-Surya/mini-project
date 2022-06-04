@@ -2,6 +2,7 @@ package com.surya.miniproject.activities;
 
 import static com.surya.miniproject.constants.Strings.APP_DEFAULTS;
 import static com.surya.miniproject.constants.Strings.FACULTIES;
+import static com.surya.miniproject.constants.Strings.FACULTY_DEPARTMENT;
 import static com.surya.miniproject.constants.Strings.FACULTY_GENDER;
 import static com.surya.miniproject.constants.Strings.FACULTY_NAME;
 import static com.surya.miniproject.constants.Strings.FACULTY_PUSH_ID;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             DashBoard.facultyPushId = sharedPreferences.getString(FACULTY_PUSH_ID, null);
             DashBoard.facultyUserName = sharedPreferences.getString(FACULTY_USER_NAME, null);
             DashBoard.facultyGender = sharedPreferences.getString(FACULTY_GENDER, null);
+            DashBoard.facultyDepartment = sharedPreferences.getString(FACULTY_DEPARTMENT, null);
 
             Intent intent = new Intent(MainActivity.this, DashBoard.class);
             startActivity(intent);
@@ -124,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
                                                             DashBoard.facultyPushId = faculty.getFacultyPushId();
                                                             DashBoard.facultyUserName = faculty.getFacultyUserName();
                                                             DashBoard.facultyGender = faculty.getFacultyGender();
+                                                            DashBoard.facultyDepartment = faculty.getFacultyDepartment();
 
                                                             // updating the shared preferences
                                                             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -132,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
                                                             editor.putString(FACULTY_PUSH_ID, faculty.getFacultyPushId());
                                                             editor.putString(FACULTY_GENDER, faculty.getFacultyGender());
                                                             editor.putString(FACULTY_USER_NAME, faculty.getFacultyUserName());
+                                                            editor.putString(FACULTY_DEPARTMENT, faculty.getFacultyDepartment());
                                                             editor.apply();
 
                                                             startActivity(intent);

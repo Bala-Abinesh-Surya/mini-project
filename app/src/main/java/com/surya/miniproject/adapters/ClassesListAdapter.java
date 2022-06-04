@@ -2,6 +2,7 @@ package com.surya.miniproject.adapters;
 
 import static com.surya.miniproject.activities.DashBoard.facultyName;
 import static com.surya.miniproject.constants.Strings.CLASS_ADVISOR;
+import static com.surya.miniproject.constants.Strings.CLASS_DEPARTMENT;
 import static com.surya.miniproject.constants.Strings.CLASS_NAME;
 import static com.surya.miniproject.constants.Strings.CLASS_PUSH_ID;
 
@@ -60,10 +61,11 @@ public class ClassesListAdapter extends RecyclerView.Adapter {
                 public void onClick(View view) {
                     // passing the user to the ClassAttendance activity
                     Intent intent = new Intent(context, ClassAttendance.class);
-                    // passing the className, pushId, class advisor as the intent
+                    // passing the className, pushId, class advisor, class department as the intent
                     intent.putExtra(CLASS_NAME, classx.getClassName());
                     intent.putExtra(CLASS_PUSH_ID, classx.getClassPushId());
                     intent.putExtra(CLASS_ADVISOR, classx.getClassAdvisor());
+                    intent.putExtra(CLASS_DEPARTMENT, classx.getClassDepartment());
                     context.startActivity(intent);
                 }
             });

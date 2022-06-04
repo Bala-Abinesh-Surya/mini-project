@@ -4,6 +4,7 @@ import static com.surya.miniproject.activities.DashBoard.facultyName;
 import static com.surya.miniproject.constants.Strings.ATTENDANCE;
 import static com.surya.miniproject.constants.Strings.CLASSES;
 import static com.surya.miniproject.constants.Strings.CLASS_ADVISOR;
+import static com.surya.miniproject.constants.Strings.CLASS_DEPARTMENT;
 import static com.surya.miniproject.constants.Strings.CLASS_NAME;
 import static com.surya.miniproject.constants.Strings.CLASS_PUSH_ID;
 
@@ -60,6 +61,7 @@ public class ClassAttendance extends AppCompatActivity {
         String className = getIntent().getStringExtra(CLASS_NAME);
         String classPushId = getIntent().getStringExtra(CLASS_PUSH_ID);
         String classAdvisor = getIntent().getStringExtra(CLASS_ADVISOR);
+        String department = getIntent().getStringExtra(CLASS_DEPARTMENT);
 
         // method to initialise the UI Elements
         initialiseUIElements(classAdvisor);
@@ -89,7 +91,7 @@ public class ClassAttendance extends AppCompatActivity {
                         firebaseDatabase.getReference()
                                 .child(ATTENDANCE)
                                 .child(className)
-                                .child("JUNE")
+                                .child(LocalDateTime.now().getMonth()+"")
                                 .addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -138,6 +140,7 @@ public class ClassAttendance extends AppCompatActivity {
                 // passing the user to the AttendanceMarking activity
                 Intent intent = new Intent(ClassAttendance.this, AttendanceMarking.class);
                 intent.putExtra(CLASS_NAME, className);
+                intent.putExtra(CLASS_DEPARTMENT, department);
                 startActivity(intent);
             }
         });

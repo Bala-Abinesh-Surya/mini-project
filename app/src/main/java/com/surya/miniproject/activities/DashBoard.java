@@ -50,6 +50,7 @@ public class DashBoard extends AppCompatActivity {
     public static String facultyPushId;
     public static String facultyGender;
     public static String facultyUserName;
+    public static String facultyDepartment;
 
     private int backButtonPressed = 0;
 
@@ -170,6 +171,7 @@ public class DashBoard extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // faculty chose not to Logout
                         // closing the dialog
+                        Toast.makeText(DashBoard.this, "Glad you chose not to go out!", Toast.LENGTH_SHORT).show();
                         dialog.cancel();
                     }
                 })
