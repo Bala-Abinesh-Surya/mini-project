@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MiniProject">
         <activity
+            android:name=".activities.hod.StaffDetailsActiity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AttendanceEditing"
+            android:exported="false" />
+        <activity
             android:name=".activities.AttendanceMarking"
             android:exported="false" />
         <activity

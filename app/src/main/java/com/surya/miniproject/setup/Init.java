@@ -6,9 +6,11 @@ import static com.surya.miniproject.constants.Strings.FEMALE;
 import static com.surya.miniproject.constants.Strings.MALE;
 
 import com.google.firebase.database.FirebaseDatabase;
+import com.surya.miniproject.constants.Strings;
 import com.surya.miniproject.details.Data;
 import com.surya.miniproject.models.Class;
 import com.surya.miniproject.models.Faculty;
+import com.surya.miniproject.models.HOD;
 import com.surya.miniproject.utility.Functions;
 
 import java.util.function.Function;
@@ -32,7 +34,7 @@ public class Init {
 
     // Constructor
     public Init() {
-
+        setupAllDepartmentsHOD();
     }
 
     // method to initialise all the Faculties
@@ -94,6 +96,27 @@ public class Init {
                     .child(CLASSES)
                     .child(key)
                     .setValue(Class);
+        }
+    }
+
+    // method to add the HOD
+    // method called, only one time that too at the beginning setup of the entire application
+    private void setupAllDepartmentsHOD(){
+        // going through the string array
+        for(String temp : data.getHOD_DETAILS()){
+            String[] t = temp.split("@@@");
+
+            String hod = t[0];
+            String department = new Functions().department(t[1]);
+
+            // creating an HOD object
+            HOD hod1 = new HOD(hod, department);
+
+            // updating the HOD object in the firebase
+            firebaseDatabase.getReference()
+                    .child(Strings.HOD)
+                    .push()
+                    .setValue(hod1);
         }
     }
 }

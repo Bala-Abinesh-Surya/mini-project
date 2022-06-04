@@ -30,6 +30,10 @@ public class Data {
             "CSE-III-B@@@CSE@@@3@@@Mrs. Karpagavalli"
     };
 
+    private String[] HOD_DETAILS = new String[]{
+            "Mr. Vishwanath Shenoi@@@CSE"
+    };
+
     // contains the classes and their teaching staffs list
     private Hashtable<String, ArrayList<String>> CLASS_STAFFS_LIST = new Hashtable<String, ArrayList<String>>() {
         {
@@ -206,5 +210,13 @@ public class Data {
 
     public void setCLASS_STUDENTS_LIST(Hashtable<String, ArrayList<Student>> CLASS_STUDENTS_LIST) {
         this.CLASS_STUDENTS_LIST = CLASS_STUDENTS_LIST;
+    }
+
+    public String[] getHOD_DETAILS() {
+        return HOD_DETAILS;
+    }
+
+    public void setHOD_DETAILS(String[] HOD_DETAILS) {
+        this.HOD_DETAILS = HOD_DETAILS;
     }
 }

@@ -4,12 +4,15 @@ public class Strings {
     // class contains all the String constants used in this project
 
     public static final String FACULTY_SIGNED_IN = "FacultySignedIn";
+    public static final String FACULTY_IS_AN_HOD = "FacultyIsAnHod";
     public static final String APP_DEFAULTS = "AppDefaults";
 
     public static final String GENDER = "Gender";
     public static final String MALE = "Male";
     public static final String FEMALE = "Female";
     public static final String RATHER_NOT_SAY = "Rather Not Say";
+
+    public static final String HOD = "HeadOfTheDepartment";
 
     public static final String FACULTY = "Faculty";
     public static final String FACULTIES = "Faculties";
@@ -32,6 +35,7 @@ public class Strings {
 
     public static final String NOTIFICATIONS = "Notifications";
     public static final String NOTIFICATION_UPDATE = "UpdateNotification";
+    public static final String NOTIFICATION_EDIT = "NotificationEdit";
 
     public static String[] ALL_DEPARTMENTS = new String[] {
             CSE_DEPARTMENT,

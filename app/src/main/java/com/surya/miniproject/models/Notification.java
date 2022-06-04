@@ -1,5 +1,6 @@
 package com.surya.miniproject.models;
 
+import static com.surya.miniproject.constants.Strings.NOTIFICATION_EDIT;
 import static com.surya.miniproject.constants.Strings.NOTIFICATION_UPDATE;
 
 public class Notification {
@@ -26,6 +27,9 @@ public class Notification {
     public String returnNotificationMessage(){
         if(category.equals(NOTIFICATION_UPDATE)){
             return notifiedBy + " updated the " + className + "'s attendance";
+        }
+        else if(category.equals(NOTIFICATION_EDIT)){
+            return notifiedBy + " edited the " + className + "'s attendance";
         }
 
         // unreachable statement

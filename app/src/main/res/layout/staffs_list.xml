@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/staff_details_profile"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/male"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/staff_details_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="15dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/staff_details_profile"
+        app:layout_constraintStart_toEndOf="@+id/staff_details_profile"
+        app:layout_constraintTop_toTopOf="@+id/staff_details_profile" />
+
+    <TextView
+        android:id="@+id/staff_details_dep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/staff_details_name"
+        app:layout_constraintTop_toBottomOf="@+id/staff_details_name" />
+
+    <ImageView
+        android:id="@+id/stafff_details_edit"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/staff_details_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/staff_details_profile"
+        app:srcCompat="@drawable/ic_edit"
+        app:tint="@color/black" />
+</androidx.constraintlayout.widget.ConstraintLayout>

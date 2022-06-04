@@ -10,6 +10,7 @@ public class Faculty {
     private String facultyPushId;
     private String facultyUserName;
     private String facultyPassword;
+    private boolean isTheStaffAHod;
 
     // list of all the Faculties
     public static ArrayList<Faculty> allFacultiesList = new ArrayList<>();
@@ -77,5 +78,13 @@ public class Faculty {
 
     public void setFacultyDepartment(String facultyDepartment) {
         this.facultyDepartment = facultyDepartment;
+    }
+
+    public boolean isTheStaffAHod() {
+        return isTheStaffAHod;
+    }
+
+    public void setTheStaffAHod(boolean theStaffAHod) {
+        isTheStaffAHod = theStaffAHod;
     }
 }

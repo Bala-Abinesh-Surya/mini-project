@@ -67,7 +67,9 @@ public class AttendanceMarkingAdapter extends RecyclerView.Adapter {
                     // checking if the attendance is marked as "P", if so changing it to "A"
                     if(attendance.get(position).equals("P")){
                         // changing it to "A"
+                        attendance.remove(position);
                         attendance.add(position, "A");
+
                         // changing the drawable file - red color
                         ((AttendanceMarkingViewHolder) holder).imageView.setBackgroundResource(R.drawable.circle_red);
 
@@ -89,7 +91,9 @@ public class AttendanceMarkingAdapter extends RecyclerView.Adapter {
                     }
                     else{
                         // changing it to "P"
+                        attendance.remove(position);
                         attendance.add(position, "P");
+
                         // changing the drawable file - green color
                         ((AttendanceMarkingViewHolder) holder).imageView.setBackgroundResource(R.drawable.circle);
 

@@ -1,8 +1,12 @@
 package com.surya.miniproject.fragments;
 
+import static com.surya.miniproject.activities.DashBoard.facultyDepartment;
 import static com.surya.miniproject.activities.DashBoard.facultyName;
+import static com.surya.miniproject.constants.Strings.APP_DEFAULTS;
 import static com.surya.miniproject.constants.Strings.CLASSES;
+import static com.surya.miniproject.constants.Strings.FACULTY_IS_AN_HOD;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -63,14 +67,29 @@ public class HomeFragment extends Fragment {
                                 if(snapshot1.exists()){
                                     Class classx = snapshot1.getValue(Class.class);
 
-                                    ArrayList<String> facultyMembers = classx.getFacultyMembers();
-                                    for(String faculty : facultyMembers){
-                                        if(faculty.equals(facultyName)){
+                                    if(getContext().getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).getBoolean(FACULTY_IS_AN_HOD, false)){
+                                        // faculty is an HOD
+                                        // so getting all the classes, in his/her department though that class is not handled by faculty
+                                        if(classx.getClassDepartment().equals(facultyDepartment)){
                                             // faculty is handling some subject for this class
                                             classes.add(classx);
 
                                             // adding the class advisor of this class to the classAdvisor Map
                                             classAdvisorMap.put(classx.getClassName(), classx.getClassAdvisor());
+                                        }
+                                    }
+                                    else{
+                                        // faculty is not an HOD
+                                        // so, getting only the classes that the faculty is handling
+                                        ArrayList<String> facultyMembers = classx.getFacultyMembers();
+                                        for(String faculty : facultyMembers){
+                                            if(faculty.equals(facultyName)){
+                                                // faculty is handling some subject for this class
+                                                classes.add(classx);
+
+                                                // adding the class advisor of this class to the classAdvisor Map
+                                                classAdvisorMap.put(classx.getClassName(), classx.getClassAdvisor());
+                                            }
                                         }
                                     }
                                 }

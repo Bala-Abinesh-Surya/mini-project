@@ -1,20 +1,28 @@
 package com.surya.miniproject.activities;
 
 import static com.surya.miniproject.activities.DashBoard.facultyName;
+import static com.surya.miniproject.constants.Strings.APP_DEFAULTS;
 import static com.surya.miniproject.constants.Strings.ATTENDANCE;
 import static com.surya.miniproject.constants.Strings.CLASSES;
 import static com.surya.miniproject.constants.Strings.CLASS_ADVISOR;
 import static com.surya.miniproject.constants.Strings.CLASS_DEPARTMENT;
 import static com.surya.miniproject.constants.Strings.CLASS_NAME;
 import static com.surya.miniproject.constants.Strings.CLASS_PUSH_ID;
+import static com.surya.miniproject.constants.Strings.FACULTY_IS_AN_HOD;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,11 +34,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.surya.miniproject.R;
+import com.surya.miniproject.activities.hod.StaffDetailsActiity;
 import com.surya.miniproject.adapters.AttendanceAdapter;
 import com.surya.miniproject.details.Data;
 import com.surya.miniproject.models.Attendance;
 import com.surya.miniproject.models.Class;
 import com.surya.miniproject.models.Student;
+import com.surya.miniproject.utility.Functions;
 
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
@@ -45,12 +55,49 @@ public class ClassAttendance extends AppCompatActivity {
     private FloatingActionButton floatingActionButton;
     private ArrayList<Attendance> result = new ArrayList<>();
     private ArrayList<String> dates = new ArrayList<>();
+    public static Attendance todayAttendance;
+
+    private String classPushId;
 
     // adapter
     private AttendanceAdapter attendanceAdapter;
 
     public static ArrayList<Student> students = new ArrayList<Student>();
-    private ArrayList<Attendance> attendance = new ArrayList<>();
+    private boolean attendanceEditedForToday = false;
+
+    // Back Button Functionality
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    // inflating the menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).getBoolean(FACULTY_IS_AN_HOD, false)){
+            // inflating the menu, if the faculty is the HOD
+            getMenuInflater().inflate(R.menu.class_menu, menu);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // menu items clicks
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // get staff details menu
+        if(item.getItemId() == R.id.menu_staff_details){
+            // passing the user to the staff details of a class activity
+            // passing the classPushId as the intent
+            Intent intent = new Intent(this, StaffDetailsActiity.class);
+            intent.putExtra(CLASS_PUSH_ID, classPushId);
+            startActivity(intent);
+        }
+        else if(item.getItemId() == android.R.id.home){
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +106,7 @@ public class ClassAttendance extends AppCompatActivity {
 
         // getting the data from the intent
         String className = getIntent().getStringExtra(CLASS_NAME);
-        String classPushId = getIntent().getStringExtra(CLASS_PUSH_ID);
+        classPushId = getIntent().getStringExtra(CLASS_PUSH_ID);
         String classAdvisor = getIntent().getStringExtra(CLASS_ADVISOR);
         String department = getIntent().getStringExtra(CLASS_DEPARTMENT);
 
@@ -72,7 +119,15 @@ public class ClassAttendance extends AppCompatActivity {
         // setting the title of the Action Bar
         getSupportActionBar().setTitle(className);
 
+        // enabling the home button in the Action Bar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo.State mobile = conMan.getNetworkInfo(0).getState();
+        NetworkInfo.State wifi = conMan.getNetworkInfo(1).getState();
+
         // getting the students list from the database
+        String todayDate = new Functions().date();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseDatabase.getReference()
                 .child(CLASSES)
@@ -103,13 +158,27 @@ public class ClassAttendance extends AppCompatActivity {
 
                                             for(DataSnapshot snapshot1 : snapshot.getChildren()){
                                                 Attendance a = snapshot1.getValue(Attendance.class);
-                                                dates.add(snapshot1.getKey().toString());
+                                                dates.add(snapshot1.getKey());
+
+                                                if(snapshot1.getKey().equals(todayDate)){
+                                                    // attendance has been updated for today, already by this staff
+                                                    attendanceEditedForToday = true;
+
+                                                    // adding today's attendance
+                                                    todayAttendance = a;
+
+                                                    floatingActionButton.setImageResource(R.drawable.ic_edit);
+                                                }
 
                                                 // adding the hash table to the array list
                                                 result.add(index, a);
 
                                                 index++;
                                             }
+                                        }
+
+                                        if(! attendanceEditedForToday){
+                                            floatingActionButton.setImageResource(R.drawable.ic_add);
                                         }
 
                                         // setting up the recycler view
@@ -137,11 +206,22 @@ public class ClassAttendance extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // passing the user to the AttendanceMarking activity
-                Intent intent = new Intent(ClassAttendance.this, AttendanceMarking.class);
-                intent.putExtra(CLASS_NAME, className);
-                intent.putExtra(CLASS_DEPARTMENT, department);
-                startActivity(intent);
+                if(attendanceEditedForToday){
+                    // attendance for today has been already been updated
+                    // so, passing the faculty to the AttendanceEditing activity
+                    Intent intent = new Intent(ClassAttendance.this, AttendanceEditing.class);
+                    intent.putExtra(CLASS_NAME, className);
+                    intent.putExtra(CLASS_DEPARTMENT, department);
+                    startActivity(intent);
+                }
+                else{
+                    // attendance for today, has not yet been uploaded
+                    // passing the user to the AttendanceMarking activity
+                    Intent intent = new Intent(ClassAttendance.this, AttendanceMarking.class);
+                    intent.putExtra(CLASS_NAME, className);
+                    intent.putExtra(CLASS_DEPARTMENT, department);
+                    startActivity(intent);
+                }
             }
         });
     }

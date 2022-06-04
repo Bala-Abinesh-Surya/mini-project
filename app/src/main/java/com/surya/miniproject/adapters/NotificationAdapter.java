@@ -1,6 +1,7 @@
 package com.surya.miniproject.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,9 @@ public class NotificationAdapter extends RecyclerView.Adapter {
     public NotificationAdapter(ArrayList<Notification> notifications, Context context) {
         this.notifications = notifications;
         this.context = context;
+
+        // reversing the notification array list
+        reverseNotificationArrayList();
     }
 
     @NonNull
@@ -60,5 +64,19 @@ public class NotificationAdapter extends RecyclerView.Adapter {
             // text view
             message = itemView.findViewById(R.id.notification_msg);
         }
+    }
+
+    // method to reverse the notification array list
+    private void reverseNotificationArrayList(){
+        ArrayList<Notification> temp = new ArrayList<>(notifications.size());
+
+        // going through the notifications array list in reverse
+        for(int i = notifications.size() - 1; i >= 0; i--){
+            int j = (notifications.size() - 1) - i;
+
+            temp.add(j, notifications.get(i));
+        }
+
+        notifications = temp;
     }
 }

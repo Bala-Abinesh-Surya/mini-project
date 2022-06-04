@@ -4,10 +4,12 @@ import static com.surya.miniproject.constants.Strings.APP_DEFAULTS;
 import static com.surya.miniproject.constants.Strings.FACULTIES;
 import static com.surya.miniproject.constants.Strings.FACULTY_DEPARTMENT;
 import static com.surya.miniproject.constants.Strings.FACULTY_GENDER;
+import static com.surya.miniproject.constants.Strings.FACULTY_IS_AN_HOD;
 import static com.surya.miniproject.constants.Strings.FACULTY_NAME;
 import static com.surya.miniproject.constants.Strings.FACULTY_PUSH_ID;
 import static com.surya.miniproject.constants.Strings.FACULTY_SIGNED_IN;
 import static com.surya.miniproject.constants.Strings.FACULTY_USER_NAME;
+import static com.surya.miniproject.constants.Strings.HOD;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +33,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.surya.miniproject.R;
+import com.surya.miniproject.details.Data;
 import com.surya.miniproject.models.Faculty;
+import com.surya.miniproject.models.HOD;
 import com.surya.miniproject.setup.Init;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private Button login;
 
     private SharedPreferences sharedPreferences;
+    private boolean signedIn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +124,40 @@ public class MainActivity extends AppCompatActivity {
                                                     if(faculty.getFacultyUserName().equals(userNameText)){
                                                         if(faculty.getFacultyPassword().equals(passwordText)){
                                                             // user's credentials exist
+                                                            // now checking if the faculty is an HOD
+                                                            firebaseDatabase.getReference()
+                                                                    .child(HOD)
+                                                                    .addValueEventListener(new ValueEventListener() {
+                                                                        @Override
+                                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                            if(snapshot.exists()){
+                                                                                for(DataSnapshot snapshot2 : snapshot.getChildren()){
+                                                                                    com.surya.miniproject.models.HOD hod = snapshot2.getValue(HOD.class);
+
+                                                                                    if(hod.getDepartment().equals(faculty.getFacultyDepartment())){
+                                                                                        if(hod.getName().equals(faculty.getFacultyName())){
+                                                                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                                                            editor.putBoolean(FACULTY_SIGNED_IN, true);
+                                                                                            editor.putBoolean(FACULTY_IS_AN_HOD, true);
+                                                                                            editor.apply();
+                                                                                        }
+                                                                                        else{
+                                                                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                                                            editor.putBoolean(FACULTY_SIGNED_IN, true);
+                                                                                            editor.putBoolean(FACULTY_IS_AN_HOD, false);
+                                                                                            editor.apply();
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+
+                                                                        @Override
+                                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                        }
+                                                                    });
+
                                                             // passing the user to dashboard activity
                                                             Intent intent = new Intent(MainActivity.this, DashBoard.class);
 
@@ -138,9 +177,10 @@ public class MainActivity extends AppCompatActivity {
                                                             editor.putString(FACULTY_DEPARTMENT, faculty.getFacultyDepartment());
                                                             editor.apply();
 
+                                                            signedIn = true;
+
                                                             startActivity(intent);
                                                             finishAffinity();
-                                                            return;
                                                         }
                                                         else{
                                                             // password is wrong
@@ -151,10 +191,12 @@ public class MainActivity extends AppCompatActivity {
                                                     }
                                                 }
 
-                                                // means the user entered invalid username as password
-                                                Toast.makeText(MainActivity.this, "Invalid credentials!", Toast.LENGTH_SHORT).show();
-                                                userName.getEditText().setText("");
-                                                password.getEditText().setText("");
+                                                if( ! signedIn){
+                                                    // means the user entered invalid username as password
+                                                    Toast.makeText(MainActivity.this, "Invalid credentials!", Toast.LENGTH_SHORT).show();
+                                                    userName.getEditText().setText("");
+                                                    password.getEditText().setText("");
+                                                }
                                             }
                                         }
 

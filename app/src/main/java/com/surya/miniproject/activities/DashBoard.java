@@ -1,7 +1,11 @@
 package com.surya.miniproject.activities;
 
 import static com.surya.miniproject.constants.Strings.APP_DEFAULTS;
+import static com.surya.miniproject.constants.Strings.FACULTY_GENDER;
+import static com.surya.miniproject.constants.Strings.FACULTY_IS_AN_HOD;
+import static com.surya.miniproject.constants.Strings.FACULTY_NAME;
 import static com.surya.miniproject.constants.Strings.FACULTY_SIGNED_IN;
+import static com.surya.miniproject.constants.Strings.HOD;
 import static com.surya.miniproject.constants.Strings.MALE;
 
 import androidx.annotation.NonNull;
@@ -32,7 +36,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.surya.miniproject.R;
+import com.surya.miniproject.models.HOD;
+import com.surya.miniproject.setup.Init;
 
 public class DashBoard extends AppCompatActivity {
 
@@ -58,17 +68,24 @@ public class DashBoard extends AppCompatActivity {
     // Like MX PLayer
     @Override
     public void onBackPressed() {
-        backButtonPressed++;
-
-        if(backButtonPressed < 2){
-            Toast.makeText(this, "Tap again to exit app", Toast.LENGTH_SHORT).show();
+        if(drawerLayout.isDrawerOpen(navigationView)){
+            // closing the drawer if it is open
+            backButtonPressed = 0;
+            drawerLayout.close();
         }
         else{
-            // the user pressed/tapped the back button twice
-            // exiting the app
-            backButtonPressed = 0;
-            finish();
-            finishAffinity();
+            backButtonPressed++;
+
+            if(backButtonPressed < 2){
+                Toast.makeText(this, "Tap again to exit app", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                // the user pressed/tapped the back button twice
+                // exiting the app
+                backButtonPressed = 0;
+                finish();
+                finishAffinity();
+            }
         }
     }
 
@@ -83,19 +100,50 @@ public class DashBoard extends AppCompatActivity {
         // method to initialise the UI Elements
         initialiseUIElements();
 
+        //Init.getInitInstance();
+
         // setting up the texts and image in navigation header
         String mUserName = "@"+facultyUserName;
         headerFacultyName.setText(facultyName);
         headerUserName.setText(mUserName);
         headerPushId.setText(facultyPushId);
 
-        if(facultyGender.equals(MALE)){
+        if(getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).getString(FACULTY_GENDER, null).equals(MALE)){
             headerImage.setImageResource(R.drawable.male);
         }
         else{
             // gender may be female, or Rather Not Say
             headerImage.setImageResource(R.drawable.female);
         }
+
+        // checking if the faculty is an HOD
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase.getReference()
+                .child(HOD)
+                        .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(snapshot.exists()){
+                                    for(DataSnapshot snapshot1 : snapshot.getChildren()){
+                                        com.surya.miniproject.models.HOD hod = snapshot1.getValue(HOD.class);
+
+                                        if(hod.getDepartment().equals(facultyDepartment)){
+                                            if(hod.getName().equals(facultyName)){
+                                                getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).edit().putBoolean(FACULTY_IS_AN_HOD, true).apply();;
+                                            }
+                                            else{
+                                                getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).edit().putBoolean(FACULTY_IS_AN_HOD, false).apply();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
 
         // opening/closing the drawer on clicking the menu in the so called action bar
         findViewById(R.id.dash_menu).setOnClickListener(new View.OnClickListener() {
