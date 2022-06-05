@@ -346,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
         login = findViewById(R.id.main_login);
 
         // admin image view
-        imageView = findViewById(R.id.admin_image);
+       imageView = findViewById(R.id.admin_image_img);
     }
 
     // method which returns the result for our askPermission() method
