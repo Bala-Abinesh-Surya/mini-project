@@ -1,5 +1,6 @@
 package com.surya.miniproject.adapters.hod;
 
+import static com.surya.miniproject.constants.Strings.FACULTIES;
 import static com.surya.miniproject.constants.Strings.MALE;
 
 import android.content.Context;
@@ -13,7 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FacebookAuthCredential;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.surya.miniproject.R;
+import com.surya.miniproject.details.Data;
 import com.surya.miniproject.models.Faculty;
 
 import java.util.ArrayList;
@@ -22,13 +28,15 @@ public class StaffsDetailsAdapter extends RecyclerView.Adapter {
     /*Using this adapter for two causes, same layout*/
 
     private Context context;
-    private ArrayList<Faculty> facultyMembers;
+    private ArrayList<String> facultyMembers;
     private int purpose;
+    private FirebaseDatabase firebaseDatabase;
 
     // Constructor
-    public StaffsDetailsAdapter(Context context, ArrayList<Faculty> facultyMembers) {
+    public StaffsDetailsAdapter(Context context, ArrayList<String> facultyMembers, FirebaseDatabase firebaseDatabase) {
         this.context = context;
         this.facultyMembers = facultyMembers;
+        this.firebaseDatabase = firebaseDatabase;
     }
 
     // setter methods
@@ -57,21 +65,10 @@ public class StaffsDetailsAdapter extends RecyclerView.Adapter {
             *
             * */
 
-            Faculty faculty = facultyMembers.get(position);
+            String facultyName = facultyMembers.get(position);
 
             // staff name
-            ((StaffsDetailsViewHolder) holder).staffName.setText(faculty.getFacultyName());
-
-            // department
-            ((StaffsDetailsViewHolder) holder).department.setText(faculty.getFacultyDepartment());
-
-            // profile
-            if(faculty.getFacultyGender().equals(MALE)){
-                ((StaffsDetailsViewHolder) holder).profile.setImageResource(R.drawable.male);
-            }
-            else{
-                ((StaffsDetailsViewHolder) holder).profile.setImageResource(R.drawable.female);
-            }
+            ((StaffsDetailsViewHolder) holder).staffName.setText(facultyName);
 
             // on click listener for the edit image
             ((StaffsDetailsViewHolder) holder).edit.setOnClickListener(new View.OnClickListener() {
@@ -96,8 +93,8 @@ public class StaffsDetailsAdapter extends RecyclerView.Adapter {
     // view holder class
     public class StaffsDetailsViewHolder extends RecyclerView.ViewHolder{
         // UI Elements
-        private TextView staffName, department;
-        private ImageView edit, profile;
+        private TextView staffName;
+        private ImageView edit;
 
         public StaffsDetailsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -105,10 +102,8 @@ public class StaffsDetailsAdapter extends RecyclerView.Adapter {
             // initialising the UI Elements
             // text view
             staffName = itemView.findViewById(R.id.staff_details_name);
-            department = itemView.findViewById(R.id.staff_details_dep);
 
             // image views
-            profile = itemView.findViewById(R.id.staff_details_profile);
             edit = itemView.findViewById(R.id.stafff_details_edit);
         }
     }

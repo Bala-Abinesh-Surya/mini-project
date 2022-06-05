@@ -114,7 +114,7 @@ public class AttendanceMarking extends AppCompatActivity {
                     firebaseDatabase.getReference()
                             .child(ATTENDANCE)
                             .child(className)
-                            .child(LocalDateTime.now().getMonth()+"") // LocalDateTime.now().getMonth()+""
+                            .child(LocalDateTime.now().getMonth()+"-"+LocalDateTime.now().getYear()) // LocalDateTime.now().getMonth()+""
                             .child(new Functions().date())
                             .setValue(a)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {

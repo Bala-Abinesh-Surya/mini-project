@@ -102,7 +102,7 @@ public class AttendanceEditing extends AppCompatActivity {
                     firebaseDatabase.getReference()
                             .child(ATTENDANCE)
                             .child(className)
-                            .child(LocalDateTime.now().getMonth()+"")
+                            .child(LocalDateTime.now().getMonth()+"-"+LocalDateTime.now().getYear())
                             .child(new Functions().date())
                             .setValue(attendance)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {

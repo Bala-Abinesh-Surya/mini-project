@@ -14,15 +14,22 @@
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_attendance_marking.xml" value="0.1875" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_class_attendance.xml" value="0.16" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_dash_board.xml" value="0.1875" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/activity_hodpanel.xml" value="0.20512820512820512" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/activity_hodpanel_entering.xml" value="0.20512820512820512" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/activity_monthly_export.xml" value="0.20512820512820512" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/activity_profile.xml" value="0.18442622950819673" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_staff_details_actiity.xml" value="0.18442622950819673" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/attendance.xml" value="0.18442622950819673" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/attendce_marking_list.xml" value="0.18442622950819673" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/classes_list.xml" value="0.18442622950819673" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_home.xml" value="0.18442622950819673" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_logout.xml" value="0.18442622950819673" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_monthly_export.xml" value="0.264" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_notification.xml" value="0.1875" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/header_layout.xml" value="0.18442622950819673" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/hod_staffs_list.xml" value="0.264" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/notifications_layout.xml" value="0.18442622950819673" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/staffs_list.xml" value="0.264" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/students_list.xml" value="0.18442622950819673" />

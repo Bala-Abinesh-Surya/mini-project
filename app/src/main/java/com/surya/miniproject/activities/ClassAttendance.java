@@ -58,6 +58,7 @@ public class ClassAttendance extends AppCompatActivity {
     public static Attendance todayAttendance;
 
     private String classPushId;
+    private String className;
 
     // adapter
     private AttendanceAdapter attendanceAdapter;
@@ -91,6 +92,7 @@ public class ClassAttendance extends AppCompatActivity {
             // passing the classPushId as the intent
             Intent intent = new Intent(this, StaffDetailsActiity.class);
             intent.putExtra(CLASS_PUSH_ID, classPushId);
+            intent.putExtra(CLASS_NAME, className);
             startActivity(intent);
         }
         else if(item.getItemId() == android.R.id.home){
@@ -105,7 +107,7 @@ public class ClassAttendance extends AppCompatActivity {
         setContentView(R.layout.activity_class_attendance);
 
         // getting the data from the intent
-        String className = getIntent().getStringExtra(CLASS_NAME);
+        className = getIntent().getStringExtra(CLASS_NAME);
         classPushId = getIntent().getStringExtra(CLASS_PUSH_ID);
         String classAdvisor = getIntent().getStringExtra(CLASS_ADVISOR);
         String department = getIntent().getStringExtra(CLASS_DEPARTMENT);
@@ -146,7 +148,7 @@ public class ClassAttendance extends AppCompatActivity {
                         firebaseDatabase.getReference()
                                 .child(ATTENDANCE)
                                 .child(className)
-                                .child(LocalDateTime.now().getMonth()+"")
+                                .child(LocalDateTime.now().getMonth()+"-"+LocalDateTime.now().getYear())
                                 .addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {

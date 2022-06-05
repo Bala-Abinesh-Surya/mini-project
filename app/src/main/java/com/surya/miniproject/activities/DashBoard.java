@@ -1,9 +1,10 @@
 package com.surya.miniproject.activities;
 
 import static com.surya.miniproject.constants.Strings.APP_DEFAULTS;
+import static com.surya.miniproject.constants.Strings.ATTENDANCE;
+import static com.surya.miniproject.constants.Strings.CLASSES;
 import static com.surya.miniproject.constants.Strings.FACULTY_GENDER;
 import static com.surya.miniproject.constants.Strings.FACULTY_IS_AN_HOD;
-import static com.surya.miniproject.constants.Strings.FACULTY_NAME;
 import static com.surya.miniproject.constants.Strings.FACULTY_SIGNED_IN;
 import static com.surya.miniproject.constants.Strings.HOD;
 import static com.surya.miniproject.constants.Strings.MALE;
@@ -12,23 +13,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -41,8 +38,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.surya.miniproject.R;
+import com.surya.miniproject.activities.hod.HODPanelEntering;
+import com.surya.miniproject.export.MonthExport;
+import com.surya.miniproject.models.Attendance;
+import com.surya.miniproject.models.Class;
 import com.surya.miniproject.models.HOD;
-import com.surya.miniproject.setup.Init;
+
+import java.util.ArrayList;
 
 public class DashBoard extends AppCompatActivity {
 
@@ -63,6 +65,8 @@ public class DashBoard extends AppCompatActivity {
     public static String facultyDepartment;
 
     private int backButtonPressed = 0;
+    private boolean once = false;
+    private int hodSecretClicked = 0;
 
     // Back Button Functionality
     // Like MX PLayer
@@ -181,6 +185,25 @@ public class DashBoard extends AppCompatActivity {
                 return false;
             }
         });
+
+
+        // on click listener for the user name in the header
+        headerUserName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).getBoolean(FACULTY_IS_AN_HOD, false)){
+                    hodSecretClicked++;
+
+                    if(hodSecretClicked >= 7){
+                        // resetting the counter
+                        hodSecretClicked = 0;
+
+                        Intent intent = new Intent(DashBoard.this, HODPanelEntering.class);
+                        startActivity(intent);
+                    }
+                }
+            }
+        });
     }
 
     // method to initialise the UI Elements
@@ -232,6 +255,7 @@ public class DashBoard extends AppCompatActivity {
                         SharedPreferences sharedPreferences = getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putBoolean(FACULTY_SIGNED_IN, false);
+                        editor.putBoolean(FACULTY_IS_AN_HOD, false);
                         editor.apply();
 
                         // passing the faculty back to the MainActivity

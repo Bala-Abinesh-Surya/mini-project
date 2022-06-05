@@ -13,9 +13,6 @@ public class Class {
     private ArrayList<Student> students = new ArrayList<>();
     private ArrayList<String> facultyMembers = new ArrayList<>();
 
-    // list of all the Classes
-    public static ArrayList<Class> allClassesList = new ArrayList<>();
-
     // Constructor
     public Class() {
 

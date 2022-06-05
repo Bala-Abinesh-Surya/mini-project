@@ -7,6 +7,7 @@
     tools:context=".activities.hod.StaffDetailsActiity">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/staff_details_rec_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,7 +17,7 @@
         tools:listitem="@layout/staffs_list" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/staff_details_add_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"

@@ -13,13 +13,19 @@ import static com.surya.miniproject.constants.Strings.HOD;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Half;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +44,8 @@ import com.surya.miniproject.models.Faculty;
 import com.surya.miniproject.models.HOD;
 import com.surya.miniproject.setup.Init;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
 
     // UI Elements
@@ -47,10 +55,25 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private boolean signedIn = false;
 
+    private static final int PERMISSION_REQUEST_CODE = 50;
+    private File file;
+
+    public static boolean folderCreated = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // checking if the app has permission to write to the external storage
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            // if yes, creating a directory
+            createDirectory();
+        }
+        else{
+            // else, asking the user for the permission
+            askPermission();
+        }
 
         // checking if the user has already signed in
         // if so, passing the suer to the DashBoard
@@ -229,5 +252,64 @@ public class MainActivity extends AppCompatActivity {
 
         // button
         login = findViewById(R.id.main_login);
+    }
+
+    // method which returns the result for our askPermission() method
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode == PERMISSION_REQUEST_CODE){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                createDirectory();
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    // method to ask the permissions that are needed for the application to perform
+    private void askPermission(){
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                },
+                PERMISSION_REQUEST_CODE
+        );
+    }
+
+    // method to create a separate directory for the app
+    private void createDirectory() {
+        // creating a directory for the ACETAT app
+        // let the name be My Paintings
+        folderNameDetermination();
+
+        if(! file.exists()){
+            // creating a folder if the folder does not already exist
+            if(file.mkdir()){
+                folderCreated = true;
+            }
+            else{
+                folderCreated = false;
+            }
+        }
+        else{
+            folderCreated = true;
+        }
+    }
+
+    // determining the folder destination for the application
+    // for android 11 and above devices, creating a folder in the Documents folder
+    // else, creating a folder in the outer main region
+    private void folderNameDetermination(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+            file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "ACETAT");
+        }
+        else{
+            file = new File(Environment.getExternalStorageDirectory(), "ACETAT");
+        }
     }
 }

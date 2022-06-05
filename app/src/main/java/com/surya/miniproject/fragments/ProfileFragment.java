@@ -1,5 +1,16 @@
 package com.surya.miniproject.fragments;
 
+import static com.surya.miniproject.constants.Strings.APP_DEFAULTS;
+import static com.surya.miniproject.constants.Strings.FACULTY_DEPARTMENT;
+import static com.surya.miniproject.constants.Strings.FACULTY_GENDER;
+import static com.surya.miniproject.constants.Strings.FACULTY_IS_AN_HOD;
+import static com.surya.miniproject.constants.Strings.FACULTY_NAME;
+import static com.surya.miniproject.constants.Strings.FACULTY_PUSH_ID;
+import static com.surya.miniproject.constants.Strings.FACULTY_USER_NAME;
+import static com.surya.miniproject.constants.Strings.MALE;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,60 +18,65 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.surya.miniproject.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProfileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    // UI Elements
+    private CircleImageView imageView;
+    private TextView staffName, department, gender, pushId, hod, userName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        // method to initialise the UI Elements
+        initialiseUIElements(view);
+
+        // getting the contents from the Shared Preferences
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE);
+
+        // setting up the texts
+        staffName.setText(sharedPreferences.getString(FACULTY_NAME, null));
+        pushId.setText(sharedPreferences.getString(FACULTY_PUSH_ID, null));
+        gender.setText(sharedPreferences.getString(FACULTY_GENDER, null));
+        department.setText(sharedPreferences.getString(FACULTY_DEPARTMENT, null));
+        userName.setText("@"+sharedPreferences.getString(FACULTY_USER_NAME, null));
+        if(sharedPreferences.getBoolean(FACULTY_IS_AN_HOD, false)){
+            hod.setText("YES");
+        }
+        else{
+            hod.setText("NO");
+        }
+
+        // setting up the image view
+        if(sharedPreferences.getString(FACULTY_GENDER, null).equals(MALE)){
+            imageView.setImageDrawable(getContext().getDrawable(R.drawable.male));
+        }
+        else{
+            imageView.setImageDrawable(getContext().getDrawable(R.drawable.female));
+        }
+
+        return view;
+    }
+
+    // method to initialise the UI Elements
+    private void initialiseUIElements(View view){
+        // image view
+        imageView = view.findViewById(R.id.profile_image);
+
+        // text view
+        staffName = view.findViewById(R.id.profile_name);
+        pushId = view.findViewById(R.id.profile_push);
+        gender = view.findViewById(R.id.profile_gender);
+        department = view.findViewById(R.id.profile_department);
+        hod = view.findViewById(R.id.profile_hod);
+        userName = view.findViewById(R.id.profile_user_name);
     }
 }

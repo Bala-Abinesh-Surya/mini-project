@@ -41,4 +41,16 @@ public class Strings {
             CSE_DEPARTMENT,
             ECE_DEPARTMENT
     };
+
+
+    public static final String COLLEGE_NAME = "Amrita College of Engineering and Technology";
+    public static final String CLASS_ADVISOR_NAME = "Name of the Class Advisor";
+    public static final String CLASS_NAME_NAME = "Name of the Class";
+    public static final String COLON = ":";
+    public static final String ACADEMIC_YEAR = "Academic Year";
+    public static final String NUMBER_OF_STUDENTS = "Number of Students";
+    public static final String GENERATED_ON = "Generated On";
+    public static final String GENERATED_FOR = "Generated For";
+
+    public static final String PIN = "962319104999";
 }
