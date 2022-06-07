@@ -3,6 +3,7 @@ package com.surya.miniproject.fragments;
 import static com.surya.miniproject.activities.DashBoard.facultyDepartment;
 import static com.surya.miniproject.activities.DashBoard.facultyName;
 import static com.surya.miniproject.constants.Strings.APP_DEFAULTS;
+import static com.surya.miniproject.constants.Strings.ATTENDANCE;
 import static com.surya.miniproject.constants.Strings.CLASSES;
 import static com.surya.miniproject.constants.Strings.FACULTY_IS_AN_HOD;
 
@@ -28,6 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.surya.miniproject.R;
 import com.surya.miniproject.activities.DashBoard;
 import com.surya.miniproject.adapters.ClassesListAdapter;
+import com.surya.miniproject.export.MonthExport;
+import com.surya.miniproject.models.Attendance;
 import com.surya.miniproject.models.Class;
 
 import java.util.ArrayList;
@@ -66,6 +69,50 @@ public class HomeFragment extends Fragment {
                             for(DataSnapshot snapshot1 : snapshot.getChildren()){
                                 if(snapshot1.exists()){
                                     Class classx = snapshot1.getValue(Class.class);
+
+                                    ArrayList<Attendance> attendances = new ArrayList<>();
+
+                                    if(classx.getClassName().equals("CSE-III-A")){
+                                        firebaseDatabase.getReference()
+                                                .child(ATTENDANCE)
+                                                .child(classx.getClassName())
+                                                .child("AUGUST-2022")
+                                                .addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                        if(snapshot.exists()){
+                                                            attendances.clear();;
+
+                                                            for(DataSnapshot snapshot2 : snapshot.getChildren()){
+                                                                Attendance attendance = snapshot2.getValue(Attendance.class);
+
+                                                                attendances.add(attendance);
+                                                            }
+
+
+
+                                                            MonthExport export = new MonthExport(
+                                                                    classx.getClassName(),
+                                                                    classx.getClassAdvisor(),
+                                                                    classx.getClassDepartment(),
+                                                                    classx.getStudents(),
+                                                                    facultyName,
+                                                                    "JUNE",
+                                                                    2022,
+                                                                    (classx.getStudents().size()),
+                                                                    attendances
+                                                            );
+
+                                                            export.createPDF();
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                                    }
+                                                });
+                                    }
 
                                     if(getContext().getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).getBoolean(FACULTY_IS_AN_HOD, false)){
                                         // faculty is an HOD

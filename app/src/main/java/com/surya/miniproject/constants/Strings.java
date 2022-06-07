@@ -43,7 +43,8 @@ public class Strings {
     };
 
 
-    public static final String COLLEGE_NAME = "Amrita College of Engineering and Technology";
+    public static final String COLLEGE_NAME = "AMRITA COLLEGE OF ENGINEERING AND TECHNOLOGY";
+    public static final String PLACE_NAME = "Erachakulam, Nagercoil";
     public static final String CLASS_ADVISOR_NAME = "Name of the Class Advisor";
     public static final String CLASS_NAME_NAME = "Name of the Class";
     public static final String COLON = ":";

@@ -118,4 +118,29 @@ public class Export {
     public void setNumberOfStudents(int numberOfStudents) {
         this.numberOfStudents = numberOfStudents;
     }
+
+    // method to draw the margin
+    public void drawMargin(Canvas canvas, Paint paint){
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(1);
+        canvas.drawRect(25, 25, 570, 817, paint);
+    }
+
+    // method to restore and save the canvas
+    public void restoreAndSaveCanvas(Canvas canvas){
+        canvas.restore();
+        canvas.save();
+    }
+
+    // method to draw the text in -90
+    public void drawText(Canvas canvas, Paint paint, int x, int y, String text){
+        // rotating the canvas
+        canvas.rotate(-90f, x, y);
+
+        // drawing the text
+        canvas.drawText(text, x, y, paint);
+
+        // bringing back the canvas to original position and saving the changes
+        restoreAndSaveCanvas(canvas);
+    }
 }
