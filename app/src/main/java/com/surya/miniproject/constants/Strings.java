@@ -32,6 +32,7 @@ public class Strings {
     public static final String DEPARTMENT = "Department";
     public static final String CSE_DEPARTMENT = "CSE Department";
     public static final String ECE_DEPARTMENT = "ECE Department";
+    public static final String SH_DEPARTMENT = "First Years";
 
     public static final String NOTIFICATIONS = "Notifications";
     public static final String NOTIFICATION_UPDATE = "UpdateNotification";

@@ -15,4 +15,10 @@
     <color name="table_row_2">#EF9F9F</color>
     <color name="fb_color">#F68989</color>
     <color name="uni_color">@color/black</color>
+
+
+    <color name="hod_main_color">#4C3575</color>
+    <color name="hod_main_dark"> #371B58</color>
+    <color name="hod_main_light">#7858A6</color>
+
 </resources>

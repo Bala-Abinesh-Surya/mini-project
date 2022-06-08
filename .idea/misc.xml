@@ -15,7 +15,7 @@
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_class_attendance.xml" value="0.16" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_dash_board.xml" value="0.1875" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_hodpanel.xml" value="0.20512820512820512" />
-        <entry key="..\:/MiniProject/app/src/main/res/layout/activity_hodpanel_entering.xml" value="0.20512820512820512" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/activity_hodpanel_entering.xml" value="0.264" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_monthly_export.xml" value="0.20512820512820512" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_profile.xml" value="0.18442622950819673" />
@@ -23,6 +23,7 @@
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_staffs_adding.xml" value="0.20512820512820512" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/attendance.xml" value="0.18442622950819673" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/attendce_marking_list.xml" value="0.18442622950819673" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/classes_check_list.xml" value="0.20427350427350427" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/classes_list.xml" value="0.4" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/coomon_action_bar.xml" value="0.4" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_h_o_d_add_staffs.xml" value="0.20512820512820512" />
