@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hod_nav"
+    app:startDestination="@+id/hod_all_faculties">
+
+    <fragment
+        android:id="@+id/hod_all_faculties"
+        android:name="com.surya.miniproject.fragments.hod.HODStaffsListFragment"
+        android:label="All Faculty Members"
+        tools:layout="@layout/fragment_h_o_d_staffs_list" />
+    <fragment
+        android:id="@+id/hod_add_staff"
+        android:name="com.surya.miniproject.fragments.hod.HODAddStaffsFragment"
+        android:label="Add a Faculty"
+        tools:layout="@layout/fragment_h_o_d_add_staffs" />
+</navigation>

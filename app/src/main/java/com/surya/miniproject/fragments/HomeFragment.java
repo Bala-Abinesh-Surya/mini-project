@@ -89,21 +89,21 @@ public class HomeFragment extends Fragment {
                                                                 attendances.add(attendance);
                                                             }
 
-
-
-                                                            MonthExport export = new MonthExport(
-                                                                    classx.getClassName(),
-                                                                    classx.getClassAdvisor(),
-                                                                    classx.getClassDepartment(),
-                                                                    classx.getStudents(),
-                                                                    facultyName,
-                                                                    "JUNE",
-                                                                    2022,
-                                                                    (classx.getStudents().size()),
-                                                                    attendances
-                                                            );
-
-                                                            export.createPDF();
+//                                                            MonthExport export = new MonthExport(
+//                                                                    classx.getClassName(),
+//                                                                    classx.getClassAdvisor(),
+//                                                                    classx.getClassDepartment(),
+//                                                                    classx.getStudents(),
+//                                                                    facultyName,
+//                                                                    "JUNE",
+//                                                                    2022,
+//                                                                    (classx.getStudents().size()),
+//                                                                    attendances
+//                                                            );
+//
+//                                                            Log.d("vikram", attendances.size()+"");
+//
+//                                                            export.createPDF();
                                                         }
                                                     }
 

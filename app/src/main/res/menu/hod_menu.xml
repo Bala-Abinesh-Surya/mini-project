@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Faculties" >
+        <menu >
+            <item
+                android:id="@+id/hod_all_faculties"
+                android:icon="@drawable/all_faculties"
+                android:title="All Faculties"/>
+            <item
+                android:id="@+id/hod_add_staff"
+                android:icon="@drawable/add_faculty"
+                android:title="Add a Faculty" />
+            <item
+                android:id="@+id/hod_remove_staff"
+                android:icon="@drawable/remove_faculty"
+                android:title="Remove a faculty" />
+        </menu>
+    </item>
+    <item android:title="Exit">
+        <menu>
+            <item
+                android:title="Exit Panel"
+                android:icon="@drawable/logout"
+                android:id="@+id/hod_exit"/>
+        </menu>
+    </item>
+
+</menu>

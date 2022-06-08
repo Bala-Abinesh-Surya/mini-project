@@ -198,6 +198,9 @@ public class DashBoard extends AppCompatActivity {
                         // resetting the counter
                         hodSecretClicked = 0;
 
+                        // closing the drawer
+                        drawerLayout.close();
+
                         Intent intent = new Intent(DashBoard.this, HODPanelEntering.class);
                         startActivity(intent);
                     }

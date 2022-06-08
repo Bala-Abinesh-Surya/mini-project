@@ -40,6 +40,7 @@ public class HODPanelEntering extends AppCompatActivity {
                 if(password.equals(PIN)){
                     Intent intent = new Intent(HODPanelEntering.this, HODPanel.class);
                     startActivity(intent);
+                    finish();
                 }
                 else{
                     Toast.makeText(HODPanelEntering.this, "Sorry! Mr. Vishwanath Shenoi!", Toast.LENGTH_SHORT).show();

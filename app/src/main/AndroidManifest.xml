@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MiniProject">
         <activity
+            android:name=".activities.hod.StaffsAddingActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.hod.HODPanel"
             android:exported="false" />
         <activity

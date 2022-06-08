@@ -39,6 +39,7 @@ import com.surya.miniproject.adapters.AttendanceAdapter;
 import com.surya.miniproject.details.Data;
 import com.surya.miniproject.models.Attendance;
 import com.surya.miniproject.models.Class;
+import com.surya.miniproject.models.CurrentClass;
 import com.surya.miniproject.models.Student;
 import com.surya.miniproject.utility.Functions;
 
@@ -112,6 +113,9 @@ public class ClassAttendance extends AppCompatActivity {
         String classAdvisor = getIntent().getStringExtra(CLASS_ADVISOR);
         String department = getIntent().getStringExtra(CLASS_DEPARTMENT);
 
+        // creating a CurrentClass object, for future reference
+        CurrentClass currentClass = new CurrentClass(className, department, classPushId, classAdvisor);
+
         // method to initialise the UI Elements
         initialiseUIElements(classAdvisor);
 
@@ -143,6 +147,8 @@ public class ClassAttendance extends AppCompatActivity {
 
                             Class classx = snapshot.getValue(Class.class);
                             students = classx.getStudents();
+
+                            CurrentClass.currentClassFacultyMember = classx.getFacultyMembers();
                         }
 
                         firebaseDatabase.getReference()

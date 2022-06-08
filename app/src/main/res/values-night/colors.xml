@@ -11,4 +11,7 @@
     <!-- Custom colors -->
     <color name="main_color">@color/purple_700</color>
     <color name="card_bg_color">#FF7272</color>
+
+
+    <color name="uni_color">@color/white</color>
 </resources>

@@ -1,15 +1,38 @@
 package com.surya.miniproject.activities.hod;
 
+import static com.surya.miniproject.activities.DashBoard.facultyDepartment;
+import static com.surya.miniproject.activities.DashBoard.facultyName;
+import static com.surya.miniproject.activities.DashBoard.facultyPushId;
+import static com.surya.miniproject.activities.DashBoard.facultyUserName;
+import static com.surya.miniproject.constants.Strings.APP_DEFAULTS;
 import static com.surya.miniproject.constants.Strings.CSE_DEPARTMENT;
 import static com.surya.miniproject.constants.Strings.FACULTIES;
+import static com.surya.miniproject.constants.Strings.FACULTY_GENDER;
+import static com.surya.miniproject.constants.Strings.MALE;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -17,64 +40,152 @@ import com.google.firebase.database.ValueEventListener;
 import com.surya.miniproject.R;
 import com.surya.miniproject.adapters.hod.PanelStaffsListAdapter;
 import com.surya.miniproject.models.Faculty;
+import com.surya.miniproject.models.HOD;
 
 import java.util.ArrayList;
 
 public class HODPanel extends AppCompatActivity {
 
-    /// UI Elements
-    private RecyclerView recyclerView;
+    // UI Elements
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private TextView headerUserName, headerPushId, headerFacultyName;
+    private ImageView headerImage;
+    private TextView headerText;
 
-    private PanelStaffsListAdapter adapter;
-    private ArrayList<Faculty> faculties = new ArrayList<>();
+    // Back Button Functionality
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(navigationView)){
+            // closing the drawer if is open
+            drawerLayout.close();
+        }
+        else{
+            new alert().show();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hodpanel);
 
-        // setting the title of Action Bar
-        getSupportActionBar().setTitle("Faculties of CSE");
+        // hiding the Action Bar
+        getSupportActionBar().hide();
 
         // method to initialise the UI Elements
         initialiseUIElements();
 
-        // fetching the staffs list from firebase
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseDatabase.getReference()
-                .child(FACULTIES)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()){
-                            // clearing the faculties array list
-                            faculties.clear();
+        // setting up the texts and image in navigation header
+        String mUserName = "@"+facultyUserName;
+        headerFacultyName.setText(facultyName);
+        headerUserName.setText(mUserName);
+        headerPushId.setText(facultyPushId);
 
-                            for(DataSnapshot snapshot1 : snapshot.getChildren()){
-                                Faculty faculty = snapshot1.getValue(Faculty.class);
+        if(getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).getString(FACULTY_GENDER, null).equals(MALE)){
+            headerImage.setImageResource(R.drawable.male);
+        }
+        else{
+            // gender may be female, or Rather Not Say
+            headerImage.setImageResource(R.drawable.female);
+        }
 
-                                if(faculty.getFacultyDepartment().equals(CSE_DEPARTMENT)){
-                                    faculties.add(faculty);
-                                }
-                            }
+        // opening/closing the drawer on clicking the menu in the so called action bar
+        findViewById(R.id.dash_menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
 
-                            // setting up the adapter for the recycler view
-                            adapter = new PanelStaffsListAdapter(HODPanel.this, faculties);
-                            recyclerView.setAdapter(adapter);
-                            recyclerView.setLayoutManager(new GridLayoutManager(HODPanel.this, 2));
-                        }
-                    }
+        // navigation view essentials
+        navigationView.setItemIconTintList(null);
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+        NavController navController = Navigation.findNavController(this, R.id.hod_dash_fragment);
+        NavigationUI.setupWithNavController(navigationView, navController);
 
-                    }
-                });
+        // changing the header text, when the user goes into different fragments
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
+                String header = navDestination.getLabel().toString();
+
+                if(header.equals("All Faculty Members")){
+                    header = "Faculty Members of " + facultyDepartment;
+                    headerText.setText(header);
+                }
+                else{
+                    headerText.setText(header);
+                }
+            }
+        });
+
+        // on click listener for the logout option the navigation view
+        navigationView.getMenu().findItem(R.id.hod_exit).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                // closing the drawer layout
+                drawerLayout.close();
+
+                alert alert = new alert();
+                alert.show();
+
+                return false;
+            }
+        });
     }
 
     // method to initialise the UI Elements
-    private void initialiseUIElements(){
-        // recycler view
-        recyclerView = findViewById(R.id.hod_panel_rec_view);
+    private void initialiseUIElements() {
+        // drawer layout
+        drawerLayout = findViewById(R.id.hod_drawer_layout);
+
+        // NavigationView
+        navigationView = findViewById(R.id.hod_nav_view);
+
+        // text view
+        headerText = findViewById(R.id.headerText);
+
+        // Elements in the navigation view header
+        // text view
+        headerFacultyName = navigationView.getHeaderView(0).findViewById(R.id.header_name);
+        headerUserName = navigationView.getHeaderView(0).findViewById(R.id.header_user_id);
+        headerPushId = navigationView.getHeaderView(0).findViewById(R.id.header_push_id);
+
+        // image view
+        headerImage = navigationView.getHeaderView(0).findViewById(R.id.header_image);
+    }
+
+    class alert{
+        private AlertDialog.Builder builder;
+
+        // Constructor
+        public alert() {
+            // initialising the builder
+            builder = new AlertDialog.Builder(HODPanel.this);
+
+            // setting up the builder
+            builder.setMessage("Do you want to exit the HOD Panel?")
+                    .setCancelable(false)
+                    .setPositiveButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // exiting the panel and passing the hod to the staff dashboard
+                            finish();
+                        }
+                    });
+        }
+
+        private void show(){
+            AlertDialog alertDialog = builder.create();
+            alertDialog.setTitle("Exit");
+            alertDialog.show();
+        }
     }
 }

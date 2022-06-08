@@ -26,6 +26,10 @@
                 android:title="Notifications"
                 android:icon="@drawable/notification"
                 android:id="@+id/menu_notifications"/>
+            <item
+                android:id="@+id/menu_request"
+                android:icon="@drawable/question"
+                android:title="Requests" />
         </menu>
     </item>
 

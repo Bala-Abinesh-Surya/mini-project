@@ -4,38 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.hod.StaffDetailsActiity">
+    tools:context=".activities.hod.StaffsAddingActivity">
 
     <include
-        android:id="@+id/include"
+        android:id="@+id/include2"
         layout="@layout/coomon_action_bar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        app:layout_constraintBottom_toTopOf="@+id/staff_details_rec_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/staff_details_rec_view"
+        android:id="@+id/staffs_Adding_rec_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include"
-        tools:listitem="@layout/staffs_list" />
+        app:layout_constraintTop_toBottomOf="@+id/include2" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/staff_details_add_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_add"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:backgroundTint="@color/fb_color"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

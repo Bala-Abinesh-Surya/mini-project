@@ -33,28 +33,16 @@ public class MonthExport extends Export{
     // child class of Export
     private ArrayList<Attendance> attendances; // monthly attendance data
 
-    private int width;
-    private int height;
-    private int centreX;
-    private int centreY;
-
     // Constructor
     public MonthExport(String className, String classAdvisor, String department, ArrayList<Student> students, String facultyName, String month, int year, int number, ArrayList<Attendance> attendances) {
         super(className, classAdvisor, department, students, facultyName, month, year, number);
         this.attendances = attendances;
-
-        this.width = getPageWidth();
-        this.height = getPageHeight();
-        centreX = width/2;
-        centreY = height/2;
     }
 
     // PDF Document variables
     private PdfDocument pdfDocument;
     private PdfDocument.PageInfo pageInfo;
     private PdfDocument.Page page;
-    private int nominalY = 800;
-    private int timesOpened = 0;
 
     // method to create the PDF
     public void createPDF() {
@@ -72,183 +60,9 @@ public class MonthExport extends Export{
         Canvas canvas = page.getCanvas();
         canvas.save();
 
-        /**************************************************************************************************************************************/
-        /*
-         *
-         *
-         * PAINTING STARTS
-         *
-         *
-         *
-         * */
-
-        // margin
-        drawMargin(canvas, paint);
-
-        // COLLEGE NAME
-        paint.setStyle(Paint.Style.FILL);
-        paint.setTextSize(10f);
-        paint.setTextAlign(Paint.Align.CENTER);
-
-        drawText(canvas, paint, 50, centreY, COLLEGE_NAME);
-
-        // PLACE NAME
-        drawText(canvas, paint, 65, centreY, PLACE_NAME);
-
-        // DEPARTMENT TEXT
-        drawText(canvas, paint, 85, centreY, PDFDepartment(getDepartment()));
-
-        // MONTH TEXT
-        drawText(canvas, paint, 100, centreY, "Attendance of " + getMonth() + "-" + getYear());
-
-        // class name, class advisor, generated for section
-        paint.setTextAlign(Paint.Align.LEFT);
-        paint.setTextSize(8f);
-
-        // class name
-        drawText(canvas, paint, 125, 630, CLASS_NAME);
-        // class advisor
-        drawText(canvas, paint, 140, 630, CLASS_ADVISOR_NAME);
-        // generated for
-        drawText(canvas, paint, 155, 630, GENERATED_FOR);
-
-        // colons
-        drawText(canvas, paint, 125, 530, COLON);
-        drawText(canvas, paint, 140, 530, COLON);
-        drawText(canvas, paint, 155, 530, COLON);
-
-        // class advisor name
-        drawText(canvas, paint, 125, 523, getClassName());
-        drawText(canvas, paint, 140, 523, getClassAdvisor());
-        drawText(canvas, paint, 155, 523, getFacultyName());
-
-        // Academic year, number of students, generated on section
-        // academic year
-        drawText(canvas, paint, 125, 350, ACADEMIC_YEAR);
-        // number of students
-        drawText(canvas, paint, 140, 350, NUMBER_OF_STUDENTS);
-        // generated on
-        drawText(canvas, paint, 155, 350, GENERATED_ON);
-
-        // colons
-        drawText(canvas, paint, 125, 270, COLON);
-        drawText(canvas, paint, 140, 270, COLON);
-        drawText(canvas, paint, 155, 270, COLON);
-
-        // year
-        drawText(canvas, paint, 125, 263, getYear()+"");
-        // number of students value
-        drawText(canvas, paint, 140, 263, getNumberOfStudents()+"");
-        // generated date
-        drawText(canvas, paint, 155, 263, new Functions().date());
-
-        // ATTENDANCE TEXT
-        paint.setTextSize(10f);
-        paint.setStrokeWidth(2f);
-        paint.setTextAlign(Paint.Align.CENTER);
-        drawText(canvas, paint, 175, centreY, ATTENDANCE.toUpperCase());
-
-        /*
-         *
-         *
-         * MAIN AREA
-         *
-         *
-         * */
-
-        // displaying names
-        paint.setTextSize(9f);
-        paint.setStrokeWidth(1f);
-        paint.setTextAlign(Paint.Align.LEFT);
-
-        int startX = 200;
-        int y = 0;
-        int counter = 0;
-        int xy = 0;
-
-        for(int i = 0; i <= getStudentArrayList().size(); i++){
-            if(i == 0){
-                // no
-                paint.setTextAlign(Paint.Align.CENTER);
-                drawText(canvas, paint, startX, 800, "No.");
-
-                // Name
-                paint.setTextAlign(Paint.Align.LEFT);
-                drawText(canvas, paint, startX, 780, "Name");
-
-                // dates
-                xy = 608/(attendances.size()+3);
-                for(int j = 0; j < attendances.size(); j++){
-                    y = 640 - (608/(attendances.size()+3)*(j+1));
-
-                    paint.setTextAlign(Paint.Align.CENTER);
-                    drawText(canvas, paint, startX, y+(xy/2), (j+1)+"");
-
-                    canvas.drawLine(185, y, 545, y, paint);
-                }
-            }
-            else{
-                if(startX >= 560){
-                    // drawing the divider lines
-                    canvas.drawLine(185, 810, 185, 640, paint);
-                    canvas.drawLine(185, 810, startX-15, 810, paint);
-                    canvas.drawLine(185, 790, startX-15, 790, paint);
-                    canvas.drawLine(185, 640, startX-15, 640, paint);
-
-                    break;
-                }
-                else{
-                    // No.
-                    paint.setColor(Color.BLACK);
-                    paint.setTextAlign(Paint.Align.CENTER);
-                    drawText(canvas, paint, startX, 800, i+"");
-
-                    // name
-                    paint.setTextAlign(Paint.Align.LEFT);
-                    drawText(canvas, paint, startX, 780, getStudentArrayList().get(i-1).getStudentName());
-
-                    // attendance data
-                    for(int j = 0; j < attendances.size(); j++){
-                        counter++;
-
-                        y = 640 - (608/(attendances.size()+3)*(j+1));
-
-                        if(j%6 == 0){
-
-                        }
-                        else{
-                            if(counter == 13){
-                                paint.setColor(Color.RED);
-                                counter = 0;
-
-                                paint.setTextAlign(Paint.Align.CENTER);
-                                drawText(canvas, paint, startX, y+(xy/2), "A");
-                            }
-                            else{
-                                paint.setColor(Color.BLACK);
-                                paint.setTextAlign(Paint.Align.CENTER);
-                                drawText(canvas, paint, startX, y+(xy/2), "P");
-                            }
-                        }
-
-                    }
-                }
-            }
-
-            paint.setColor(Color.BLACK);
-
-            canvas.drawLine(startX+5, 810, startX+5, y, paint);
-
-           // canvas.drawLine(startX, 800, 0, 0, paint);
-           // canvas.drawLine(startX-9, 800, 0, 0, paint);
-
-            startX = startX + 20;
-        }
-
-        paint.setStyle(Paint.Style.STROKE);
-        canvas.drawRect(185, 32, startX-15, 640, paint);
-
-        pdfDocument.finishPage(page);
+        // preparing the main page
+        prepareMainPageForMonthlyAttendance(
+                pdfDocument, page, canvas, paint, attendances);
 
         // creating a File object
         File file;

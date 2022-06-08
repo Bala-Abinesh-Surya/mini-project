@@ -1,8 +1,10 @@
 package com.surya.miniproject.adapters.hod;
 
+import static com.surya.miniproject.constants.Strings.CLASSES;
 import static com.surya.miniproject.constants.Strings.MALE;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.surya.miniproject.R;
 import com.surya.miniproject.models.Faculty;
 
@@ -54,6 +58,14 @@ public class PanelStaffsListAdapter extends RecyclerView.Adapter {
             else{
                 ((PanelStaffsListViewHolder) holder).imageView.setImageResource(R.drawable.female);
             }
+
+            // on click listener for the pencil
+            ((PanelStaffsListViewHolder) holder).imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
     }
 

@@ -10,9 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +35,8 @@ public class StaffDetailsActiity extends AppCompatActivity {
     // UI Elements
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
+    private ImageView back;
+    private TextView title;
 
     private ArrayList<String> faculties = new ArrayList<>();
 
@@ -41,20 +47,13 @@ public class StaffDetailsActiity extends AppCompatActivity {
         finish();
     }
 
-    // menu item clicks
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // back button in the action bar
-        if(item.getItemId() == android.R.id.home){
-            onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_staff_details_actiity);
+
+        // hiding the action bar
+        getSupportActionBar().hide();
 
         // method to initialise the UI Elements
         initialiseUIElements();
@@ -63,11 +62,16 @@ public class StaffDetailsActiity extends AppCompatActivity {
         String classPushId = getIntent().getStringExtra(CLASS_PUSH_ID);
         String className = getIntent().getStringExtra(CLASS_NAME);
 
-        // setting the title of the action bar
-        getSupportActionBar().setTitle("Faculty Members of " + className);
+        // setting the title
+        title.setText("Faculty Members of " + className);
 
-        // setting up the back button in the Action Bar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // on click listener for the back image
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         // getting the faculties from the database
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -88,7 +92,7 @@ public class StaffDetailsActiity extends AppCompatActivity {
                         }
 
                         // setting up the adapter for the recycler view
-                        StaffsDetailsAdapter staffsDetailsAdapter = new StaffsDetailsAdapter(StaffDetailsActiity.this, faculties, firebaseDatabase);
+                        StaffsDetailsAdapter staffsDetailsAdapter = new StaffsDetailsAdapter(StaffDetailsActiity.this, faculties, firebaseDatabase, className, classPushId);
                         staffsDetailsAdapter.setPurpose(1);
                         recyclerView.setAdapter(staffsDetailsAdapter);
                         recyclerView.setLayoutManager(new LinearLayoutManager(StaffDetailsActiity.this));
@@ -99,6 +103,16 @@ public class StaffDetailsActiity extends AppCompatActivity {
 
                     }
                 });
+
+        // on click listener for the floatingActionButton
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // passing the HOD to the StaffsAddingActivity
+                Intent intent = new Intent(StaffDetailsActiity.this, StaffsAddingActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     // method to initialise the UI Elements
@@ -108,5 +122,11 @@ public class StaffDetailsActiity extends AppCompatActivity {
 
         // floating action button
         floatingActionButton = findViewById(R.id.staff_details_add_btn);
+
+        // title
+        title = findViewById(R.id.back_title);
+
+        // back button - image view
+        back = findViewById(R.id.back_image);
     }
 }
