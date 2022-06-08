@@ -70,50 +70,6 @@ public class HomeFragment extends Fragment {
                                 if(snapshot1.exists()){
                                     Class classx = snapshot1.getValue(Class.class);
 
-                                    ArrayList<Attendance> attendances = new ArrayList<>();
-
-                                    if(classx.getClassName().equals("CSE-III-A")){
-                                        firebaseDatabase.getReference()
-                                                .child(ATTENDANCE)
-                                                .child(classx.getClassName())
-                                                .child("AUGUST-2022")
-                                                .addValueEventListener(new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                        if(snapshot.exists()){
-                                                            attendances.clear();;
-
-                                                            for(DataSnapshot snapshot2 : snapshot.getChildren()){
-                                                                Attendance attendance = snapshot2.getValue(Attendance.class);
-
-                                                                attendances.add(attendance);
-                                                            }
-
-//                                                            MonthExport export = new MonthExport(
-//                                                                    classx.getClassName(),
-//                                                                    classx.getClassAdvisor(),
-//                                                                    classx.getClassDepartment(),
-//                                                                    classx.getStudents(),
-//                                                                    facultyName,
-//                                                                    "JUNE",
-//                                                                    2022,
-//                                                                    (classx.getStudents().size()),
-//                                                                    attendances
-//                                                            );
-//
-//                                                            Log.d("vikram", attendances.size()+"");
-//
-//                                                            export.createPDF();
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                                    }
-                                                });
-                                    }
-
                                     if(getContext().getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).getBoolean(FACULTY_IS_AN_HOD, false)){
                                         // faculty is an HOD
                                         // so getting all the classes, in his/her department though that class is not handled by faculty

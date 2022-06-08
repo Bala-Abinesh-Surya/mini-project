@@ -111,43 +111,41 @@ public class AttendanceMarking extends AppCompatActivity {
                 if (mobile == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTED) {
                     // updating the attendance in the database
                     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                    for(int i = 1; i <= 30; i++){
-                        firebaseDatabase.getReference()
-                                .child(ATTENDANCE)
-                                .child(className)
-                                .child("AUGUST"+"-"+LocalDateTime.now().getYear()) // LocalDateTime.now().getMonth()+""
-                                .child(i+"-5-2022") // new Functions().date()
-                                .setValue(a)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()){
-                                            // creating a notification
-                                            Notification notification = new Notification(department, facultyName, className, new Functions().date());
-                                            notification.setCategory(NOTIFICATION_UPDATE);
+                    firebaseDatabase.getReference()
+                            .child(ATTENDANCE)
+                            .child(className)
+                            .child(LocalDateTime.now().getMonth()+"-"+LocalDateTime.now().getYear()) // LocalDateTime.now().getMonth()+""
+                            .child(new Functions().date()) // new Functions().date()
+                            .setValue(a)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        // creating a notification
+                                        Notification notification = new Notification(department, facultyName, className, new Functions().date());
+                                        notification.setCategory(NOTIFICATION_UPDATE);
 
-                                            // uploading the notification in the database
-                                            firebaseDatabase.getReference()
-                                                    .child(NOTIFICATIONS)
-                                                    .child(department)
-                                                    .push()
-                                                    .setValue(notification)
-                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-                                                            // do exactly what the back button does
-                                                            onBackPressed();
-                                                        }
-                                                    });
+                                        // uploading the notification in the database
+                                        firebaseDatabase.getReference()
+                                                .child(NOTIFICATIONS)
+                                                .child(department)
+                                                .push()
+                                                .setValue(notification)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        // do exactly what the back button does
+                                                        onBackPressed();
+                                                    }
+                                                });
 
-                                        }
-                                        else{
-                                            // attendance has not been updated
-                                            Toast.makeText(AttendanceMarking.this, "Failed... Try Again", Toast.LENGTH_SHORT).show();
-                                        }
                                     }
-                                });
-                    }
+                                    else{
+                                        // attendance has not been updated
+                                        Toast.makeText(AttendanceMarking.this, "Failed... Try Again", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                 }
                 else{
                     // telling the user to turn on the mobile data/wifi

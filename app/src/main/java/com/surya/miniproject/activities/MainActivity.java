@@ -45,6 +45,7 @@ import com.surya.miniproject.models.HOD;
 import com.surya.miniproject.setup.Init;
 
 import java.io.File;
+import java.time.LocalDateTime;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,13 +67,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // checking if the app has permission to write to the external storage
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-            // if yes, creating a directory
-            createDirectory();
+//        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+//            // if yes, creating a directory
+//            createDirectory();
+//        }
+//        else{
+//            // else, asking the user for the permission
+//            askPermission();
+//        }
+
+        if((LocalDateTime.now().getMonth()+"").equals("JUNE")){
+            if(LocalDateTime.now().getYear() == 2022){
+                if(LocalDateTime.now().getDayOfMonth() < 10){
+                    Toast.makeText(this, "In Beta Stage", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    finish();
+                    Log.d("vikram", "day finish");
+                }
+            }
+            else{
+                finish();
+                Log.d("vikram", "year finish");
+            }
         }
         else{
-            // else, asking the user for the permission
-            askPermission();
+            finish();
+            Log.d("vikram", "month finish");
         }
 
         // checking if the user has already signed in

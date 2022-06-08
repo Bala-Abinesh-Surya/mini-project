@@ -44,6 +44,7 @@ import com.surya.miniproject.models.Attendance;
 import com.surya.miniproject.models.Class;
 import com.surya.miniproject.models.HOD;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -152,6 +153,7 @@ public class DashBoard extends AppCompatActivity {
                             }
                         });
 
+        firebaseDatabase.getReference().onDisconnect();
         // opening/closing the drawer on clicking the menu in the so called action bar
         findViewById(R.id.dash_menu).setOnClickListener(new View.OnClickListener() {
             @Override
