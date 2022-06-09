@@ -60,6 +60,7 @@ public class ClassAttendance extends AppCompatActivity {
 
     private String classPushId;
     private String className;
+    private String classAdvisor;
 
     // adapter
     private AttendanceAdapter attendanceAdapter;
@@ -77,9 +78,15 @@ public class ClassAttendance extends AppCompatActivity {
     // inflating the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).getBoolean(FACULTY_IS_AN_HOD, false)){
-            // inflating the menu, if the faculty is the HOD
+        if( (getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).getBoolean(FACULTY_IS_AN_HOD, false))
+            || (classAdvisor.equals(facultyName)) ){
+            // inflating the menu, if the faculty is the HOD or the class advisor
             getMenuInflater().inflate(R.menu.class_menu, menu);
+        }
+        else{
+            // if the staff is not an HOD or the class advisor
+            // inflating the request access menu
+            getMenuInflater().inflate(R.menu.request_menu, menu);
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -99,6 +106,9 @@ public class ClassAttendance extends AppCompatActivity {
         else if(item.getItemId() == android.R.id.home){
             onBackPressed();
         }
+        else if(item.getItemId() == R.id.menu_request_access){
+            // showing the bottom sheet
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -110,7 +120,7 @@ public class ClassAttendance extends AppCompatActivity {
         // getting the data from the intent
         className = getIntent().getStringExtra(CLASS_NAME);
         classPushId = getIntent().getStringExtra(CLASS_PUSH_ID);
-        String classAdvisor = getIntent().getStringExtra(CLASS_ADVISOR);
+        classAdvisor = getIntent().getStringExtra(CLASS_ADVISOR);
         String department = getIntent().getStringExtra(CLASS_DEPARTMENT);
 
         // creating a CurrentClass object, for future reference

@@ -3,6 +3,7 @@ package com.surya.miniproject.activities;
 import static com.surya.miniproject.constants.Strings.APP_DEFAULTS;
 import static com.surya.miniproject.constants.Strings.ATTENDANCE;
 import static com.surya.miniproject.constants.Strings.CLASSES;
+import static com.surya.miniproject.constants.Strings.DO_NOT_ASK_PIN_FOR_HOD_PANEL;
 import static com.surya.miniproject.constants.Strings.FACULTY_GENDER;
 import static com.surya.miniproject.constants.Strings.FACULTY_IS_AN_HOD;
 import static com.surya.miniproject.constants.Strings.FACULTY_SIGNED_IN;
@@ -38,6 +39,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.surya.miniproject.R;
+import com.surya.miniproject.activities.hod.HODPanel;
 import com.surya.miniproject.activities.hod.HODPanelEntering;
 import com.surya.miniproject.export.MonthExport;
 import com.surya.miniproject.models.Attendance;
@@ -153,7 +155,6 @@ public class DashBoard extends AppCompatActivity {
                             }
                         });
 
-        firebaseDatabase.getReference().onDisconnect();
         // opening/closing the drawer on clicking the menu in the so called action bar
         findViewById(R.id.dash_menu).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,6 +192,20 @@ public class DashBoard extends AppCompatActivity {
             }
         });
 
+        // on click listener for thr weekly export option in the navigation menu
+        navigationView.getMenu().findItem(R.id.menu_week).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                // closing the drawer
+                drawerLayout.close();
+
+                // passing the faculty to the WeeklyExportActivity
+                Intent intent = new Intent(DashBoard.this, WeeklyExportActivity.class);
+                startActivity(intent);
+
+                return false;
+            }
+        });
 
         // on click listener for the user name in the header
         headerUserName.setOnClickListener(new View.OnClickListener() {
@@ -206,7 +221,19 @@ public class DashBoard extends AppCompatActivity {
                         // closing the drawer
                         drawerLayout.close();
 
-                        Intent intent = new Intent(DashBoard.this, HODPanelEntering.class);
+                        // deciding whether to pass the hod directly to the Panel or the panel entering activity
+                        SharedPreferences sharedPreferences = getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE);
+                        boolean dontAsk = sharedPreferences.getBoolean(DO_NOT_ASK_PIN_FOR_HOD_PANEL, false);
+
+                        Intent intent;
+                        if(dontAsk){
+                            // hod opted for the do not ask PIN option
+                            // so passing the hod directly to the hod Panel
+                            intent = new Intent(DashBoard.this, HODPanel.class);
+                        }
+                        else{
+                            intent = new Intent(DashBoard.this, HODPanelEntering.class);
+                        }
                         startActivity(intent);
                     }
                 }

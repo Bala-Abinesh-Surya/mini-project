@@ -30,6 +30,7 @@ import android.util.Half;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     // UI Elements
     private TextInputLayout userName, password;
     private Button login;
+    private ImageView imageView;
 
     private SharedPreferences sharedPreferences;
     private boolean signedIn = false;
@@ -67,33 +69,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // checking if the app has permission to write to the external storage
-//        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-//            // if yes, creating a directory
-//            createDirectory();
-//        }
-//        else{
-//            // else, asking the user for the permission
-//            askPermission();
-//        }
-
-        if((LocalDateTime.now().getMonth()+"").equals("JUNE")){
-            if(LocalDateTime.now().getYear() == 2022){
-                if(LocalDateTime.now().getDayOfMonth() < 10){
-                    Toast.makeText(this, "In Beta Stage", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    finish();
-                    Log.d("vikram", "day finish");
-                }
-            }
-            else{
-                finish();
-                Log.d("vikram", "year finish");
-            }
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            // if yes, creating a directory
+            createDirectory();
         }
         else{
-            finish();
-            Log.d("vikram", "month finish");
+            // else, asking the user for the permission
+            askPermission();
         }
 
         // checking if the user has already signed in
@@ -135,15 +117,15 @@ public class MainActivity extends AppCompatActivity {
                             userName.setError("UserName cannot be empty");
                             return;
                         }
-                        if(passwordText.length() <= 0){
+                        else if(passwordText.length() <= 0){
                             password.setError("Password cannot be empty");
                             return;
                         }
-                        if(userNameText.length() >= 16){
+                        else if(userNameText.length() >= 16){
                             userName.setError("UserName cannot be more than 15 characters long");
                             return;
                         }
-                        if(passwordText.length() >= 16){
+                        else if(passwordText.length() >= 16){
                             password.setError("Password cannot be more than 15 characters long");
                             return;
                         }
@@ -263,6 +245,14 @@ public class MainActivity extends AppCompatActivity {
                 v.validateTheInputs(userNameText, passwordText);
             }
         });
+
+        // on click listener for the admin panel entering image
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     // method to initialise the UI Elements
@@ -273,6 +263,9 @@ public class MainActivity extends AppCompatActivity {
 
         // button
         login = findViewById(R.id.main_login);
+
+        // admin image view
+        imageView = findViewById(R.id.admin_image);
     }
 
     // method which returns the result for our askPermission() method

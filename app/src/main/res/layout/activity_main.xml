@@ -29,7 +29,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/admin_image"
         android:layout_width="150dp"
         android:layout_height="150dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -47,9 +47,9 @@
         android:text="@string/str_welcome_text"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintEnd_toEndOf="@+id/admin_image"
+        app:layout_constraintStart_toStartOf="@+id/admin_image"
+        app:layout_constraintTop_toBottomOf="@+id/admin_image" />
 
     <Button
         android:id="@+id/main_login"

@@ -32,12 +32,15 @@
 
     <EditText
         android:id="@+id/hod_text"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="5dp"
         android:ems="10"
         android:hint="Enter 12 digits PIN"
         android:inputType="numberPassword"
+        android:textAlignment="start"
+        android:textIsSelectable="false"
         app:layout_constraintEnd_toEndOf="@+id/textView15"
         app:layout_constraintStart_toStartOf="@+id/textView15"
         app:layout_constraintTop_toBottomOf="@+id/textView15"
@@ -45,11 +48,20 @@
 
     <Button
         android:id="@+id/hod_btn"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="40dp"
         android:text="LOGIN"
         app:layout_constraintEnd_toEndOf="@+id/hod_text"
+        app:layout_constraintStart_toStartOf="@+id/hod_text"
+        app:layout_constraintTop_toBottomOf="@+id/hod_panel_check_box" />
+
+    <CheckBox
+        android:id="@+id/hod_panel_check_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:text="Don't ask PIN again on this device"
         app:layout_constraintStart_toStartOf="@+id/hod_text"
         app:layout_constraintTop_toBottomOf="@+id/hod_text" />
 

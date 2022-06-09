@@ -55,4 +55,7 @@ public class Strings {
     public static final String GENERATED_FOR = "Generated For";
 
     public static final String PIN = "962319104999";
+    public static final String DO_NOT_ASK_PIN_FOR_HOD_PANEL = "DoNotAskPinForHodPanel";
+
+    public static final String ADMIN_PIN = "YellowStone@2022";
 }
