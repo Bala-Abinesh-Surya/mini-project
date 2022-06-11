@@ -11,6 +11,7 @@ public class Faculty {
     private String facultyUserName;
     private String facultyPassword;
     private boolean isTheStaffAHod;
+    private boolean signedInOnAMobile;
 
     // list of all the Faculties
     public static ArrayList<Faculty> allFacultiesList = new ArrayList<>();

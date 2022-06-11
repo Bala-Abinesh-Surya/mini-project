@@ -43,7 +43,6 @@ public class Strings {
             ECE_DEPARTMENT
     };
 
-
     public static final String COLLEGE_NAME = "AMRITA COLLEGE OF ENGINEERING AND TECHNOLOGY";
     public static final String PLACE_NAME = "Erachakulam, Nagercoil";
     public static final String CLASS_ADVISOR_NAME = "Name of the Class Advisor";
@@ -58,4 +57,8 @@ public class Strings {
     public static final String DO_NOT_ASK_PIN_FOR_HOD_PANEL = "DoNotAskPinForHodPanel";
 
     public static final String ADMIN_PIN = "YellowStone@2022";
+
+    public static final String REQUESTS = "Requests";
+    public static final String REQUEST_ONE_TIME = "RequestOneTime";
+    public static final String REQUEST_UNLIMITED_ACCESS = "RequestUnlimitedAccess";
 }

@@ -5,14 +5,17 @@ public class Request {
     private String requestSender;
     private String requestReceiver;
     private String requestType;
+    private String className;
     private String requestedDate;
     private boolean accepted;
+    private String requestPushId;
 
     // Constructor
-    public Request(String requestSender, String requestReceiver, String requestType, String requestedDate, boolean accepted) {
+    public Request(String requestSender, String requestReceiver, String requestType, String className, String requestedDate, boolean accepted) {
         this.requestSender = requestSender;
         this.requestReceiver = requestReceiver;
         this.requestType = requestType;
+        this.className = className;
         this.requestedDate = requestedDate;
         this.accepted = accepted;
     }
@@ -56,5 +59,21 @@ public class Request {
 
     public void setAccepted(boolean accepted) {
         this.accepted = accepted;
+    }
+
+    public String getRequestPushId() {
+        return requestPushId;
+    }
+
+    public void setRequestPushId(String requestPushId) {
+        this.requestPushId = requestPushId;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 }

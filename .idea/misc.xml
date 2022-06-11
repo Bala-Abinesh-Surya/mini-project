@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/MiniProject/app/src/main/res/drawable/bottom_sheet_background.xml" value="0.189" />
+        <entry key="..\:/MiniProject/app/src/main/res/drawable/button_background.xml" value="0.189" />
         <entry key="..\:/MiniProject/app/src/main/res/drawable/circle.xml" value="0.1" />
         <entry key="..\:/MiniProject/app/src/main/res/drawable/circle_od.xml" value="0.1" />
         <entry key="..\:/MiniProject/app/src/main/res/drawable/circle_red.xml" value="0.1" />
@@ -22,6 +24,7 @@
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_staff_details_actiity.xml" value="0.264" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_staffs_adding.xml" value="0.20512820512820512" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_weekly_export.xml" value="0.20512820512820512" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/admin_panel_bottom_sheet.xml" value="0.4" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/attendance.xml" value="0.18442622950819673" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/attendce_marking_list.xml" value="0.18442622950819673" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/classes_check_list.xml" value="0.20427350427350427" />
@@ -37,6 +40,7 @@
         <entry key="..\:/MiniProject/app/src/main/res/layout/header_layout.xml" value="0.18442622950819673" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/hod_staffs_list.xml" value="0.536" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/notifications_layout.xml" value="0.18442622950819673" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/requesting_access_bottpm_sheet.xml" value="0.4" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/staffs_list.xml" value="0.264" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/students_list.xml" value="0.18442622950819673" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/understand.xml" value="0.18442622950819673" />
