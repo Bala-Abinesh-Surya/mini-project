@@ -79,6 +79,8 @@ public class AdminPanel extends AppCompatActivity{
         // method to initialise the UI Elements
         initialiseUIElements();
 
+
+
         // opening/closing the drawer on click the menu image
         findViewById(R.id.admin_menu)
                 .setOnClickListener(new View.OnClickListener() {
