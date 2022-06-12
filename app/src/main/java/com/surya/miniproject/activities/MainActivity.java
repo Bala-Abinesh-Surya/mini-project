@@ -71,6 +71,26 @@ public class MainActivity extends AppCompatActivity {
 
     public static boolean folderCreated = false;
 
+    private int backButtonPressed = 0;
+
+    // Back Button
+    // Like MX PLayer
+    @Override
+    public void onBackPressed() {
+        backButtonPressed++;
+
+        if(backButtonPressed < 2){
+            Toast.makeText(this, "Tap again to exit app", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            // the user pressed/tapped the back button twice
+            // exiting the app
+            backButtonPressed = 0;
+            finish();
+            finishAffinity();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
