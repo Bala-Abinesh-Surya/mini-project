@@ -1,5 +1,6 @@
 package com.surya.miniproject.activities;
 
+import static com.surya.miniproject.activities.DashBoard.facultyDepartment;
 import static com.surya.miniproject.activities.DashBoard.facultyGender;
 import static com.surya.miniproject.activities.DashBoard.facultyName;
 import static com.surya.miniproject.constants.Strings.APP_DEFAULTS;
@@ -27,6 +28,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,6 +53,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.surya.miniproject.R;
 import com.surya.miniproject.activities.hod.StaffDetailsActiity;
 import com.surya.miniproject.adapters.AttendanceAdapter;
+import com.surya.miniproject.adapters.RequestsAdapter;
 import com.surya.miniproject.models.Attendance;
 import com.surya.miniproject.models.Class;
 import com.surya.miniproject.models.CurrentClass;
@@ -82,6 +85,8 @@ public class ClassAttendance extends AppCompatActivity {
     public static ArrayList<Student> students = new ArrayList<Student>();
     private boolean attendanceEditedForToday = false;
 
+    private Request req;
+
     // Back Button Functionality
     @Override
     public void onBackPressed() {
@@ -99,8 +104,51 @@ public class ClassAttendance extends AppCompatActivity {
         }
         else{
             // if the staff is not an HOD or the class advisor
-            // inflating the request access menu
-            getMenuInflater().inflate(R.menu.request_menu, menu);
+            // checking if the staff has requested for the attendance already
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            firebaseDatabase.getReference()
+                    .child(REQUESTS)
+                    .child(facultyDepartment)
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists()){
+                                // going through the requests
+                                boolean alreadyRequested = false;
+
+                                for(DataSnapshot snapshot1 : snapshot.getChildren()){
+                                    Request request = snapshot1.getValue(Request.class);
+
+                                    if(request.getClassName().equals(className)){
+                                        if(request.getRequestSender().equals(facultyName)){
+                                            // means, this faculty has already requested for this class attendance
+                                            req = request;
+                                            alreadyRequested = true;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if(alreadyRequested){
+                                    // inflating the request accept menu
+                                    getMenuInflater().inflate(R.menu.request_status_menu, menu);
+                                }
+                                else{
+                                    // inflating the request access menu
+                                    getMenuInflater().inflate(R.menu.request_menu, menu);
+                                }
+                            }
+//                            else{
+//                                // inflating the request access menu
+//                                getMenuInflater().inflate(R.menu.request_menu, menu);
+//                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -121,7 +169,7 @@ public class ClassAttendance extends AppCompatActivity {
             onBackPressed();
         }
         else if(item.getItemId() == R.id.menu_request_access){
-            // showing the bottom sheet
+            // showing the request bottom sheet
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(ClassAttendance.this, R.style.BottomSheetDialogTheme);
             View view = LayoutInflater.from(ClassAttendance.this)
                     .inflate(R.layout.requesting_access_bottpm_sheet, (ConstraintLayout) findViewById(R.id.requesting_access_layout));
@@ -183,6 +231,8 @@ public class ClassAttendance extends AppCompatActivity {
                             false
                     );
 
+                    warnText.setText(request.requestWarnText());
+
                     // on item selected listener for the spinner
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -218,9 +268,11 @@ public class ClassAttendance extends AppCompatActivity {
 
                                 // setting up the request push id
                                 request.setRequestPushId(key);
+                                request.setRequestTimedOut(false);
 
                                 firebaseDatabase.getReference()
                                         .child(REQUESTS)
+                                        .child(facultyDepartment)
                                         .child(key)
                                         .setValue(request)
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -235,6 +287,49 @@ public class ClassAttendance extends AppCompatActivity {
                             }
                         }
                     });
+                }
+            }
+
+            new elements(view);
+
+            bottomSheetDialog.setContentView(view);
+            bottomSheetDialog.show();
+        }
+        else if(item.getItemId() == R.id.menu_request_status){
+            // inflating the request status bottom sheet
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.BottomSheetDialogTheme);
+            View view = LayoutInflater.from(ClassAttendance.this)
+                    .inflate(R.layout.request_status_bottom_sheet, (ConstraintLayout) findViewById(R.id.request_status_layout));
+
+            class elements{
+                private final View view;
+                private final TextView staffName, statusText;
+                private final ImageView imageView;
+
+                // Constructor
+                public elements(View view) {
+                    this.view = view;
+
+                    // initialising the UI Elements
+                    // text view
+                    staffName = view.findViewById(R.id.request_status_staff_name);
+                    statusText = view.findViewById(R.id.request_status_text);
+
+                    // image view
+                    imageView = view.findViewById(R.id.request_status_staff_image);
+
+                    // setting up the image
+                    if(getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).getString(FACULTY_GENDER, null).equals(MALE)){
+                        imageView.setImageResource(R.drawable.male);
+                    }
+                    else{
+                        // gender may be female, or Rather Not Say
+                        imageView.setImageResource(R.drawable.female);
+                    }
+
+                    // setting up the texts
+                    staffName.setText(facultyName);
+                    statusText.setText(req.requestStatusText());
                 }
             }
 

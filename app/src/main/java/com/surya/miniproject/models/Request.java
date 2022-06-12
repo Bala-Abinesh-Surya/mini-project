@@ -1,5 +1,9 @@
 package com.surya.miniproject.models;
 
+import static com.surya.miniproject.constants.Strings.REQUEST_ONE_TIME;
+
+import java.util.Locale;
+
 public class Request {
     // attributes of a request
     private String requestSender;
@@ -9,8 +13,13 @@ public class Request {
     private String requestedDate;
     private boolean accepted;
     private String requestPushId;
+    private boolean requestTimedOut;
 
     // Constructor
+    public Request() {
+
+    }
+
     public Request(String requestSender, String requestReceiver, String requestType, String className, String requestedDate, boolean accepted) {
         this.requestSender = requestSender;
         this.requestReceiver = requestReceiver;
@@ -18,6 +27,39 @@ public class Request {
         this.className = className;
         this.requestedDate = requestedDate;
         this.accepted = accepted;
+    }
+
+    public String requestWarnText(){
+        return "* It's up to " + requestReceiver + " to accept the request or not";
+    }
+
+    // for the request list recycler view
+    public String requestText(){
+        return requestSender +
+                " requesting you the access to edit the " + className + " attendance";
+    }
+
+    public String requestAcceptedText(){
+        return "You gave access for " + requestSender + " to edit the " + className + " attendance";
+    }
+
+    // status message for the recipient
+    public String requestStatusText(){
+        if(isAccepted()){
+            return "Your request has been accepted by " + requestReceiver;
+        }
+        else{
+            return "Your request has not been accepted yet by " + requestReceiver;
+        }
+    }
+
+    public String timelineText(){
+        if(requestType.equals(REQUEST_ONE_TIME)){
+            return "Timeline : Only One Time";
+        }
+        else{
+            return "Timeline : Unlimited Access";
+        }
     }
 
     // getter and setter methods
@@ -75,5 +117,27 @@ public class Request {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public boolean isRequestTimedOut() {
+        return requestTimedOut;
+    }
+
+    public void setRequestTimedOut(boolean requestTimedOut) {
+        this.requestTimedOut = requestTimedOut;
+    }
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "requestSender='" + requestSender + '\'' +
+                ", requestReceiver='" + requestReceiver + '\'' +
+                ", requestType='" + requestType + '\'' +
+                ", className='" + className + '\'' +
+                ", requestedDate='" + requestedDate + '\'' +
+                ", accepted=" + accepted +
+                ", requestPushId='" + requestPushId + '\'' +
+                ", requestTimedOut=" + requestTimedOut +
+                '}';
     }
 }

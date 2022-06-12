@@ -4,32 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.DashBoard"
-    android:id="@+id/drawerLayout"
-    >
+    tools:context=".activities.admin.AdminPanel"
+    tools:ignore="SpeakableTextPresentCheck"
+    android:id="@+id/admin_panel_drawer">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:background="@color/main_color"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center">
 
             <ImageView
-                android:id="@+id/dash_menu"
+                android:id="@+id/admin_menu"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_marginStart="15dp"
                 android:src="@drawable/ic_menu"
-                app:tint="@color/white"
-                android:layout_marginStart="15dp"/>
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/admin_text"
@@ -46,22 +46,25 @@
         <fragment
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            android:id="@+id/dash_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linear"
             android:name="androidx.navigation.fragment.NavHostFragment"
+            android:id="@+id/admin_dash_fragment"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/main_navigation"/>
+            app:navGraph="@navigation/admin_nav"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationView"
+        android:id="@+id/adminNavigationView"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        app:headerLayout="@layout/header_layout"
         android:layout_gravity="start"
-        app:menu="@menu/main_menu"
-        app:headerLayout="@layout/header_layout"/>
+        app:menu="@menu/admin_menu"
+        />
+
+
 </androidx.drawerlayout.widget.DrawerLayout>

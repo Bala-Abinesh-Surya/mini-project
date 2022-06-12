@@ -21,9 +21,9 @@
         android:name="com.surya.miniproject.fragments.NotificationFragment"
         android:label="Notifications"
         tools:layout="@layout/fragment_notification" />
-<!--    <fragment-->
-<!--        android:id="@+id/menu_month"-->
-<!--        android:name="com.surya.miniproject.fragments.MonthlyExport"-->
-<!--        android:label="Monthly Export"-->
-<!--        tools:layout="@layout/fragment_monthly_export" />-->
+    <fragment
+        android:id="@+id/menu_request"
+        android:name="com.surya.miniproject.fragments.RequestsFragment"
+        android:label="Requests"
+        tools:layout="@layout/fragment_requests" />
 </navigation>

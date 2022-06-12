@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin_nav"
+    app:startDestination="@+id/admin_menu_all_classes">
+
+    <fragment
+        android:id="@+id/admin_menu_all_classes"
+        android:name="com.surya.miniproject.fragments.admin.AdminAllClassesFragment"
+        android:label="All Classes"
+        tools:layout="@layout/fragment_admin_all_classes" />
+    <fragment
+        android:id="@+id/admin_menu_all_faculties"
+        android:name="com.surya.miniproject.fragments.admin.AdminAllFacultiesFragment"
+        android:label="All Faculties"
+        tools:layout="@layout/fragment_admin_all_faculties" />
+    <fragment
+        android:id="@+id/admin_menu_all_hod"
+        android:name="com.surya.miniproject.fragments.admin.AdminAllHodFragment"
+        android:label="All HODs"
+        tools:layout="@layout/fragment_admin_all_hod" />
+    <fragment
+        android:id="@+id/admin_menu_notifications"
+        android:name="com.surya.miniproject.fragments.admin.AdminNotificationsFragment"
+        android:label="All Notifications"
+        tools:layout="@layout/fragment_admin_notifications" />
+</navigation>

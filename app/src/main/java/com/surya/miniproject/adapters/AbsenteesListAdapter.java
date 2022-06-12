@@ -61,7 +61,7 @@ public class AbsenteesListAdapter extends RecyclerView.Adapter {
     }
 
     // view holder class
-    public class AbsenteesListViewHolder extends RecyclerView.ViewHolder{
+    public static class AbsenteesListViewHolder extends RecyclerView.ViewHolder{
         // UI Elements
         private TextView regNo, studentName;
         private ConstraintLayout constraintLayout;

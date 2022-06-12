@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="General">
+        <menu>
+            <item
+                android:title="All Classes"
+                android:id="@+id/admin_menu_all_classes"
+                android:icon="@drawable/all_classes"/>
+            <item
+                android:title="All Faculties"
+                android:id="@+id/admin_menu_all_faculties"
+                android:icon="@drawable/all_faculties"/>
+            <item
+                android:title="All HODs"
+                android:id="@+id/admin_menu_all_hod"
+                android:icon="@drawable/all_hod"/>
+            <item
+                android:title="Notifications"
+                android:id="@+id/admin_menu_notifications"
+                android:icon="@drawable/notification"/>
+        </menu>
+    </item>
+
+    <item android:title="Edit">
+        <menu>
+            <item
+                android:title="Add a Faculty"
+                android:id="@+id/admin_add_faculty"
+                android:icon="@drawable/add_faculty"/>
+            <item
+                android:title="Remove a Faculty"
+                android:id="@+id/admin_remove_faculty"
+                android:icon="@drawable/remove_faculty" />
+            <item
+                android:title="Promote a Faculty"
+                android:id="@+id/admin_promote_faculty"
+                android:icon="@drawable/promote"/>
+        </menu>
+    </item>
+
+    <item android:title="Exit">
+        <menu>
+            <item
+                android:title="Logout"
+                android:id="@+id/admin_menu_logout"
+                android:icon="@drawable/logout"/>
+        </menu>
+    </item>
+</menu>

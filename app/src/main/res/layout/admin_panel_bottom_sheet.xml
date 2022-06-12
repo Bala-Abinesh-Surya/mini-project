@@ -55,7 +55,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/admin_master_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/admin_panel_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -87,6 +87,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/view"
         app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/admin_master_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

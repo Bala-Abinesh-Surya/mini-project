@@ -2,6 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_request_access"
-        android:title="Request Access" />
+        android:id="@+id/menu_request_status"
+        android:title="Get Request Status" />
 </menu>

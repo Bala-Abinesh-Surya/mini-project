@@ -1,8 +1,6 @@
 package com.surya.miniproject.activities;
 
 import static com.surya.miniproject.constants.Strings.APP_DEFAULTS;
-import static com.surya.miniproject.constants.Strings.ATTENDANCE;
-import static com.surya.miniproject.constants.Strings.CLASSES;
 import static com.surya.miniproject.constants.Strings.DO_NOT_ASK_PIN_FOR_HOD_PANEL;
 import static com.surya.miniproject.constants.Strings.FACULTY_GENDER;
 import static com.surya.miniproject.constants.Strings.FACULTY_IS_AN_HOD;
@@ -14,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -26,7 +25,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -41,18 +40,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.surya.miniproject.R;
 import com.surya.miniproject.activities.hod.HODPanel;
 import com.surya.miniproject.activities.hod.HODPanelEntering;
-import com.surya.miniproject.export.MonthExport;
-import com.surya.miniproject.models.Attendance;
-import com.surya.miniproject.models.Class;
+import com.surya.miniproject.fragments.RequestsFragment;
 import com.surya.miniproject.models.HOD;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
-
-public class DashBoard extends AppCompatActivity {
+public class DashBoard extends AppCompatActivity implements RequestsFragment.BottomSheetViewSettingInterface {
 
     // UI Elements
     private DrawerLayout drawerLayout;
@@ -256,7 +247,7 @@ public class DashBoard extends AppCompatActivity {
         setupAlertDialogBuilder();
 
         // text view
-        headerText = findViewById(R.id.headerText);
+        headerText = findViewById(R.id.admin_text);
 
         // Elements in the navigation view header
         // text view
@@ -299,5 +290,16 @@ public class DashBoard extends AppCompatActivity {
                         finish();
                     }
                 });
+    }
+
+    @Override
+    public View setRequestAcceptingView() {
+        return LayoutInflater.from(this)
+                .inflate(R.layout.request_access_accept_layout, (ConstraintLayout) findViewById(R.id.request_accepting_layout), false);
+    }
+
+    @Override
+    public View setRequestAcceptedView() {
+        return null;
     }
 }
