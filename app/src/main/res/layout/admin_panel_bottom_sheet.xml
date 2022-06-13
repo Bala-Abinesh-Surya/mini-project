@@ -84,6 +84,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:text="Enter Panel"
+        android:background="@drawable/button_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/view"
         app:layout_constraintStart_toStartOf="@+id/view"

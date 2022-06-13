@@ -38,6 +38,14 @@
         </menu>
     </item>
 
+    <item android:title="Contact Us">
+        <menu>
+            <item
+                android:title="The Fab Four"
+                android:id="@+id/menu_developer"/>
+        </menu>
+    </item>
+
     <item android:title="Exit">
         <menu>
             <item

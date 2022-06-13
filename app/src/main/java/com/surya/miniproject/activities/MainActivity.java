@@ -284,19 +284,17 @@ public class MainActivity extends AppCompatActivity {
                     // resetting the count down
                     adminImageClicked = 0;
 
+                    // inflating the admin panel bottom sheet
                     BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetDialogTheme);
                     View bottomSheetView = LayoutInflater.from(MainActivity.this)
                             .inflate(R.layout.admin_panel_bottom_sheet, (ConstraintLayout) findViewById(R.id.admin_panel_bottom_sheet_container));
 
-                    class admin{
-                        private final View view;
-                        private final Button enter;
+                    class Admin{
                         private final EditText editText;
 
                         // Constructor
-                        public admin(View view) {
-                            this.view = view;
-                            enter = view.findViewById(R.id.admin_panel_btn);
+                        public Admin(View view) {
+                            Button enter = view.findViewById(R.id.admin_panel_btn);
                             editText = view.findViewById(R.id.admin_master_password);
 
                             // on click listener for the button
@@ -317,6 +315,8 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                         else{
                                             // wrong pin
+                                            // clearing the editText
+                                            editText.setText("");
                                             Toast.makeText(MainActivity.this, "Wrong Master Password!!!", Toast.LENGTH_SHORT).show();
                                         }
                                     }
@@ -327,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-                    new admin(bottomSheetView);
+                    new Admin(bottomSheetView);
 
                     bottomSheetDialog.setContentView(bottomSheetView);
                     bottomSheetDialog.show();

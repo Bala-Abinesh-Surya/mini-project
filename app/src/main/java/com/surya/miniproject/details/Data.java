@@ -179,6 +179,16 @@ public class Data {
         }
     };
 
+    // developers details
+    // developer_name@@@about@@@reg_no
+    public String[] DEVELOPER_DETAILS = new String[]{
+            "Dr. Vishwanath Shenoi@@@Are we building the right product or the product right?@@@The Head of the Department@@@Project Guide",
+            "Abinilla VA@@@Remember sometimes not getting what you want is a stroke of luck!@@@962319104003@@@UI Designer",
+            "Harshavardini VS@@@Cherish what you have now@@@962319104045@@@Lead Tester",
+            "Abino Amriy ES@@@Be the sky with no limits...@@@962319104004@@@Scrum Master",
+            "Bala Abinesh Surya B@@@```Butter Bala```@@@962319104029@@@Developer"
+    };
+
     // getter and setter methods
     public String[] getSTAFF_DETAILS() {
         return this.STAFF_DETAILS;
