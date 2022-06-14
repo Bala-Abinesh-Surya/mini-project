@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -50,7 +51,7 @@ public class AdminNotificationsFragment extends Fragment {
 
     private static class NotificationsFetcher extends AsyncTask<FirebaseDatabase, Integer, ArrayList<ArrayList<Notification>>>{
         private ArrayList<ArrayList<Notification>> notifications;
-        private WeakReference<AdminNotificationsFragment> weakReference;
+        private final WeakReference<AdminNotificationsFragment> weakReference;
 
         // Constructor
         public NotificationsFetcher(AdminNotificationsFragment fragment) {
@@ -68,6 +69,8 @@ public class AdminNotificationsFragment extends Fragment {
         @Override
         protected ArrayList<ArrayList<Notification>> doInBackground(FirebaseDatabase... firebaseDatabases) {
             FirebaseDatabase firebaseDatabase = firebaseDatabases[0];
+
+            AdminNotificationsFragment fragment = weakReference.get();
 
             // going through all the notifications
             firebaseDatabase.getReference()
@@ -126,6 +129,10 @@ public class AdminNotificationsFragment extends Fragment {
                                     }
                                 }
 
+                                // setting up the recycler view
+                                AdminNotificationOuterAdapter adapter = new AdminNotificationOuterAdapter(fragment.getContext(), notifications);
+                                fragment.recyclerView.setAdapter(adapter);
+                                fragment.recyclerView.setLayoutManager(new LinearLayoutManager(fragment.getContext()));
                             }
                         }
 

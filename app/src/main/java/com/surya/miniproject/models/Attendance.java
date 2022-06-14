@@ -1,7 +1,9 @@
 package com.surya.miniproject.models;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
@@ -28,6 +30,11 @@ public class Attendance {
 
         month = LocalDateTime.now().getMonth();
         day = LocalDateTime.now().getDayOfMonth();
+    }
+
+    public void setTable(){
+        Type type = new TypeToken<Hashtable<String, String>>(){}.getType();
+        table = new Gson().fromJson(json, type);
     }
 
     // getter and setter methods
@@ -86,4 +93,6 @@ public class Attendance {
     public void setDay(int day) {
         this.day = day;
     }
+
+
 }

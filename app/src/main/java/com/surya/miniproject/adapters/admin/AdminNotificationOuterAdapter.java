@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.surya.miniproject.R;
+import com.surya.miniproject.adapters.NotificationAdapter;
 import com.surya.miniproject.models.Notification;
 
 import java.util.ArrayList;
@@ -34,7 +36,18 @@ public class AdminNotificationOuterAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if(holder.getClass() == AdminNotificationsOuterViewHolder.class){
+            // displaying the data
+            ArrayList<Notification> notification = notifications.get(position);
 
+            // data
+            ((AdminNotificationsOuterViewHolder) holder).date.setText(notification.get(0).getDate());
+
+            // setting up the adapter fpr thr recycler view
+            NotificationAdapter adapter = new NotificationAdapter(notification, context);
+            ((AdminNotificationsOuterViewHolder) holder).recyclerView.setAdapter(adapter);
+            ((AdminNotificationsOuterViewHolder) holder).recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        }
     }
 
     @Override

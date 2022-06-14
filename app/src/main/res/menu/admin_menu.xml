@@ -42,7 +42,8 @@
         <menu>
             <item
                 android:title="The Fab Four"
-                android:id="@+id/menu_developer"/>
+                android:id="@+id/menu_developer"
+                android:icon="@drawable/team"/>
         </menu>
     </item>
 

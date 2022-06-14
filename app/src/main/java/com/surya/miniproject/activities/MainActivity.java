@@ -172,75 +172,77 @@ public class MainActivity extends AppCompatActivity {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             if(snapshot.exists()){
-                                                for(DataSnapshot snapshot1 : snapshot.getChildren()){
+                                                for(DataSnapshot snapshot1 : snapshot.getChildren()) {
                                                     Faculty faculty = snapshot1.getValue(Faculty.class);
 
-                                                    if(faculty.getFacultyUserName().equals(userNameText)){
-                                                        if(faculty.getFacultyPassword().equals(passwordText)){
-                                                            // user's credentials exist
-                                                            // now checking if the faculty is an HOD
-                                                            firebaseDatabase.getReference()
-                                                                    .child(HOD)
-                                                                    .addValueEventListener(new ValueEventListener() {
-                                                                        @Override
-                                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                                            if(snapshot.exists()){
-                                                                                for(DataSnapshot snapshot2 : snapshot.getChildren()){
-                                                                                    com.surya.miniproject.models.HOD hod = snapshot2.getValue(HOD.class);
+                                                    if(! (faculty.getFacultyName().equals("DUMMY"))){
+                                                        if(faculty.getFacultyUserName().equals(userNameText)){
+                                                            if(faculty.getFacultyPassword().equals(passwordText)){
+                                                                // user's credentials exist
+                                                                // now checking if the faculty is an HOD
+                                                                firebaseDatabase.getReference()
+                                                                        .child(HOD)
+                                                                        .addValueEventListener(new ValueEventListener() {
+                                                                            @Override
+                                                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                                if(snapshot.exists()){
+                                                                                    for(DataSnapshot snapshot2 : snapshot.getChildren()){
+                                                                                        com.surya.miniproject.models.HOD hod = snapshot2.getValue(HOD.class);
 
-                                                                                    if(hod.getDepartment().equals(faculty.getFacultyDepartment())){
-                                                                                        if(hod.getName().equals(faculty.getFacultyName())){
-                                                                                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                                                                                            editor.putBoolean(FACULTY_SIGNED_IN, true);
-                                                                                            editor.putBoolean(FACULTY_IS_AN_HOD, true);
-                                                                                            editor.apply();
-                                                                                        }
-                                                                                        else{
-                                                                                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                                                                                            editor.putBoolean(FACULTY_SIGNED_IN, true);
-                                                                                            editor.putBoolean(FACULTY_IS_AN_HOD, false);
-                                                                                            editor.apply();
+                                                                                        if(hod.getDepartment().equals(faculty.getFacultyDepartment())){
+                                                                                            if(hod.getName().equals(faculty.getFacultyName())){
+                                                                                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                                                                editor.putBoolean(FACULTY_SIGNED_IN, true);
+                                                                                                editor.putBoolean(FACULTY_IS_AN_HOD, true);
+                                                                                                editor.apply();
+                                                                                            }
+                                                                                            else{
+                                                                                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                                                                editor.putBoolean(FACULTY_SIGNED_IN, true);
+                                                                                                editor.putBoolean(FACULTY_IS_AN_HOD, false);
+                                                                                                editor.apply();
+                                                                                            }
                                                                                         }
                                                                                     }
                                                                                 }
                                                                             }
-                                                                        }
 
-                                                                        @Override
-                                                                        public void onCancelled(@NonNull DatabaseError error) {
+                                                                            @Override
+                                                                            public void onCancelled(@NonNull DatabaseError error) {
 
-                                                                        }
-                                                                    });
+                                                                            }
+                                                                        });
 
-                                                            // passing the user to dashboard activity
-                                                            Intent intent = new Intent(MainActivity.this, DashBoard.class);
+                                                                // passing the user to dashboard activity
+                                                                Intent intent = new Intent(MainActivity.this, DashBoard.class);
 
-                                                            DashBoard.facultyName = faculty.getFacultyName();
-                                                            DashBoard.facultyPushId = faculty.getFacultyPushId();
-                                                            DashBoard.facultyUserName = faculty.getFacultyUserName();
-                                                            DashBoard.facultyGender = faculty.getFacultyGender();
-                                                            DashBoard.facultyDepartment = faculty.getFacultyDepartment();
+                                                                DashBoard.facultyName = faculty.getFacultyName();
+                                                                DashBoard.facultyPushId = faculty.getFacultyPushId();
+                                                                DashBoard.facultyUserName = faculty.getFacultyUserName();
+                                                                DashBoard.facultyGender = faculty.getFacultyGender();
+                                                                DashBoard.facultyDepartment = faculty.getFacultyDepartment();
 
-                                                            // updating the shared preferences
-                                                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                                                            editor.putBoolean(FACULTY_SIGNED_IN, true);
-                                                            editor.putString(FACULTY_NAME, faculty.getFacultyName());
-                                                            editor.putString(FACULTY_PUSH_ID, faculty.getFacultyPushId());
-                                                            editor.putString(FACULTY_GENDER, faculty.getFacultyGender());
-                                                            editor.putString(FACULTY_USER_NAME, faculty.getFacultyUserName());
-                                                            editor.putString(FACULTY_DEPARTMENT, faculty.getFacultyDepartment());
-                                                            editor.apply();
+                                                                // updating the shared preferences
+                                                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                                editor.putBoolean(FACULTY_SIGNED_IN, true);
+                                                                editor.putString(FACULTY_NAME, faculty.getFacultyName());
+                                                                editor.putString(FACULTY_PUSH_ID, faculty.getFacultyPushId());
+                                                                editor.putString(FACULTY_GENDER, faculty.getFacultyGender());
+                                                                editor.putString(FACULTY_USER_NAME, faculty.getFacultyUserName());
+                                                                editor.putString(FACULTY_DEPARTMENT, faculty.getFacultyDepartment());
+                                                                editor.apply();
 
-                                                            signedIn = true;
+                                                                signedIn = true;
 
-                                                            startActivity(intent);
-                                                            finishAffinity();
-                                                        }
-                                                        else{
-                                                            // password is wrong
-                                                            password.setError("Password is incorrect");
-                                                            password.getEditText().setText("");
-                                                            return;
+                                                                startActivity(intent);
+                                                                finishAffinity();
+                                                            }
+                                                            else{
+                                                                // password is wrong
+                                                                password.setError("Password is incorrect");
+                                                                password.getEditText().setText("");
+                                                                return;
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -280,58 +282,62 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 adminImageClicked++;
 
-                if(adminImageClicked >= 5){
-                    // resetting the count down
-                    adminImageClicked = 0;
-
-                    // inflating the admin panel bottom sheet
-                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetDialogTheme);
-                    View bottomSheetView = LayoutInflater.from(MainActivity.this)
-                            .inflate(R.layout.admin_panel_bottom_sheet, (ConstraintLayout) findViewById(R.id.admin_panel_bottom_sheet_container));
-
-                    class Admin{
-                        private final EditText editText;
-
-                        // Constructor
-                        public Admin(View view) {
-                            Button enter = view.findViewById(R.id.admin_panel_btn);
-                            editText = view.findViewById(R.id.admin_master_password);
-
-                            // on click listener for the button
-                            enter.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    String password = editText.getText().toString();
-
-                                    if(password.length() == 0){
-                                        Toast.makeText(MainActivity.this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
-                                    }
-                                    else{
-                                        if(password.equals(ADMIN_PIN)){
-                                            // passing the user to the Admin Panel
-                                            Intent intent = new Intent(MainActivity.this, AdminPanel.class);
+                Intent intent = new Intent(MainActivity.this, AdminPanel.class);
                                             startActivity(intent);
                                             finish();
-                                        }
-                                        else{
-                                            // wrong pin
-                                            // clearing the editText
-                                            editText.setText("");
-                                            Toast.makeText(MainActivity.this, "Wrong Master Password!!!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
 
-                                    bottomSheetDialog.dismiss();
-                                }
-                            });
-                        }
-                    }
-
-                    new Admin(bottomSheetView);
-
-                    bottomSheetDialog.setContentView(bottomSheetView);
-                    bottomSheetDialog.show();
-                }
+//                if(adminImageClicked >= 5){
+//                    // resetting the count down
+//                    adminImageClicked = 0;
+//
+//                    // inflating the admin panel bottom sheet
+//                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetDialogTheme);
+//                    View bottomSheetView = LayoutInflater.from(MainActivity.this)
+//                            .inflate(R.layout.admin_panel_bottom_sheet, (ConstraintLayout) findViewById(R.id.admin_panel_bottom_sheet_container));
+//
+//                    class Admin{
+//                        private final EditText editText;
+//
+//                        // Constructor
+//                        public Admin(View view) {
+//                            Button enter = view.findViewById(R.id.admin_panel_btn);
+//                            editText = view.findViewById(R.id.admin_master_password);
+//
+//                            // on click listener for the button
+//                            enter.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    String password = editText.getText().toString();
+//
+//                                    if(password.length() == 0){
+//                                        Toast.makeText(MainActivity.this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                    else{
+//                                        if(password.equals(ADMIN_PIN)){
+//                                            // passing the user to the Admin Panel
+//                                            Intent intent = new Intent(MainActivity.this, AdminPanel.class);
+//                                            startActivity(intent);
+//                                            finish();
+//                                        }
+//                                        else{
+//                                            // wrong pin
+//                                            // clearing the editText
+//                                            editText.setText("");
+//                                            Toast.makeText(MainActivity.this, "Wrong Master Password!!!", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    }
+//
+//                                    bottomSheetDialog.dismiss();
+//                                }
+//                            });
+//                        }
+//                    }
+//
+//                    new Admin(bottomSheetView);
+//
+//                    bottomSheetDialog.setContentView(bottomSheetView);
+//                    bottomSheetDialog.show();
+//                }
             }
         });
     }

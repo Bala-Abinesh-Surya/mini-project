@@ -34,9 +34,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.surya.miniproject.R;
 import com.surya.miniproject.activities.MainActivity;
 import com.surya.miniproject.fragments.DeveloperFragment;
+import com.surya.miniproject.fragments.admin.AdminAllFacultiesFragment;
 import com.surya.miniproject.fragments.admin.AdminNotificationsFragment;
 
-public class AdminPanel extends AppCompatActivity implements DeveloperFragment.DevelopersBottomSheet {
+public class AdminPanel extends AppCompatActivity implements DeveloperFragment.DevelopersBottomSheet, AdminAllFacultiesFragment.StaffDetailsBottomSheet {
 
     // UI Elements
     private DrawerLayout drawerLayout;
@@ -180,5 +181,12 @@ public class AdminPanel extends AppCompatActivity implements DeveloperFragment.D
     public View getDevelopersBottomSheetView() {
         return LayoutInflater.from(this)
                 .inflate(R.layout.developers_bottom_sheet, (ConstraintLayout) findViewById(R.id.developers_bottom_sheet_layout), false);
+    }
+
+    // returning the staff details bottom sheet
+    @Override
+    public View GiveStaffDetailsBottomSheet() {
+        return LayoutInflater.from(this)
+                .inflate(R.layout.staff_info_bottom_sheet, (ConstraintLayout) findViewById(R.id.admin_all_faculty_bottom_sheet), false);
     }
 }
