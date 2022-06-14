@@ -19,7 +19,7 @@ import com.surya.miniproject.details.Data;
 public class DevelopersListAdapter extends RecyclerView.Adapter {
 
     private final Context context;
-    private Data data;
+    private final Data data;
     private final View bottomSheetView;
 
     // Constructor
@@ -29,6 +29,8 @@ public class DevelopersListAdapter extends RecyclerView.Adapter {
 
         // initialising data object
         data = new Data();
+
+        // hi
     }
 
     @NonNull

@@ -180,7 +180,7 @@ public class Data {
     };
 
     // developers details
-    // developer_name@@@about@@@reg_no
+    // developer_name@@@about@@@reg_no@@@role
     public String[] DEVELOPER_DETAILS = new String[]{
             "Dr. Vishwanath Shenoi@@@Are we building the right product or the product right?@@@The Head of the Department@@@Project Guide",
             "Abinilla VA@@@Remember sometimes not getting what you want is a stroke of luck!@@@962319104003@@@UI Designer",
