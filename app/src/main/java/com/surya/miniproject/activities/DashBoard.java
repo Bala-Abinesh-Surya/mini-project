@@ -2,6 +2,7 @@ package com.surya.miniproject.activities;
 
 import static com.surya.miniproject.constants.Strings.APP_DEFAULTS;
 import static com.surya.miniproject.constants.Strings.DO_NOT_ASK_PIN_FOR_HOD_PANEL;
+import static com.surya.miniproject.constants.Strings.FACULTIES;
 import static com.surya.miniproject.constants.Strings.FACULTY_GENDER;
 import static com.surya.miniproject.constants.Strings.FACULTY_IS_AN_HOD;
 import static com.surya.miniproject.constants.Strings.FACULTY_SIGNED_IN;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.provider.FontsContractCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -43,6 +45,9 @@ import com.surya.miniproject.activities.hod.HODPanelEntering;
 import com.surya.miniproject.fragments.RequestsFragment;
 import com.surya.miniproject.models.HOD;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DashBoard extends AppCompatActivity implements RequestsFragment.BottomSheetViewSettingInterface {
 
     // UI Elements
@@ -62,7 +67,6 @@ public class DashBoard extends AppCompatActivity implements RequestsFragment.Bot
     public static String facultyDepartment;
 
     private int backButtonPressed = 0;
-    private boolean once = false;
     private int hodSecretClicked = 0;
 
     // Back Button Functionality
@@ -117,8 +121,9 @@ public class DashBoard extends AppCompatActivity implements RequestsFragment.Bot
             headerImage.setImageResource(R.drawable.female);
         }
 
-        // checking if the faculty is an HOD
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
+        // checking if the faculty is an HOD
         firebaseDatabase.getReference()
                 .child(HOD)
                         .addValueEventListener(new ValueEventListener() {
@@ -174,6 +179,9 @@ public class DashBoard extends AppCompatActivity implements RequestsFragment.Bot
             public boolean onMenuItemClick(MenuItem item) {
                 // closing the drawer first
                 drawerLayout.close();
+
+                // method to setup the Alert Dialog Builder
+                setupAlertDialogBuilder(facultyPushId);
 
                 AlertDialog alertDialog = builder.create();
                 alertDialog.setTitle("Logout");
@@ -243,9 +251,6 @@ public class DashBoard extends AppCompatActivity implements RequestsFragment.Bot
         // alert dialog builder
         builder = new AlertDialog.Builder(this);
 
-        // method to setup the Alert Dialog Builder
-        setupAlertDialogBuilder();
-
         // text view
         headerText = findViewById(R.id.admin_text);
 
@@ -260,7 +265,7 @@ public class DashBoard extends AppCompatActivity implements RequestsFragment.Bot
     }
 
     // method to setup the Alert Dialog Builder
-    private void setupAlertDialogBuilder(){
+    private void setupAlertDialogBuilder(String facultyPushId){
         builder.setMessage("Do you want to Logout?")
                 .setCancelable(false)
                 .setPositiveButton("NO", new DialogInterface.OnClickListener() {
@@ -288,6 +293,7 @@ public class DashBoard extends AppCompatActivity implements RequestsFragment.Bot
                         Intent intent = new Intent(DashBoard.this, MainActivity.class);
                         startActivity(intent);
                         finish();
+                        finishAffinity();
                     }
                 });
     }

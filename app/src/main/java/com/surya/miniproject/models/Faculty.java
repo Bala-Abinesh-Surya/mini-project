@@ -88,4 +88,12 @@ public class Faculty {
     public void setTheStaffAHod(boolean theStaffAHod) {
         isTheStaffAHod = theStaffAHod;
     }
+
+    public boolean isSignedInOnAMobile() {
+        return signedInOnAMobile;
+    }
+
+    public void setSignedInOnAMobile(boolean signedInOnAMobile) {
+        this.signedInOnAMobile = signedInOnAMobile;
+    }
 }

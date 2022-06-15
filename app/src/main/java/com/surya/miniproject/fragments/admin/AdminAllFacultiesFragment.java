@@ -74,7 +74,6 @@ public class AdminAllFacultiesFragment extends Fragment {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.exists()){
                                 // clearing the facultyMembers array list
-
                                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                                     Faculty faculty = dataSnapshot.getValue(Faculty.class);
 

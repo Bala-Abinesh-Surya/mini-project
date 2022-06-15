@@ -35,9 +35,10 @@ import com.surya.miniproject.R;
 import com.surya.miniproject.activities.MainActivity;
 import com.surya.miniproject.fragments.DeveloperFragment;
 import com.surya.miniproject.fragments.admin.AdminAllFacultiesFragment;
+import com.surya.miniproject.fragments.admin.AdminAllHodFragment;
 import com.surya.miniproject.fragments.admin.AdminNotificationsFragment;
 
-public class AdminPanel extends AppCompatActivity implements DeveloperFragment.DevelopersBottomSheet, AdminAllFacultiesFragment.StaffDetailsBottomSheet {
+public class AdminPanel extends AppCompatActivity implements DeveloperFragment.DevelopersBottomSheet, AdminAllFacultiesFragment.StaffDetailsBottomSheet, AdminAllHodFragment.BottomSheet {
 
     // UI Elements
     private DrawerLayout drawerLayout;
@@ -186,6 +187,14 @@ public class AdminPanel extends AppCompatActivity implements DeveloperFragment.D
     // returning the staff details bottom sheet
     @Override
     public View GiveStaffDetailsBottomSheet() {
+        return LayoutInflater.from(this)
+                .inflate(R.layout.staff_info_bottom_sheet, (ConstraintLayout) findViewById(R.id.admin_all_faculty_bottom_sheet), false);
+    }
+
+    // returning the staff details bottom sheet
+    // for the all Hods fragment
+    @Override
+    public View giveStaffBottomSheet() {
         return LayoutInflater.from(this)
                 .inflate(R.layout.staff_info_bottom_sheet, (ConstraintLayout) findViewById(R.id.admin_all_faculty_bottom_sheet), false);
     }

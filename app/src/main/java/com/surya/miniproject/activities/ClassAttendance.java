@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -97,6 +99,9 @@ public class ClassAttendance extends AppCompatActivity {
     // inflating the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // clearing the menu if any exists
+        menu.clear();
+
         if( (getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).getBoolean(FACULTY_IS_AN_HOD, false))
             || (classAdvisor.equals(facultyName)) ){
             // inflating the menu, if the faculty is the HOD or the class advisor
@@ -138,10 +143,11 @@ public class ClassAttendance extends AppCompatActivity {
                                     getMenuInflater().inflate(R.menu.request_menu, menu);
                                 }
                             }
-//                            else{
-//                                // inflating the request access menu
-//                                getMenuInflater().inflate(R.menu.request_menu, menu);
-//                            }
+                            else{
+                                // no requests have been made by any staff to any staff
+                                // inflating the request access menu
+                                getMenuInflater().inflate(R.menu.request_menu, menu);
+                            }
                         }
 
                         @Override
