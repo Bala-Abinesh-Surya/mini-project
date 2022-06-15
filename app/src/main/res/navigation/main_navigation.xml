@@ -26,4 +26,9 @@
         android:name="com.surya.miniproject.fragments.RequestsFragment"
         android:label="Requests"
         tools:layout="@layout/fragment_requests" />
+    <fragment
+        android:id="@+id/menu_leave"
+        android:name="com.surya.miniproject.fragments.LeaveFragment"
+        android:label="Working Days"
+        tools:layout="@layout/fragment_leave" />
 </navigation>

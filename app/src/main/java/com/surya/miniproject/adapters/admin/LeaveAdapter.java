@@ -31,6 +31,7 @@ public class LeaveAdapter extends RecyclerView.Adapter{
     private final ArrayList<Integer> original;
     private RecyclerView leaves;
     private ArrayList<Integer> leavesArrayList = new ArrayList<>();
+    private int purpose = 0;
 
     // Constructor
     public LeaveAdapter(Context context, ArrayList<Integer> status, RecyclerView recyclerView) {
@@ -47,6 +48,17 @@ public class LeaveAdapter extends RecyclerView.Adapter{
         FullLeaveAdapter adapter = new FullLeaveAdapter(context, leavesArrayList);
         leaves.setAdapter(adapter);
         leaves.setLayoutManager(new GridLayoutManager(context, 5));
+    }
+
+    public LeaveAdapter(Context context, ArrayList<Integer> status){
+        this.context = context;
+        LeaveAdapter.status = status;
+        this.purpose = 1;
+
+        // initialising leaves array list
+        initialiseLeaveData();
+
+        this.original = (ArrayList<Integer>) leavesArrayList.clone();
     }
 
     // setter methods
@@ -73,16 +85,21 @@ public class LeaveAdapter extends RecyclerView.Adapter{
             class Background{
                 // Constructor
                 public Background(){
-                    if(status.get(position) == 0){
-                        if(LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), position + 1, 0, 1).getDayOfWeek().equals(DayOfWeek.SUNDAY)){
-                            ((LeaveViewHolder) holder).circle.setImageResource(R.drawable.circle_red);
-                        }
-                        else{
-                            ((LeaveViewHolder) holder).circle.setImageResource(R.drawable.circle_leave);
-                        }
+                    if((position + 1) < LocalDateTime.now().getDayOfMonth()){
+                        ((LeaveViewHolder) holder).circle.setImageResource(R.drawable.circle_grey);
                     }
                     else{
-                        ((LeaveViewHolder) holder).circle.setImageResource(R.drawable.circle);
+                        if(status.get(position) == 0){
+                            if(LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), position + 1, 0, 1).getDayOfWeek().equals(DayOfWeek.SUNDAY)){
+                                ((LeaveViewHolder) holder).circle.setImageResource(R.drawable.circle_red);
+                            }
+                            else{
+                                ((LeaveViewHolder) holder).circle.setImageResource(R.drawable.circle_leave);
+                            }
+                        }
+                        else{
+                            ((LeaveViewHolder) holder).circle.setImageResource(R.drawable.circle);
+                        }
                     }
                 }
             }
@@ -93,36 +110,38 @@ public class LeaveAdapter extends RecyclerView.Adapter{
             ((LeaveViewHolder) holder).circle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if((position + 1) < LocalDateTime.now().getDayOfMonth()){
-                        Toast.makeText(context, "It's past time", Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        if(original.contains(position + 1)){
-                            Toast.makeText(context, "It's is a Sunday", Toast.LENGTH_SHORT).show();
+                    if(purpose == 0){
+                        if((position + 1) < LocalDateTime.now().getDayOfMonth()){
+                            Toast.makeText(context, "It's past time", Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            if(status.get(position) == 0){
-                                // leave
-                                // changing it to working day - 1
-                                status.remove(position);
-                                status.add(position, 1);
+                            if(LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), position + 1, 0, 1).getDayOfWeek().equals(DayOfWeek.SUNDAY)){
+                                Toast.makeText(context, "It's is a Sunday", Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                // working day
-                                // changing it to leave - 0
-                                status.remove(position);
-                                status.add(position, 0);
+                                if(status.get(position) == 0){
+                                    // leave
+                                    // changing it to working day - 1
+                                    status.remove(position);
+                                    status.add(position, 1);
+                                }
+                                else{
+                                    // working day
+                                    // changing it to leave - 0
+                                    status.remove(position);
+                                    status.add(position, 0);
+                                }
+
+                                initialiseLeaveData();
+
+                                // setting up the adapter for the leaves recycler view
+                                FullLeaveAdapter adapter = new FullLeaveAdapter(context, leavesArrayList);
+                                leaves.setAdapter(adapter);
+                                leaves.setLayoutManager(new GridLayoutManager(context, 5));
+
+                                // changing the background of the image
+                                new Background();
                             }
-
-                            initialiseLeaveData();
-
-                            // setting up the adapter for the leaves recycler view
-                            FullLeaveAdapter adapter = new FullLeaveAdapter(context, leavesArrayList);
-                            leaves.setAdapter(adapter);
-                            leaves.setLayoutManager(new GridLayoutManager(context, 5));
-
-                            // changing the background of the image
-                            new Background();
                         }
                     }
                 }

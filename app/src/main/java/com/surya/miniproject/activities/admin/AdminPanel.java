@@ -36,9 +36,11 @@ import com.surya.miniproject.activities.MainActivity;
 import com.surya.miniproject.fragments.DeveloperFragment;
 import com.surya.miniproject.fragments.admin.AdminAllFacultiesFragment;
 import com.surya.miniproject.fragments.admin.AdminAllHodFragment;
+import com.surya.miniproject.fragments.admin.AdminMarkLeaves;
 import com.surya.miniproject.fragments.admin.AdminNotificationsFragment;
 
-public class AdminPanel extends AppCompatActivity implements DeveloperFragment.DevelopersBottomSheet, AdminAllFacultiesFragment.StaffDetailsBottomSheet, AdminAllHodFragment.BottomSheet {
+public class AdminPanel extends AppCompatActivity implements DeveloperFragment.DevelopersBottomSheet,
+        AdminAllFacultiesFragment.StaffDetailsBottomSheet, AdminAllHodFragment.BottomSheet {
 
     // UI Elements
     private DrawerLayout drawerLayout;

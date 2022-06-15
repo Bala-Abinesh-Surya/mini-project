@@ -19,6 +19,14 @@
         </menu>
     </item>
 
+    <item android:title="Working Days">
+        <menu>
+            <item android:title="Working Days"
+                android:icon="@drawable/leave"
+                android:id="@+id/menu_leave"/>
+        </menu>
+    </item>
+
     <item
         android:title="Notifications">
         <menu>

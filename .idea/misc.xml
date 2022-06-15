@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/MiniProject/app/src/main/res/drawable/circle.xml" value="0.189" />
+        <entry key="..\:/MiniProject/app/src/main/res/drawable/circle_grey.xml" value="0.189" />
         <entry key="..\:/MiniProject/app/src/main/res/drawable/circle_leave.xml" value="0.189" />
+        <entry key="..\:/MiniProject/app/src/main/res/drawable/circle_red.xml" value="0.189" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/absentees_list.xml" value="0.264" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_admin_panel.xml" value="0.20512820512820512" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_attendance_editing.xml" value="0.264" />
@@ -29,6 +31,7 @@
         <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_h_o_d_add_staffs.xml" value="0.13162393162393163" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_h_o_d_staffs_list.xml" value="0.13162393162393163" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_home.xml" value="0.13162393162393163" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_leave.xml" value="0.264" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_monthly_export.xml" value="0.13162393162393163" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_notification.xml" value="0.13162393162393163" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_profile.xml" value="0.4" />
@@ -44,6 +47,8 @@
         <entry key="..\:/MiniProject/app/src/main/res/layout/staff_info_bottom_sheet.xml" value="0.4" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/staffs_list.xml" value="0.13162393162393163" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/students_list.xml" value="0.13162393162393163" />
+        <entry key="..\:/MiniProject/app/src/main/res/menu/hod_menu.xml" value="0.20512820512820512" />
+        <entry key="..\:/MiniProject/app/src/main/res/menu/main_menu.xml" value="0.20512820512820512" />
       </map>
     </option>
   </component>

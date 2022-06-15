@@ -1,9 +1,12 @@
 package com.surya.miniproject.fragments.admin;
 
+import static com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED;
+import static com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN;
 import static com.surya.miniproject.constants.Strings.LEAVES;
 
 import static java.time.DayOfWeek.SUNDAY;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,12 +25,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.surya.miniproject.R;
 import com.surya.miniproject.adapters.admin.LeaveAdapter;
+import com.surya.miniproject.models.Leave;
 
 import java.lang.ref.WeakReference;
 import java.time.DayOfWeek;
@@ -66,9 +74,12 @@ public class AdminMarkLeaves extends Fragment {
         view.findViewById(R.id.admin_leave_marking_update_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Leave leave = new Leave();
+                leave.setLeaves(LeaveAdapter.status);
+
                 Map<String, Object> map = new HashMap<String, Object>(){
                     {
-                        put("leaves", LeaveAdapter.status);
+                        put("leaves", leave);
                     }
                 };
 
@@ -77,9 +88,18 @@ public class AdminMarkLeaves extends Fragment {
                         .child(LEAVES)
                         .child(LocalDateTime.now().getYear()+"")
                         .child(LocalDateTime.now().getMonth()+"")
-                        .updateChildren(map);
-
-                Toast.makeText(getContext(), "Leaves Updated", Toast.LENGTH_SHORT).show();
+                        .updateChildren(map)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            Toast.makeText(getContext(), "Leaves Updated", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else{
+                                            Toast.makeText(getContext(), "Leaves not updated.. Try Again", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
             }
         });
 
@@ -108,7 +128,15 @@ public class AdminMarkLeaves extends Fragment {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.exists()){
+                                // attendance for this month has been updated
+                                Leave leave = snapshot.child("leaves").getValue(Leave.class);
 
+                                ArrayList<Integer> leaves = leave.getLeaves();
+
+                                // setting up the adapter for the leaves recycler view
+                                LeaveAdapter adapter = new LeaveAdapter(markLeaves.getContext(), leaves, markLeaves.leaves);
+                                markLeaves.workingDays.setAdapter(adapter);
+                                markLeaves.workingDays.setLayoutManager(new GridLayoutManager(markLeaves.getContext(), 5));
                             }
                             else{
                                 // snapshot does not exist
