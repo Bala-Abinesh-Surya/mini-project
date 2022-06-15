@@ -1,5 +1,6 @@
 package com.surya.miniproject.activities;
 
+import static com.surya.miniproject.constants.Integers.JOB_NOTIFICATION_UPDATE;
 import static com.surya.miniproject.constants.Strings.APP_DEFAULTS;
 import static com.surya.miniproject.constants.Strings.DO_NOT_ASK_PIN_FOR_HOD_PANEL;
 import static com.surya.miniproject.constants.Strings.FACULTIES;
@@ -22,6 +23,10 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.app.job.JobService;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;

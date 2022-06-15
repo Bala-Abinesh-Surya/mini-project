@@ -38,6 +38,15 @@
         </menu>
     </item>
 
+    <item android:title="Leaves">
+        <menu>
+            <item
+                android:title="Mark Leaves"
+                android:id="@+id/admin_menu_mark_leaves"
+                android:icon="@drawable/leave"/>
+        </menu>
+    </item>
+
     <item android:title="Contact Us">
         <menu>
             <item

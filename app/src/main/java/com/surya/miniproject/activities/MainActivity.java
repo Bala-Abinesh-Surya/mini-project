@@ -282,62 +282,62 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 adminImageClicked++;
 
-//                Intent intent = new Intent(MainActivity.this, AdminPanel.class);
-//                                            startActivity(intent);
-//                                            finish();
-
-                if(adminImageClicked >= 5){
-                    // resetting the count down
-                    adminImageClicked = 0;
-
-                    // inflating the admin panel bottom sheet
-                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetDialogTheme);
-                    View bottomSheetView = LayoutInflater.from(MainActivity.this)
-                            .inflate(R.layout.admin_panel_bottom_sheet, (ConstraintLayout) findViewById(R.id.admin_panel_bottom_sheet_container));
-
-                    class Admin{
-                        private final EditText editText;
-
-                        // Constructor
-                        public Admin(View view) {
-                            Button enter = view.findViewById(R.id.admin_panel_btn);
-                            editText = view.findViewById(R.id.admin_master_password);
-
-                            // on click listener for the button
-                            enter.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    String password = editText.getText().toString();
-
-                                    if(password.length() == 0){
-                                        Toast.makeText(MainActivity.this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
-                                    }
-                                    else{
-                                        if(password.equals(ADMIN_PIN)){
-                                            // passing the user to the Admin Panel
-                                            Intent intent = new Intent(MainActivity.this, AdminPanel.class);
+                Intent intent = new Intent(MainActivity.this, AdminPanel.class);
                                             startActivity(intent);
                                             finish();
-                                        }
-                                        else{
-                                            // wrong pin
-                                            // clearing the editText
-                                            editText.setText("");
-                                            Toast.makeText(MainActivity.this, "Wrong Master Password!!!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
 
-                                    bottomSheetDialog.dismiss();
-                                }
-                            });
-                        }
-                    }
-
-                    new Admin(bottomSheetView);
-
-                    bottomSheetDialog.setContentView(bottomSheetView);
-                    bottomSheetDialog.show();
-                }
+//                if(adminImageClicked >= 5){
+//                    // resetting the count down
+//                    adminImageClicked = 0;
+//
+//                    // inflating the admin panel bottom sheet
+//                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetDialogTheme);
+//                    View bottomSheetView = LayoutInflater.from(MainActivity.this)
+//                            .inflate(R.layout.admin_panel_bottom_sheet, (ConstraintLayout) findViewById(R.id.admin_panel_bottom_sheet_container));
+//
+//                    class Admin{
+//                        private final EditText editText;
+//
+//                        // Constructor
+//                        public Admin(View view) {
+//                            Button enter = view.findViewById(R.id.admin_panel_btn);
+//                            editText = view.findViewById(R.id.admin_master_password);
+//
+//                            // on click listener for the button
+//                            enter.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    String password = editText.getText().toString();
+//
+//                                    if(password.length() == 0){
+//                                        Toast.makeText(MainActivity.this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                    else{
+//                                        if(password.equals(ADMIN_PIN)){
+//                                            // passing the user to the Admin Panel
+//                                            Intent intent = new Intent(MainActivity.this, AdminPanel.class);
+//                                            startActivity(intent);
+//                                            finish();
+//                                        }
+//                                        else{
+//                                            // wrong pin
+//                                            // clearing the editText
+//                                            editText.setText("");
+//                                            Toast.makeText(MainActivity.this, "Wrong Master Password!!!", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    }
+//
+//                                    bottomSheetDialog.dismiss();
+//                                }
+//                            });
+//                        }
+//                    }
+//
+//                    new Admin(bottomSheetView);
+//
+//                    bottomSheetDialog.setContentView(bottomSheetView);
+//                    bottomSheetDialog.show();
+//                }
             }
         });
     }

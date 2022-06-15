@@ -30,4 +30,9 @@
         android:name="com.surya.miniproject.fragments.DeveloperFragment"
         android:label="The Fab Four"
         tools:layout="@layout/fragment_developer" />
+    <fragment
+        android:id="@+id/admin_menu_mark_leaves"
+        android:name="com.surya.miniproject.fragments.admin.AdminMarkLeaves"
+        android:label="Leaves"
+        tools:layout="@layout/fragment_admin_mark_leaves" />
 </navigation>

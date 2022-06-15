@@ -62,4 +62,6 @@ public class Strings {
     public static final String REQUEST_TIMED_OUT = "RequestTimedOut";
     public static final String REQUEST_ONE_TIME = "RequestOneTime";
     public static final String REQUEST_UNLIMITED_ACCESS = "RequestUnlimitedAccess";
+
+    public static final String LEAVES = "Leaves";
 }
