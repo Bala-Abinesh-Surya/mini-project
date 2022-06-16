@@ -45,6 +45,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter {
         this.dates = dates;
 
         // computing the table
+        // list of attendance contains, list of json strings (Hashtable<student_name, value>)
         for(Attendance a : results){
             Type type = new TypeToken<Hashtable<String, String>>(){}.getType();
             Hashtable<String, String> table = new Gson().fromJson(a.getJson(), type);

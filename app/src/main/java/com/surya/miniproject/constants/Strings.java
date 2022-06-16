@@ -64,4 +64,5 @@ public class Strings {
     public static final String REQUEST_UNLIMITED_ACCESS = "RequestUnlimitedAccess";
 
     public static final String LEAVES = "Leaves";
+    public static final String TODAY_IS_A_LEAVE = "TodayIsALeave";
 }

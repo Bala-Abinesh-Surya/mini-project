@@ -10,8 +10,10 @@
         <entry key="..\:/MiniProject/app/src/main/res/layout/absentees_list.xml" value="0.264" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_admin_panel.xml" value="0.20512820512820512" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_attendance_editing.xml" value="0.264" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/activity_attendance_marking.xml" value="0.20512820512820512" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_dash_board.xml" value="0.20512820512820512" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/activity_today_attendance.xml" value="0.264" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_todays_attendance.xml" value="0.264" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/admin_all_faculty_members.xml" value="0.536" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/admin_all_staffs.xml" value="0.20427350427350427" />
@@ -28,7 +30,7 @@
         <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_admin_mark_leaves.xml" value="0.4" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_admin_notifications.xml" value="0.13162393162393163" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_developer.xml" value="0.264" />
-        <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_h_o_d_add_staffs.xml" value="0.13162393162393163" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_h_o_d_add_staffs.xml" value="0.264" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_h_o_d_staffs_list.xml" value="0.13162393162393163" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_home.xml" value="0.13162393162393163" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/fragment_leave.xml" value="0.264" />
@@ -46,7 +48,7 @@
         <entry key="..\:/MiniProject/app/src/main/res/layout/settings_activity.xml" value="0.16" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/staff_info_bottom_sheet.xml" value="0.4" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/staffs_list.xml" value="0.13162393162393163" />
-        <entry key="..\:/MiniProject/app/src/main/res/layout/students_list.xml" value="0.13162393162393163" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/students_list.xml" value="0.264" />
         <entry key="..\:/MiniProject/app/src/main/res/menu/hod_menu.xml" value="0.20512820512820512" />
         <entry key="..\:/MiniProject/app/src/main/res/menu/main_menu.xml" value="0.20512820512820512" />
       </map>

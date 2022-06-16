@@ -31,8 +31,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.FirebaseDatabase;
 import com.surya.miniproject.R;
 import com.surya.miniproject.activities.MainActivity;
+import com.surya.miniproject.background.IsTodayALeaveAsyncTask;
 import com.surya.miniproject.fragments.DeveloperFragment;
 import com.surya.miniproject.fragments.admin.AdminAllFacultiesFragment;
 import com.surya.miniproject.fragments.admin.AdminAllHodFragment;
@@ -162,6 +164,9 @@ public class AdminPanel extends AppCompatActivity implements DeveloperFragment.D
                 return false;
             }
         });
+
+        // checking if today is leave or not
+        new IsTodayALeaveAsyncTask(getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).edit()).execute(FirebaseDatabase.getInstance());
     }
 
     // method to initialise the UI Elements

@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MiniProject">
         <activity
+            android:name=".activities.TodayAttendance"
+            android:exported="false" />
+        <activity
             android:name=".activities.admin.AdminPanel"
             android:exported="false" />
         <activity
@@ -55,7 +58,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

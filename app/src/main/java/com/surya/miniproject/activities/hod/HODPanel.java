@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -22,6 +23,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,8 +31,9 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.surya.miniproject.R;
+import com.surya.miniproject.fragments.hod.HODStaffsListFragment;
 
-public class HODPanel extends AppCompatActivity {
+public class HODPanel extends AppCompatActivity implements HODStaffsListFragment.FacultyDetailsBottomSheet {
 
     // UI Elements
     private DrawerLayout drawerLayout;
@@ -173,5 +176,12 @@ public class HODPanel extends AppCompatActivity {
             alertDialog.setTitle("Exit");
             alertDialog.show();
         }
+    }
+
+    // returning the staff details bottom sheet
+    @Override
+    public View facultyDetailsBottomSheet() {
+        return LayoutInflater.from(this)
+                .inflate(R.layout.staff_info_bottom_sheet, (ConstraintLayout) findViewById(R.id.admin_all_faculty_bottom_sheet));
     }
 }

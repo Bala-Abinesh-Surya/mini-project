@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.surya.miniproject.R;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class FullLeaveAdapter extends RecyclerView.Adapter {
@@ -40,7 +41,12 @@ public class FullLeaveAdapter extends RecyclerView.Adapter {
             ((FullLeaveViewHolder) holder).date.setText(leaves.get(position) + "");
 
             // image view
-            ((FullLeaveViewHolder) holder).circle.setImageResource(R.drawable.circle_red);
+            if(LocalDateTime.now().getDayOfMonth() > leaves.get(position)){
+                ((FullLeaveViewHolder) holder).circle.setImageResource(R.drawable.circle_grey);
+            }
+            else{
+                ((FullLeaveViewHolder) holder).circle.setImageResource(R.drawable.circle_red);
+            }
         }
     }
 

@@ -1,9 +1,7 @@
 package com.surya.miniproject.activities;
 
-import static com.surya.miniproject.constants.Integers.JOB_NOTIFICATION_UPDATE;
 import static com.surya.miniproject.constants.Strings.APP_DEFAULTS;
 import static com.surya.miniproject.constants.Strings.DO_NOT_ASK_PIN_FOR_HOD_PANEL;
-import static com.surya.miniproject.constants.Strings.FACULTIES;
 import static com.surya.miniproject.constants.Strings.FACULTY_GENDER;
 import static com.surya.miniproject.constants.Strings.FACULTY_IS_AN_HOD;
 import static com.surya.miniproject.constants.Strings.FACULTY_SIGNED_IN;
@@ -15,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.provider.FontsContractCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -23,10 +20,6 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.app.job.JobService;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -45,13 +38,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.surya.miniproject.R;
+import com.surya.miniproject.background.IsTodayALeaveAsyncTask;
 import com.surya.miniproject.activities.hod.HODPanel;
 import com.surya.miniproject.activities.hod.HODPanelEntering;
 import com.surya.miniproject.fragments.RequestsFragment;
 import com.surya.miniproject.models.HOD;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class DashBoard extends AppCompatActivity implements RequestsFragment.BottomSheetViewSettingInterface {
 
@@ -243,6 +234,9 @@ public class DashBoard extends AppCompatActivity implements RequestsFragment.Bot
                 }
             }
         });
+
+        // checking if today is leave
+        new IsTodayALeaveAsyncTask(getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).edit()).execute(FirebaseDatabase.getInstance());
     }
 
     // method to initialise the UI Elements

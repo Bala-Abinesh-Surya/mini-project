@@ -40,14 +40,14 @@ public class PresentAbsentAdapter extends RecyclerView.Adapter {
             String date = attendance.get(position);
 
             if(date.contains("-")){
-                // displaying the data
+                // displaying the date
                 String[] temp = date.split("-"); // 3, 6, 2022
                 String ans = temp[0] + "/" + temp[1]; // 3/6
 
                 ((PresentAbsentViewHolder) holder).result.setText(ans);
             }
             else{
-                // displaying the data
+                // displaying the attendance data
                 ((PresentAbsentViewHolder) holder).result.setText(date);
             }
         }

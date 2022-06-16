@@ -47,12 +47,12 @@
                 android:id="@+id/textView20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="200dp"
+                android:layout_marginTop="15dp"
                 android:text="Faculty Department"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/hod_faculty_gender_group" />
+                app:layout_constraintTop_toBottomOf="@+id/hod_faculty_designation" />
 
             <RadioGroup
                 android:id="@+id/hod_faculty_department"
@@ -134,6 +134,12 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView23">
+
+                <RadioButton
+                    android:id="@+id/hod_fac_dr_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dr." />
 
                 <RadioButton
                     android:id="@+id/hod_fac_mr_des"

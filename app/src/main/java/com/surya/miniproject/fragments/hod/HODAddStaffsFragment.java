@@ -117,6 +117,9 @@ public class HODAddStaffsFragment extends Fragment {
                 else if(group.getCheckedRadioButtonId() == R.id.hod_fac_mrs_des){
                     designationValue = "Mrs. ";
                 }
+                else if(group.getCheckedRadioButtonId() == R.id.hod_fac_dr_des){
+                    designationValue = "Dr. ";
+                }
                 else{
                     // Designation - Ms.
                     designationValue = "Ms. ";
@@ -166,18 +169,22 @@ public class HODAddStaffsFragment extends Fragment {
 
                         if(facultyName.length() == 0){
                             Toast.makeText(getContext(), "Faculty Name cannot be empty!!!", Toast.LENGTH_SHORT).show();
+                            return;
                         }
 
                         else if(facultyGender == null){
                             Toast.makeText(getContext(), "Choose a gender", Toast.LENGTH_SHORT).show();
+                            return;
                         }
 
                         else if(designationValue == null){
                             Toast.makeText(getContext(), "Choose a designation", Toast.LENGTH_SHORT).show();
+                            return;
                         }
 
                         else if(departmentValue == null){
                             Toast.makeText(getContext(), "Choose a department", Toast.LENGTH_SHORT).show();
+                            return;
                         }
 
                         // checking if any faculty members has this same name
