@@ -25,6 +25,21 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class LeaveAdapter extends RecyclerView.Adapter{
+    /*
+    *
+    * Used for two purposes
+    *
+    * 1. PURPOSE - 0:
+    *   - To Show the working days and leaves in a month along with the leaves recyler view
+    *   - for th admin
+    *   - also letting the admin to edit those
+    *
+    * 2. Purpose - 1:
+    *   - To just show the data for the faculty or the hod
+    *   - No leaves recycler view
+    *   - No editing allowed
+    *
+    * */
 
     private final Context context;
     public static ArrayList<Integer> status;
@@ -85,6 +100,7 @@ public class LeaveAdapter extends RecyclerView.Adapter{
             class Background{
                 // Constructor
                 public Background(){
+                    // background is grey, if we are past those dates
                     if((position + 1) < LocalDateTime.now().getDayOfMonth()){
                         ((LeaveViewHolder) holder).circle.setImageResource(R.drawable.circle_grey);
                     }
@@ -111,6 +127,7 @@ public class LeaveAdapter extends RecyclerView.Adapter{
                 @Override
                 public void onClick(View v) {
                     if(purpose == 0){
+                        // only works for the admin
                         if((position + 1) < LocalDateTime.now().getDayOfMonth()){
                             Toast.makeText(context, "It's past time", Toast.LENGTH_SHORT).show();
                         }
