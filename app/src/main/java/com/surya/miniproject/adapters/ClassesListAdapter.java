@@ -8,11 +8,13 @@ import static com.surya.miniproject.constants.Strings.CLASS_PUSH_ID;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -21,22 +23,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.surya.miniproject.R;
 import com.surya.miniproject.activities.ClassAttendance;
+import com.surya.miniproject.activities.TodayAttendance;
+import com.surya.miniproject.models.Attendance;
 import com.surya.miniproject.models.Class;
+import com.surya.miniproject.models.CurrentClass;
+import com.surya.miniproject.models.Student;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class ClassesListAdapter extends RecyclerView.Adapter {
+public class ClassesListAdapter extends RecyclerView.Adapter{
 
     private ArrayList<Class> classes;
     private Context context;
     private Hashtable<String, String> advisors;
+
+    public static ArrayList<Student> studentsArrayList;
 
     // Constructor
     public ClassesListAdapter(ArrayList<Class> classes, Context context, Hashtable<String, String> advisors) {
         this.classes = classes;
         this.context = context;
         this.advisors = advisors;
+    }
+
+    public ClassesListAdapter(){
+
     }
 
     @NonNull

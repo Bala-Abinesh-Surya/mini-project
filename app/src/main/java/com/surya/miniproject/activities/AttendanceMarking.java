@@ -18,6 +18,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,7 +29,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.surya.miniproject.R;
+import com.surya.miniproject.adapters.AttendanceAdapter;
 import com.surya.miniproject.adapters.AttendanceMarkingAdapter;
+import com.surya.miniproject.adapters.ClassesListAdapter;
 import com.surya.miniproject.details.Data;
 import com.surya.miniproject.models.Attendance;
 import com.surya.miniproject.models.Notification;
@@ -56,6 +59,16 @@ public class AttendanceMarking extends AppCompatActivity {
         finish();
     }
 
+    // menu item clicks
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            onBackPressed();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +84,9 @@ public class AttendanceMarking extends AppCompatActivity {
         // setting the title of the Action bar
         getSupportActionBar().setTitle(className);
 
+        // enabling the back button in the action bar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // changing the name
         classNameText.setText(className);
         editBy.setText(facultyName);
@@ -84,73 +100,78 @@ public class AttendanceMarking extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // creating an Attendance object
-                Attendance a = new Attendance(className, new Functions().date());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // creating an Attendance object
+                        Attendance a = new Attendance(className, new Functions().date());
 
-                class Compute{
-                    private String json(){
-                        // computing the hashtable
-                        Hashtable<String, String> table = new Hashtable<>();
+                        class Compute{
+                            private String json(){
+                                // computing the hashtable
+                                Hashtable<String, String> table = new Hashtable<>();
 
-                        for(int i = 0; i < ClassAttendance.students.size(); i++){
-                            table.put(ClassAttendance.students.get(i).getStudentName(), attendance.get(i));
+                                for(int i = 0; i < AttendanceAdapter.students.size(); i++){
+                                    table.put(AttendanceAdapter.students.get(i).getStudentName(), attendance.get(i));
+                                }
+
+                                // converting the hashtable into json string
+                                return new Gson().toJson(table);
+                            }
                         }
 
-                        // converting the hashtable into json string
-                        return new Gson().toJson(table);
+                        a.setJson(new Compute().json());
+                        a.setEditedBy(facultyName);
+
+                        ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                        NetworkInfo.State mobile = conMan.getNetworkInfo(0).getState();
+                        NetworkInfo.State wifi = conMan.getNetworkInfo(1).getState();
+
+                        if (mobile == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTED) {
+                            // updating the attendance in the database
+                            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                            firebaseDatabase.getReference()
+                                    .child(ATTENDANCE)
+                                    .child(className)
+                                    .child(LocalDateTime.now().getMonth()+"-"+LocalDateTime.now().getYear()) // LocalDateTime.now().getMonth()+""
+                                    .child(new Functions().date()) // new Functions().date()
+                                    .setValue(a)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()){
+                                                // creating a notification
+                                                Notification notification = new Notification(department, facultyName, className, new Functions().date());
+                                                notification.setCategory(NOTIFICATION_UPDATE);
+
+                                                // uploading the notification in the database
+                                                firebaseDatabase.getReference()
+                                                        .child(NOTIFICATIONS)
+                                                        .child(department)
+                                                        .push()
+                                                        .setValue(notification)
+                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                // do exactly what the back button does
+                                                                onBackPressed();
+                                                            }
+                                                        });
+
+                                            }
+                                            else{
+                                                // attendance has not been updated
+                                                Toast.makeText(AttendanceMarking.this, "Failed... Try Again", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                        }
+                        else{
+                            // telling the user to turn on the mobile data/wifi
+                            Toast.makeText(AttendanceMarking.this, "Turn on the Mobile Data/Wifi to Update", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
-
-                a.setJson(new Compute().json());
-                a.setEditedBy(facultyName);
-
-                ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo.State mobile = conMan.getNetworkInfo(0).getState();
-                NetworkInfo.State wifi = conMan.getNetworkInfo(1).getState();
-
-                if (mobile == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTED) {
-                    // updating the attendance in the database
-                    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                    firebaseDatabase.getReference()
-                            .child(ATTENDANCE)
-                            .child(className)
-                            .child(LocalDateTime.now().getMonth()+"-"+LocalDateTime.now().getYear()) // LocalDateTime.now().getMonth()+""
-                            .child(new Functions().date()) // new Functions().date()
-                            .setValue(a)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        // creating a notification
-                                        Notification notification = new Notification(department, facultyName, className, new Functions().date());
-                                        notification.setCategory(NOTIFICATION_UPDATE);
-
-                                        // uploading the notification in the database
-                                        firebaseDatabase.getReference()
-                                                .child(NOTIFICATIONS)
-                                                .child(department)
-                                                .push()
-                                                .setValue(notification)
-                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                        // do exactly what the back button does
-                                                        onBackPressed();
-                                                    }
-                                                });
-
-                                    }
-                                    else{
-                                        // attendance has not been updated
-                                        Toast.makeText(AttendanceMarking.this, "Failed... Try Again", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }
-                else{
-                    // telling the user to turn on the mobile data/wifi
-                    Toast.makeText(AttendanceMarking.this, "Turn on the Mobile Data/Wifi to Update", Toast.LENGTH_SHORT).show();
-                }
+                }).start();
             }
         });
     }

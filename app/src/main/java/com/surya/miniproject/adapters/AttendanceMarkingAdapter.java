@@ -3,6 +3,7 @@ package com.surya.miniproject.adapters;
 import static com.surya.miniproject.adapters.AttendanceAdapter.students;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.LabeledIntent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +60,21 @@ public class AttendanceMarkingAdapter extends RecyclerView.Adapter {
             String regNo = student.getStudentRegNo();
             ((AttendanceMarkingViewHolder) holder).regNo.setText(regNo.substring(regNo.length() - 3));
 
+            class BackGround{
+                public BackGround(){
+                    if(attendance.get(position).equals("P")){
+                        // changing the drawable file - green color
+                        ((AttendanceMarkingViewHolder) holder).imageView.setBackgroundResource(R.drawable.circle);
+                    }
+                    else{
+                        // changing the drawable file - red color
+                        ((AttendanceMarkingViewHolder) holder).imageView.setBackgroundResource(R.drawable.circle_red);
+                    }
+                }
+            }
+
+            new BackGround();
+
             // on click listener for the image view
             // to mark either P or A
             ((AttendanceMarkingViewHolder) holder).imageView.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +86,7 @@ public class AttendanceMarkingAdapter extends RecyclerView.Adapter {
                         attendance.remove(position);
                         attendance.add(position, "A");
 
-                        // changing the drawable file - red color
-                        ((AttendanceMarkingViewHolder) holder).imageView.setBackgroundResource(R.drawable.circle_red);
+                        new BackGround();
 
                         // adding the student to the absentees array list
                         addIfNotAlreadyExists(student);
@@ -94,13 +109,12 @@ public class AttendanceMarkingAdapter extends RecyclerView.Adapter {
                         attendance.remove(position);
                         attendance.add(position, "P");
 
-                        // changing the drawable file - green color
-                        ((AttendanceMarkingViewHolder) holder).imageView.setBackgroundResource(R.drawable.circle);
+                        new BackGround();
 
                         // removing the student
                         absentees.remove(student);
 
-                        // if the size of the absentees is 0, hiding the recyler view
+                        // if the size of the absentees is 0, hiding the recycler view
                         if(absentees.size() == 0){
                             // making the absentees text visible
                             absentText.setVisibility(View.VISIBLE);

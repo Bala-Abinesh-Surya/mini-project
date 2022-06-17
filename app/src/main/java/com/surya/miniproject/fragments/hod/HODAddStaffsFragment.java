@@ -189,63 +189,6 @@ public class HODAddStaffsFragment extends Fragment {
 
                         // checking if any faculty members has this same name
                         facultyName = designationValue + facultyName; // Mr. + Anantraj
-//                        Toast.makeText(getContext(), facultyName, Toast.LENGTH_SHORT).show();
-//
-//                        final boolean[] duplicate = {false};
-//                        class name{
-//                            private void nameCheck(){
-//                                firebaseDatabase.getReference()
-//                                        .child(FACULTIES)
-//                                        .addValueEventListener(new ValueEventListener() {
-//                                            @Override
-//                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                                if(snapshot.exists()){
-//                                                    for(DataSnapshot snapshot1 : snapshot.getChildren()){
-//                                                        Faculty faculty = snapshot1.getValue(Faculty.class);
-//
-//                                                        if(! (duplicate[0])){
-//                                                            if(faculty.getFacultyName().contains(facultyName)){
-//                                                                duplicate[0] = true;
-//                                                                Toast.makeText(getContext(), "Faculty Name already exists", Toast.LENGTH_SHORT).show();
-//                                                                break;
-//                                                            }
-//                                                        }
-//                                                    }
-//
-//                                                    // all conditions have been met
-//                                                    if(! (duplicate[0])){
-//                                                        // by here the inputs are valid
-//                                                        // creating a faculty object
-//                                                        Faculty faculty = new Faculty(facultyName, departmentValue, facultyGender);
-//
-//                                                        String key = firebaseDatabase.getReference().push().getKey();
-//                                                        faculty.setFacultyPushId(key);
-//
-//                                                        // checking if the hod decided to add the faculty to any of the classes
-//                                                        if(addedClasses.size() == 0){
-//                                                            // hod did not add the faculty to any of the classes
-//                                                            // just updating the staff to the database
-//                                                            firebaseDatabase.getReference()
-//                                                                    .child(FACULTIES)
-//                                                                    .child(key)
-//                                                                    .setValue(faculty);
-//                                                        }
-//                                                        else{
-//                                                            Toast.makeText(getContext(), "hi", Toast.LENGTH_SHORT).show();
-//                                                        }
-//                                                    }
-//                                                }
-//                                            }
-//
-//                                            @Override
-//                                            public void onCancelled(@NonNull DatabaseError error) {
-//
-//                                            }
-//                                        });
-//                            }
-//                        }
-//
-//                        new name().nameCheck();
 
                         // by here the inputs are valid
                         // creating a faculty object
