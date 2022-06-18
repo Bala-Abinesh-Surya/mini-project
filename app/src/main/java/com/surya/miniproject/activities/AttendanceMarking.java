@@ -111,8 +111,8 @@ public class AttendanceMarking extends AppCompatActivity {
                                 // computing the hashtable
                                 Hashtable<String, String> table = new Hashtable<>();
 
-                                for(int i = 0; i < AttendanceAdapter.students.size(); i++){
-                                    table.put(AttendanceAdapter.students.get(i).getStudentName(), attendance.get(i));
+                                for(int i = 0; i < ClassesListAdapter.studentsArrayList.size(); i++){
+                                    table.put(ClassesListAdapter.studentsArrayList.get(i).getStudentName(), attendance.get(i));
                                 }
 
                                 // converting the hashtable into json string
@@ -157,7 +157,6 @@ public class AttendanceMarking extends AppCompatActivity {
                                                                 onBackPressed();
                                                             }
                                                         });
-
                                             }
                                             else{
                                                 // attendance has not been updated

@@ -3,5 +3,8 @@
 
     <item
         android:id="@+id/menu_staff_details"
-        android:title="Get Staff Details" />
+        android:title="Get Faculty Members" />
+    <item
+        android:id="@+id/menu_monthly_attendance"
+        android:title="Get Monthly Attendance" />
 </menu>

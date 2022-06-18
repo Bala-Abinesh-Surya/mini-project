@@ -32,7 +32,7 @@ public class Attendance {
         day = LocalDateTime.now().getDayOfMonth();
     }
 
-    public void setTable(){
+    public void setLocalTable(){
         Type type = new TypeToken<Hashtable<String, String>>(){}.getType();
         table = new Gson().fromJson(json, type);
     }
@@ -93,6 +93,4 @@ public class Attendance {
     public void setDay(int day) {
         this.day = day;
     }
-
-
 }

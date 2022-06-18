@@ -71,8 +71,10 @@ public class ClassesListAdapter extends RecyclerView.Adapter{
             ((ClassesListViewHolder) holder).constraintLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    studentsArrayList = classx.getStudents();
+
                     // passing the user to the ClassAttendance activity
-                    Intent intent = new Intent(context, ClassAttendance.class);
+                    Intent intent = new Intent(context, TodayAttendance.class);
                     // passing the className, pushId, class advisor, class department as the intent
                     intent.putExtra(CLASS_NAME, classx.getClassName());
                     intent.putExtra(CLASS_PUSH_ID, classx.getClassPushId());

@@ -170,12 +170,10 @@ public class StaffsDetailsAdapter extends RecyclerView.Adapter {
                                 if(facultyName.equals(faculty)){
                                     Toast.makeText(context, "Cannot remove yourself!!!", Toast.LENGTH_SHORT).show();
                                 }
-
                                 // checking if the staff is the class advisor
                                 else if(CurrentClass.classAdvisor.equals(staffName)){
                                     Toast.makeText(context, "Cannot remove the Class Advisor!!!", Toast.LENGTH_SHORT).show();
                                 }
-
                                 else{
                                     // removing the staff
                                     remove(faculty);

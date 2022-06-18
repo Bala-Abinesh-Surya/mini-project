@@ -38,7 +38,7 @@ public class AttendanceMarkingAdapter extends RecyclerView.Adapter {
         this.absenteesNumber = number;
 
         // initialising the dummy attendance
-        attendance = makeDummyAttendance(students.size());
+        attendance = makeDummyAttendance(ClassesListAdapter.studentsArrayList.size());
 
         absentees = new ArrayList<>();
     }
@@ -54,7 +54,7 @@ public class AttendanceMarkingAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if(holder.getClass() == AttendanceMarkingViewHolder.class){
             // displaying the data
-            Student student = students.get(position);
+            Student student = ClassesListAdapter.studentsArrayList.get(position);
 
             // regNo
             String regNo = student.getStudentRegNo();
@@ -151,7 +151,7 @@ public class AttendanceMarkingAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return students.size();
+        return ClassesListAdapter.studentsArrayList.size();
     }
 
     // view holder class

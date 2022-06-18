@@ -1,13 +1,18 @@
 package com.surya.miniproject.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.surya.miniproject.R;
@@ -19,14 +24,27 @@ import java.util.Hashtable;
 public class TodayAttendanceAdapter extends RecyclerView.Adapter {
 
     private final Context context;
-    private final Hashtable<String, String> attendance;
+    public static Hashtable<String, String> attendance;
     private final ArrayList<Student> students;
+    private final int purpose;
+    public static boolean forHereToEditTheAttendance = false;
+    private final Button update;
+    private final RecyclerView recyclerView;
+    private final TextView noAbsenteesText;
+    private ArrayList<Student> absentees = new ArrayList<>();
 
     // Constructor
-    public TodayAttendanceAdapter(Context context, ArrayList<Student> students, Hashtable<String, String> attendance) {
+    public TodayAttendanceAdapter(Context context, ArrayList<Student> students, Hashtable<String, String> attendance, int purpose, Button button, RecyclerView recyclerView, TextView noAbsenteesText) {
         this.context = context;
         this.students = students;
-        this.attendance = attendance;
+        TodayAttendanceAdapter.attendance = attendance;
+        this.purpose = purpose;
+        this.update = button;
+        this.recyclerView = recyclerView;
+        this.noAbsenteesText = noAbsenteesText;
+
+        // making the button invisible
+        update.setVisibility(View.GONE);
     }
 
     @NonNull
@@ -58,7 +76,96 @@ public class TodayAttendanceAdapter extends RecyclerView.Adapter {
                 }
             }
 
-            //new BackGround();
+            new BackGround();
+
+            // on click listener for the image view
+            ((TodayAttendanceViewHolder) holder).imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(purpose == 1){
+                        // class advisor is here to edit the attendance may be...
+                        if(forHereToEditTheAttendance){
+                            // checking the status of the attendance now
+                            String studentName = students.get(position).getStudentName();
+
+                            class Edit{
+                                public Edit(){
+                                    // clearing the absentees array list
+                                    absentees.clear();
+
+                                    for(Student student : students){
+                                        if(attendance.get(student.getStudentName()).equals("A")){
+                                            absentees.add(student);
+                                        }
+                                    }
+
+                                    if(absentees.size() == 0){
+                                        // no absentees there
+                                        // so making the noAbsentText visible
+                                        noAbsenteesText.setVisibility(View.VISIBLE);
+                                        recyclerView.setVisibility(View.GONE);
+                                    }
+                                    else{
+                                        // absentees are there
+                                        // so setting up the adapter for the absentees recycler view
+                                        noAbsenteesText.setVisibility(View.GONE);
+                                        recyclerView.setVisibility(View.VISIBLE);
+
+                                        AbsenteesListAdapter adapter = new AbsenteesListAdapter(context, absentees);
+                                        recyclerView.setAdapter(adapter);
+                                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                                    }
+                                }
+                            }
+
+                            if(attendance.get(studentName).equals("P")){
+                                // changing it to A
+                                attendance.put(studentName, "A");
+                            }
+                            else{
+                                // current is A
+                                // changing it to P
+                                attendance.put(studentName, "P");
+                            }
+
+                            new BackGround();
+                            new Edit();
+                        }
+                        else{
+                            // showing an alert to the class advisor, to check if the faculty is here to edit the attendance
+                            class Alert{
+                                public Alert(){
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                                            .setCancelable(false)
+                                            .setMessage("Do you want to edit the attendance ?")
+                                            .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    forHereToEditTheAttendance = true;
+                                                    // showing the button
+                                                    update.setVisibility(View.VISIBLE);
+                                                    dialog.dismiss();
+                                                }
+                                            })
+                                            .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    forHereToEditTheAttendance = false;
+                                                    dialog.dismiss();
+                                                }
+                                            });
+
+                                    AlertDialog dialog = builder.create();
+                                    dialog.setTitle("Edit the attendance");
+                                    dialog.show();
+                                }
+                            }
+
+                            new Alert();
+                        }
+                    }
+                }
+            });
         }
     }
 
