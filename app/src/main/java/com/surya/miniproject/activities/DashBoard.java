@@ -66,7 +66,7 @@ public class DashBoard extends AppCompatActivity implements RequestsFragment.Bot
     private int hodSecretClicked = 0;
 
     // Back Button Functionality
-    // Like MX PLayer
+    // Like MX Player
     @Override
     public void onBackPressed() {
         if(drawerLayout.isDrawerOpen(navigationView)){
@@ -182,6 +182,20 @@ public class DashBoard extends AppCompatActivity implements RequestsFragment.Bot
                 AlertDialog alertDialog = builder.create();
                 alertDialog.setTitle("Logout");
                 alertDialog.show();
+
+                return false;
+            }
+        });
+
+        // on click listener for the monthly export option in the navigation view
+        navigationView.getMenu().findItem(R.id.menu_month).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                // closing the drawer
+                drawerLayout.close();
+
+                // showing a toast to the faculty
+                Toast.makeText(DashBoard.this, "Data not sufficient to generate Monthly Report", Toast.LENGTH_SHORT).show();
 
                 return false;
             }

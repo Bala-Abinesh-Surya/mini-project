@@ -260,6 +260,8 @@ public class HODAddStaffsFragment extends Fragment {
                                                                                 .child(key)
                                                                                 .updateChildren(map);
 
+                                                                        Toast.makeText(getContext(), "Faculty Added", Toast.LENGTH_SHORT).show();
+
                                                                         // resetting the fields
                                                                         name.setText("");
                                                                     }

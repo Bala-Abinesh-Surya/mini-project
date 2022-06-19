@@ -15,4 +15,14 @@
         android:name="com.surya.miniproject.fragments.hod.HODAddStaffsFragment"
         android:label="Add a Faculty"
         tools:layout="@layout/fragment_h_o_d_add_staffs" />
+    <fragment
+        android:id="@+id/hod_remove_staff"
+        android:name="com.surya.miniproject.fragments.hod.HODRemoveAFaculty"
+        android:label="Remove a Faculty"
+        tools:layout="@layout/fragment_h_o_d_remove_a_faculty" />
+    <fragment
+        android:id="@+id/hod_class_advisor"
+        android:name="com.surya.miniproject.fragments.hod.HODClassAdvisorsFragment"
+        android:label="Class Advisors"
+        tools:layout="@layout/fragment_h_o_d_class_advisors" />
 </navigation>

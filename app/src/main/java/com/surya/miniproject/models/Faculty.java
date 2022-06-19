@@ -96,4 +96,6 @@ public class Faculty {
     public void setSignedInOnAMobile(boolean signedInOnAMobile) {
         this.signedInOnAMobile = signedInOnAMobile;
     }
+
+
 }

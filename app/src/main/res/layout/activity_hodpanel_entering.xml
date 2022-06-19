@@ -50,6 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
+        android:background="@drawable/button_background"
         android:text="LOGIN"
         app:layout_constraintEnd_toEndOf="@+id/hod_text"
         app:layout_constraintStart_toStartOf="@+id/hod_text"

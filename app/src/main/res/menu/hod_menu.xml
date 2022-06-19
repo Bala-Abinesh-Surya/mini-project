@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Faculties" >
+    <item android:title="Faculty Members" >
         <menu >
             <item
                 android:id="@+id/hod_all_faculties"
@@ -15,6 +15,13 @@
                 android:id="@+id/hod_remove_staff"
                 android:icon="@drawable/remove_faculty"
                 android:title="Remove a faculty" />
+        </menu>
+    </item>
+    <item android:title="Class Advisors">
+        <menu>
+            <item android:id="@+id/hod_class_advisor"
+                android:icon="@drawable/class_advisor"
+                android:title="Class Advisors"/>
         </menu>
     </item>
     <item android:title="Exit">

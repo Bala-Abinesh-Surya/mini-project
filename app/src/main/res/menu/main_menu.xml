@@ -12,10 +12,10 @@
                 android:title="Profile"
                 android:icon="@drawable/profile"
                 android:id="@+id/menu_profile"/>
-            <item
-                android:title="Settings"
-                android:icon="@drawable/settings"
-                android:id="@+id/menu_settings"/>
+<!--            <item-->
+<!--                android:title="Settings"-->
+<!--                android:icon="@drawable/settings"-->
+<!--                android:id="@+id/menu_settings"/>-->
         </menu>
     </item>
 
@@ -34,10 +34,10 @@
                 android:title="Notifications"
                 android:icon="@drawable/notification"
                 android:id="@+id/menu_notifications"/>
-            <item
-                android:id="@+id/menu_request"
-                android:icon="@drawable/question"
-                android:title="Requests" />
+<!--            <item-->
+<!--                android:id="@+id/menu_request"-->
+<!--                android:icon="@drawable/question"-->
+<!--                android:title="Requests" />-->
         </menu>
     </item>
 

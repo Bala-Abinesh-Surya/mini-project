@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MiniProject">
         <activity
+            android:name=".activities.hod.ClassAdvisorsPickActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.TodayAttendance"
             android:exported="false" />
         <activity

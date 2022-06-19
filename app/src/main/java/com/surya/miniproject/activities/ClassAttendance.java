@@ -91,254 +91,14 @@ public class ClassAttendance extends AppCompatActivity {
         finish();
     }
 
-    // inflating the menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // clearing the menu if any exists
-        menu.clear();
-
-        if( (getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).getBoolean(FACULTY_IS_AN_HOD, false))
-            || (classAdvisor.equals(facultyName)) ){
-            // inflating the menu, if the faculty is the HOD or the class advisor
-            getMenuInflater().inflate(R.menu.class_menu, menu);
-        }
-        else{
-            // if the staff is not an HOD or the class advisor
-            // checking if the staff has requested for the attendance already
-            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-            firebaseDatabase.getReference()
-                    .child(REQUESTS)
-                    .child(facultyDepartment)
-                    .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.exists()){
-                                // going through the requests
-                                boolean alreadyRequested = false;
-
-                                for(DataSnapshot snapshot1 : snapshot.getChildren()){
-                                    Request request = snapshot1.getValue(Request.class);
-
-                                    if(request.getClassName().equals(className)){
-                                        if(request.getRequestSender().equals(facultyName)){
-                                            // means, this faculty has already requested for this class attendance
-                                            req = request;
-                                            alreadyRequested = true;
-                                            break;
-                                        }
-                                    }
-                                }
-
-                                if(alreadyRequested){
-                                    // inflating the request accept menu
-                                    getMenuInflater().inflate(R.menu.request_status_menu, menu);
-                                }
-                                else{
-                                    // inflating the request access menu
-                                    getMenuInflater().inflate(R.menu.request_menu, menu);
-                                }
-                            }
-                            else{
-                                // no requests have been made by any staff to any staff
-                                // inflating the request access menu
-                                getMenuInflater().inflate(R.menu.request_menu, menu);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
     // menu items clicks
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // get staff details menu
-        if(item.getItemId() == R.id.menu_staff_details){
-            // passing the user to the staff details of a class activity
-            // passing the classPushId as the intent
-            Intent intent = new Intent(this, StaffDetailsActiity.class);
-            intent.putExtra(CLASS_PUSH_ID, classPushId);
-            intent.putExtra(CLASS_NAME, className);
-            startActivity(intent);
-        }
-        else if(item.getItemId() == android.R.id.home){
+        // back button in the action bar
+        if(item.getItemId() == android.R.id.home){
             onBackPressed();
         }
-        else if(item.getItemId() == R.id.menu_request_access){
-            // showing the request bottom sheet
-            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(ClassAttendance.this, R.style.BottomSheetDialogTheme);
-            View view = LayoutInflater.from(ClassAttendance.this)
-                    .inflate(R.layout.requesting_access_bottpm_sheet, (ConstraintLayout) findViewById(R.id.requesting_access_layout));
 
-            class elements{
-                private final Button button;
-                private final TextView staffName, warnText, classText;
-                private final Spinner spinner;
-                private final Request request;
-                private final ImageView imageView;
-                private final ArrayAdapter<String> adapter;
-
-                private final String[] requestString = new String[]{
-                        "Only 1 Time",
-                        "Many More Time"
-                };
-
-                // Constructor
-                public elements(View view) {
-                    // initialising the UI Elements
-                    // button
-                    button = view.findViewById(R.id.request_access);
-
-                    // image view
-                    imageView = view.findViewById(R.id.request_staff_image);
-
-                    // setting up the image
-                    if(getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).getString(FACULTY_GENDER, null).equals(MALE)){
-                        imageView.setImageResource(R.drawable.male);
-                    }
-                    else{
-                        // gender may be female, or Rather Not Say
-                        imageView.setImageResource(R.drawable.female);
-                    }
-
-                    // text view
-                    staffName = view.findViewById(R.id.request_staff_name);
-                    warnText = view.findViewById(R.id.request_warn);
-                    classText = view.findViewById(R.id.request_class_text);
-
-                    // spinner
-                    // setting up the ArrayAdapter for the spinner
-                    adapter = new ArrayAdapter(ClassAttendance.this, android.R.layout.simple_spinner_dropdown_item, requestString);
-
-                    spinner = view.findViewById(R.id.request_spinner);
-                    spinner.setAdapter(adapter);
-
-                    // setting up the facultyName and the classText
-                    staffName.setText(facultyName);
-                    classText.setText("You are requesting for " + className + " attendance");
-
-                    // setting up the request object
-                    request = new Request(
-                            facultyName,
-                            classAdvisor,
-                            REQUEST_ONE_TIME,
-                            className,
-                            new Functions().date(),
-                            false
-                    );
-
-                    warnText.setText(request.requestWarnText());
-
-                    // on item selected listener for the spinner
-                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if(position == 0){
-                                onNothingSelected(parent);
-                            }
-                            else if(position == 1){
-                                // Many More Time selected
-                                request.setRequestType(REQUEST_ONE_TIME);
-                            }
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-                            // nothing selected
-                            request.setRequestType(REQUEST_ONE_TIME);
-                        }
-                    });
-
-                    // on click listener for the button
-                    button.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // updating the request in the firebase database
-                            ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-                            NetworkInfo.State mobile = conMan.getNetworkInfo(0).getState();
-                            NetworkInfo.State wifi = conMan.getNetworkInfo(1).getState();
-
-                            if(mobile == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTED){
-                                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                                String key = firebaseDatabase.getReference().push().getKey();
-
-                                // setting up the request push id
-                                request.setRequestPushId(key);
-                                request.setRequestTimedOut(false);
-
-                                firebaseDatabase.getReference()
-                                        .child(REQUESTS)
-                                        .child(facultyDepartment)
-                                        .child(key)
-                                        .setValue(request)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                bottomSheetDialog.dismiss();
-                                            }
-                                        });
-                            }
-                            else{
-                                Toast.makeText(ClassAttendance.this, "Turn on the Mobile Data/Wifi", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }
-            }
-
-            new elements(view);
-
-            bottomSheetDialog.setContentView(view);
-            bottomSheetDialog.show();
-        }
-        else if(item.getItemId() == R.id.menu_request_status){
-            // inflating the request status bottom sheet
-            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.BottomSheetDialogTheme);
-            View view = LayoutInflater.from(ClassAttendance.this)
-                    .inflate(R.layout.request_status_bottom_sheet, (ConstraintLayout) findViewById(R.id.request_status_layout));
-
-            class elements{
-                private final View view;
-                private final TextView staffName, statusText;
-                private final ImageView imageView;
-
-                // Constructor
-                public elements(View view) {
-                    this.view = view;
-
-                    // initialising the UI Elements
-                    // text view
-                    staffName = view.findViewById(R.id.request_status_staff_name);
-                    statusText = view.findViewById(R.id.request_status_text);
-
-                    // image view
-                    imageView = view.findViewById(R.id.request_status_staff_image);
-
-                    // setting up the image
-                    if(getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).getString(FACULTY_GENDER, null).equals(MALE)){
-                        imageView.setImageResource(R.drawable.male);
-                    }
-                    else{
-                        // gender may be female, or Rather Not Say
-                        imageView.setImageResource(R.drawable.female);
-                    }
-
-                    // setting up the texts
-                    staffName.setText(facultyName);
-                    statusText.setText(req.requestStatusText());
-                }
-            }
-
-            new elements(view);
-
-            bottomSheetDialog.setContentView(view);
-            bottomSheetDialog.show();
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -354,7 +114,7 @@ public class ClassAttendance extends AppCompatActivity {
         String department = getIntent().getStringExtra(CLASS_DEPARTMENT);
 
         // creating a CurrentClass object, for future reference
-        CurrentClass currentClass = new CurrentClass(className, department, classPushId, classAdvisor);
+        //CurrentClass currentClass = new CurrentClass(className, department, classPushId, classAdvisor);
 
         // method to initialise the UI Elements
         initialiseUIElements(classAdvisor);
@@ -452,27 +212,27 @@ public class ClassAttendance extends AppCompatActivity {
         // on click listener for the floating action button
         // button visible only to the class advisor, that too only in the working days
         // in leaves, it will not be visible
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(attendanceEditedForToday){
-                    // attendance for today has been already been updated
-                    // so, passing the faculty to the AttendanceEditing activity
-                    Intent intent = new Intent(ClassAttendance.this, AttendanceEditing.class);
-                    intent.putExtra(CLASS_NAME, className);
-                    intent.putExtra(CLASS_DEPARTMENT, department);
-                    startActivity(intent);
-                }
-                else{
-                    // attendance for today, has not yet been uploaded
-                    // passing the user to the AttendanceMarking activity
-                    Intent intent = new Intent(ClassAttendance.this, AttendanceMarking.class);
-                    intent.putExtra(CLASS_NAME, className);
-                    intent.putExtra(CLASS_DEPARTMENT, department);
-                    startActivity(intent);
-                }
-            }
-        });
+//        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(attendanceEditedForToday){
+//                    // attendance for today has been already been updated
+//                    // so, passing the faculty to the AttendanceEditing activity
+//                    Intent intent = new Intent(ClassAttendance.this, AttendanceEditing.class);
+//                    intent.putExtra(CLASS_NAME, className);
+//                    intent.putExtra(CLASS_DEPARTMENT, department);
+//                    startActivity(intent);
+//                }
+//                else{
+//                    // attendance for today, has not yet been uploaded
+//                    // passing the user to the AttendanceMarking activity
+//                    Intent intent = new Intent(ClassAttendance.this, AttendanceMarking.class);
+//                    intent.putExtra(CLASS_NAME, className);
+//                    intent.putExtra(CLASS_DEPARTMENT, department);
+//                    startActivity(intent);
+//                }
+//            }
+//        });
 
         // fetching the attendance
         new FetchAttendanceAsyncTask(this, this).execute(FirebaseDatabase.getInstance());
@@ -636,6 +396,7 @@ public class ClassAttendance extends AppCompatActivity {
 
         // floating action button
         floatingActionButton = findViewById(R.id.add_attendance_btn);
+        floatingActionButton.setVisibility(View.GONE);
 
         // hiding the floating action button for all the faculty members but for the class advisor and that too nly in the working days
         if(getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).getBoolean(TODAY_IS_A_LEAVE, false)){
@@ -646,15 +407,15 @@ public class ClassAttendance extends AppCompatActivity {
             // showing the toast to the faculty that today is a holiday
             Toast.makeText(this, "Today is a holiday!", Toast.LENGTH_SHORT).show();
         }
-        else{
-            // working day
-            // so making the button visible only to the class advisor
-            if(classAdvisor.equals(facultyName)){
-                floatingActionButton.setVisibility(View.VISIBLE);
-            }
-            else{
-                floatingActionButton.setVisibility(View.GONE);
-            }
-        }
+//        else{
+//            // working day
+//            // so making the button visible only to the class advisor
+//            if(classAdvisor.equals(facultyName)){
+//                floatingActionButton.setVisibility(View.VISIBLE);
+//            }
+//            else{
+//                floatingActionButton.setVisibility(View.GONE);
+//            }
+//        }
     }
 }

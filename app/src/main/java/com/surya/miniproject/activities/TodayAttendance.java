@@ -109,6 +109,16 @@ public class TodayAttendance extends AppCompatActivity {
                 Toast.makeText(this, "Sorry! You got no permission to view", Toast.LENGTH_SHORT).show();
             }
         }
+        else{
+            // get monthly attendance menu
+            // a faculty taking any subject can view the monthly attendance
+            Intent intent = new Intent(this, ClassAttendance.class);
+            intent.putExtra(CLASS_NAME, className);
+            intent.putExtra(CLASS_PUSH_ID, classPushId);
+            intent.putExtra(CLASS_DEPARTMENT, department);
+            intent.putExtra(CLASS_ADVISOR, classAdvisor);
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }
