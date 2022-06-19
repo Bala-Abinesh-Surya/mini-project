@@ -8,7 +8,8 @@ public class CurrentClass {
     public static String department;
     public static String classPushId;
     public static String classAdvisor;
-    public static ArrayList<String> currentClassFacultyMember;
+    public static ArrayList<String> currentClassFacultyMember = new ArrayList<>();
+    public static ArrayList<String> currentFacultyHandlingClasses = new ArrayList<>();
 
     // Constructor
     public CurrentClass(String className, String department, String classPushId, String classAdvisor) {

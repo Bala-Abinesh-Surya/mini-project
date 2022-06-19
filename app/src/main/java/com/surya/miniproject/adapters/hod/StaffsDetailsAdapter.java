@@ -425,7 +425,7 @@ public class StaffsDetailsAdapter extends RecyclerView.Adapter {
 
                             // Constructor
                             public alert(){
-                                // initialising up the builder
+                                // initialising the builder
                                 builder = new AlertDialog.Builder(context);
 
                                 // setting up the builder

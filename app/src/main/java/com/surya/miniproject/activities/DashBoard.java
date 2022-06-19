@@ -42,7 +42,10 @@ import com.surya.miniproject.background.IsTodayALeaveAsyncTask;
 import com.surya.miniproject.activities.hod.HODPanel;
 import com.surya.miniproject.activities.hod.HODPanelEntering;
 import com.surya.miniproject.fragments.RequestsFragment;
+import com.surya.miniproject.models.CurrentClass;
 import com.surya.miniproject.models.HOD;
+
+import java.util.Currency;
 
 public class DashBoard extends AppCompatActivity implements RequestsFragment.BottomSheetViewSettingInterface {
 
@@ -301,6 +304,9 @@ public class DashBoard extends AppCompatActivity implements RequestsFragment.Bot
                         editor.putBoolean(FACULTY_SIGNED_IN, false);
                         editor.putBoolean(FACULTY_IS_AN_HOD, false);
                         editor.apply();
+
+                        // clearing the classes handled array list by the faculty
+                        CurrentClass.currentFacultyHandlingClasses.clear();
 
                         // passing the faculty back to the MainActivity
                         Intent intent = new Intent(DashBoard.this, MainActivity.class);

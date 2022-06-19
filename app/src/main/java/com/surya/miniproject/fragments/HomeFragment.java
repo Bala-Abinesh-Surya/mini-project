@@ -8,6 +8,7 @@ import static com.surya.miniproject.constants.Strings.CLASSES;
 import static com.surya.miniproject.constants.Strings.FACULTY_IS_AN_HOD;
 
 import android.content.Context;
+import android.icu.util.Currency;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ import com.surya.miniproject.adapters.ClassesListAdapter;
 import com.surya.miniproject.export.MonthExport;
 import com.surya.miniproject.models.Attendance;
 import com.surya.miniproject.models.Class;
+import com.surya.miniproject.models.CurrentClass;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -65,6 +67,7 @@ public class HomeFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()){
                             classes.clear();
+                            CurrentClass.currentFacultyHandlingClasses.clear();
 
                             for(DataSnapshot snapshot1 : snapshot.getChildren()){
                                 if(snapshot1.exists()){
@@ -76,6 +79,9 @@ public class HomeFragment extends Fragment {
                                         if(classx.getClassDepartment().equals(facultyDepartment)){
                                             // faculty is handling some subject for this class
                                             classes.add(classx);
+
+                                            CurrentClass.currentFacultyHandlingClasses.add(classx.getClassName());
+                                            Log.d("vikram", classx.getClassName());
 
                                             // adding the class advisor of this class to the classAdvisor Map
                                             classAdvisorMap.put(classx.getClassName(), classx.getClassAdvisor());
@@ -89,6 +95,8 @@ public class HomeFragment extends Fragment {
                                             if(faculty.equals(facultyName)){
                                                 // faculty is handling some subject for this class
                                                 classes.add(classx);
+
+                                                CurrentClass.currentFacultyHandlingClasses.add(classx.getClassName());
 
                                                 // adding the class advisor of this class to the classAdvisor Map
                                                 classAdvisorMap.put(classx.getClassName(), classx.getClassAdvisor());
