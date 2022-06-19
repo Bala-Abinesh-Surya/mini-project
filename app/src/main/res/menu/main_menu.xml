@@ -49,13 +49,13 @@
                 android:icon="@drawable/month"
                 android:id="@+id/menu_month"/>
 
-            <item android:title="Weekly Export"
-                android:id="@+id/menu_week"
-                android:icon="@drawable/daily"/>
+<!--            <item android:title="Weekly Export"-->
+<!--                android:id="@+id/menu_week"-->
+<!--                android:icon="@drawable/daily"/>-->
 
-            <item android:title="Statistics"
-                android:icon="@drawable/individual"
-                android:id="@+id/menu_statistics"/>
+<!--            <item android:title="Statistics"-->
+<!--                android:icon="@drawable/individual"-->
+<!--                android:id="@+id/menu_statistics"/>-->
         </menu>
     </item>
 

@@ -75,7 +75,7 @@ public class AdminAllClassesFragment extends Fragment {
                                 }
 
                                 // setting up the adapter for the recycler view
-                                AllClassesAdapter adapter = new AllClassesAdapter(fragment.getContext(), classes, firebaseDatabase);
+                                AllClassesAdapter adapter = new AllClassesAdapter(fragment.getContext(), classes, firebaseDatabase, 0);
                                 fragment.recyclerView.setAdapter(adapter);
                                 fragment.recyclerView.setLayoutManager(new LinearLayoutManager(fragment.getContext()));
                             }

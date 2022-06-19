@@ -9,6 +9,7 @@
         <entry key="..\:/MiniProject/app/src/main/res/drawable/circle_red.xml" value="0.189" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/absentees_list.xml" value="0.264" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_admin_panel.xml" value="0.20512820512820512" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/activity_answers_list.xml" value="0.20512820512820512" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_attendance_editing.xml" value="0.264" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_attendance_marking.xml" value="0.20512820512820512" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/activity_class_advisors_pick.xml" value="0.20512820512820512" />
@@ -56,7 +57,9 @@
         <entry key="..\:/MiniProject/app/src/main/res/layout/staff_info_bottom_sheet.xml" value="0.4" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/staffs_list.xml" value="0.13162393162393163" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/staffs_row_list.xml" value="0.264" />
+        <entry key="..\:/MiniProject/app/src/main/res/layout/stat_class_bottom_sheet.xml" value="0.4" />
         <entry key="..\:/MiniProject/app/src/main/res/layout/students_list.xml" value="0.264" />
+        <entry key="..\:/MiniProject/app/src/main/res/menu/admin_menu.xml" value="0.20512820512820512" />
         <entry key="..\:/MiniProject/app/src/main/res/menu/class_menu.xml" value="0.20512820512820512" />
         <entry key="..\:/MiniProject/app/src/main/res/menu/hod_menu.xml" value="0.20512820512820512" />
         <entry key="..\:/MiniProject/app/src/main/res/menu/main_menu.xml" value="0.20512820512820512" />

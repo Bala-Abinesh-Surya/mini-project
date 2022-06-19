@@ -45,8 +45,6 @@ import com.surya.miniproject.fragments.RequestsFragment;
 import com.surya.miniproject.models.CurrentClass;
 import com.surya.miniproject.models.HOD;
 
-import java.util.Currency;
-
 public class DashBoard extends AppCompatActivity implements RequestsFragment.BottomSheetViewSettingInterface {
 
     // UI Elements
@@ -205,19 +203,19 @@ public class DashBoard extends AppCompatActivity implements RequestsFragment.Bot
         });
 
         // on click listener for thr weekly export option in the navigation menu
-        navigationView.getMenu().findItem(R.id.menu_week).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                // closing the drawer
-                drawerLayout.close();
-
-                // passing the faculty to the WeeklyExportActivity
-                Intent intent = new Intent(DashBoard.this, WeeklyExportActivity.class);
-                startActivity(intent);
-
-                return false;
-            }
-        });
+//        navigationView.getMenu().findItem(R.id.menu_statistics).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                // closing the drawer
+//                drawerLayout.close();
+//
+//                // passing the faculty to the StatisticsActivity
+//                Intent intent = new Intent(DashBoard.this, StatisticsActivity.class);
+//                //startActivity(intent);
+//
+//                return false;
+//            }
+//        });
 
         // on click listener for the user name in the header
         headerUserName.setOnClickListener(new View.OnClickListener() {

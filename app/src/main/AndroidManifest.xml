@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MiniProject">
         <activity
+            android:name=".AnswersListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.hod.ClassAdvisorsPickActivity"
             android:exported="false" />
         <activity
@@ -26,7 +29,7 @@
             android:name=".activities.admin.AdminPanel"
             android:exported="false" />
         <activity
-            android:name=".activities.WeeklyExportActivity"
+            android:name=".activities.StatisticsActivity"
             android:exported="false" />
         <activity
             android:name=".activities.hod.StaffsAddingActivity"

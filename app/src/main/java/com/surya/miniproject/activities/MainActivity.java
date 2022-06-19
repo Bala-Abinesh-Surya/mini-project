@@ -208,6 +208,30 @@ public class MainActivity extends AppCompatActivity {
                                                                                                     }
                                                                                                 }
                                                                                             }
+
+                                                                                            // passing the user to dashboard activity
+                                                                                            Intent intent = new Intent(MainActivity.this, DashBoard.class);
+
+                                                                                            DashBoard.facultyName = faculty.getFacultyName();
+                                                                                            DashBoard.facultyPushId = faculty.getFacultyPushId();
+                                                                                            DashBoard.facultyUserName = faculty.getFacultyUserName();
+                                                                                            DashBoard.facultyGender = faculty.getFacultyGender();
+                                                                                            DashBoard.facultyDepartment = faculty.getFacultyDepartment();
+
+                                                                                            // updating the shared preferences
+                                                                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                                                            editor.putBoolean(FACULTY_SIGNED_IN, true);
+                                                                                            editor.putString(FACULTY_NAME, faculty.getFacultyName());
+                                                                                            editor.putString(FACULTY_PUSH_ID, faculty.getFacultyPushId());
+                                                                                            editor.putString(FACULTY_GENDER, faculty.getFacultyGender());
+                                                                                            editor.putString(FACULTY_USER_NAME, faculty.getFacultyUserName());
+                                                                                            editor.putString(FACULTY_DEPARTMENT, faculty.getFacultyDepartment());
+                                                                                            editor.apply();
+
+                                                                                            signedIn = true;
+
+                                                                                            startActivity(intent);
+                                                                                            finishAffinity();
                                                                                         }
                                                                                     }
 
@@ -217,29 +241,7 @@ public class MainActivity extends AppCompatActivity {
                                                                                     }
                                                                                 });
 
-                                                                        // passing the user to dashboard activity
-                                                                        Intent intent = new Intent(MainActivity.this, DashBoard.class);
 
-                                                                        DashBoard.facultyName = faculty.getFacultyName();
-                                                                        DashBoard.facultyPushId = faculty.getFacultyPushId();
-                                                                        DashBoard.facultyUserName = faculty.getFacultyUserName();
-                                                                        DashBoard.facultyGender = faculty.getFacultyGender();
-                                                                        DashBoard.facultyDepartment = faculty.getFacultyDepartment();
-
-                                                                        // updating the shared preferences
-                                                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                                                        editor.putBoolean(FACULTY_SIGNED_IN, true);
-                                                                        editor.putString(FACULTY_NAME, faculty.getFacultyName());
-                                                                        editor.putString(FACULTY_PUSH_ID, faculty.getFacultyPushId());
-                                                                        editor.putString(FACULTY_GENDER, faculty.getFacultyGender());
-                                                                        editor.putString(FACULTY_USER_NAME, faculty.getFacultyUserName());
-                                                                        editor.putString(FACULTY_DEPARTMENT, faculty.getFacultyDepartment());
-                                                                        editor.apply();
-
-                                                                        signedIn = true;
-
-                                                                        startActivity(intent);
-                                                                        finishAffinity();
                                                                     }
                                                                     else{
                                                                         // password is wrong
@@ -253,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
 
                                                         if( ! signedIn){
                                                             // means the user entered invalid username as password
-                                                            Toast.makeText(MainActivity.this, "Invalid credentials!", Toast.LENGTH_SHORT).show();
+                                                          //  Toast.makeText(MainActivity.this, "Invalid credentials!", Toast.LENGTH_SHORT).show();
                                                             userName.getEditText().setText("");
                                                             password.getEditText().setText("");
                                                         }

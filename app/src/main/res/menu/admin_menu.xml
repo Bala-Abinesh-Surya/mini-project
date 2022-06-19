@@ -10,10 +10,10 @@
                 android:title="All Faculties"
                 android:id="@+id/admin_menu_all_faculties"
                 android:icon="@drawable/all_faculties"/>
-            <item
-                android:title="All HODs"
-                android:id="@+id/admin_menu_all_hod"
-                android:icon="@drawable/all_hod"/>
+<!--            <item-->
+<!--                android:title="All HODs"-->
+<!--                android:id="@+id/admin_menu_all_hod"-->
+<!--                android:icon="@drawable/all_hod"/>-->
             <item
                 android:title="Notifications"
                 android:id="@+id/admin_menu_notifications"
@@ -30,22 +30,22 @@
         </menu>
     </item>
 
-    <item android:title="Edit">
-        <menu>
-            <item
-                android:title="Add a Faculty"
-                android:id="@+id/admin_add_faculty"
-                android:icon="@drawable/add_faculty"/>
-            <item
-                android:title="Remove a Faculty"
-                android:id="@+id/admin_remove_faculty"
-                android:icon="@drawable/remove_faculty" />
-            <item
-                android:title="Promote a Faculty"
-                android:id="@+id/admin_promote_faculty"
-                android:icon="@drawable/promote"/>
-        </menu>
-    </item>
+<!--    <item android:title="Edit">-->
+<!--        <menu>-->
+<!--            <item-->
+<!--                android:title="Add a Faculty"-->
+<!--                android:id="@+id/admin_add_faculty"-->
+<!--                android:icon="@drawable/add_faculty"/>-->
+<!--            <item-->
+<!--                android:title="Remove a Faculty"-->
+<!--                android:id="@+id/admin_remove_faculty"-->
+<!--                android:icon="@drawable/remove_faculty" />-->
+<!--            <item-->
+<!--                android:title="Promote a Faculty"-->
+<!--                android:id="@+id/admin_promote_faculty"-->
+<!--                android:icon="@drawable/promote"/>-->
+<!--        </menu>-->
+<!--    </item>-->
 
     <item android:title="Contact Us">
         <menu>
