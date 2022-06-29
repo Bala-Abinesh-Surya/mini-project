@@ -114,36 +114,36 @@ public class AllClassesAdapter extends RecyclerView.Adapter {
 
             // status image
             // checking if the attendance for today has been updated for the class
-            firebaseDatabase.getReference()
-                    .child(ATTENDANCE)
-                    .child(myClass.getClassName())
-                    .child(LocalDateTime.now().getMonth() + "-" + LocalDateTime.now().getYear())
-                    .child(new Functions().date())
-                    .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.exists()){
-                                // attendance has already been taken for today
-                                ((AllClassesViewHolder) holder).status.setImageResource(R.drawable.circle);
-
-                                // hiding the notify image, because the attendance is taken
-                                ((AllClassesViewHolder) holder).notify.setVisibility(View.GONE);
-                            }
-                            else{
-                                // snapshot does not exist
-                                // so attendance is not yet taken
-                                ((AllClassesViewHolder) holder).status.setImageResource(R.drawable.circle_red);
-
-                                // making the notify image visible, because the attendance is not yet taken
-                                ((AllClassesViewHolder) holder).notify.setVisibility(View.VISIBLE);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
+//            firebaseDatabase.getReference()
+//                    .child(ATTENDANCE)
+//                    .child(myClass.getClassName())
+//                    .child(LocalDateTime.now().getMonth() + "-" + LocalDateTime.now().getYear())
+//                    .child(new Functions().date())
+//                    .addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            if(snapshot.exists()){
+//                                // attendance has already been taken for today
+//                                ((AllClassesViewHolder) holder).status.setImageResource(R.drawable.circle);
+//
+//                                // hiding the notify image, because the attendance is taken
+//                                ((AllClassesViewHolder) holder).notify.setVisibility(View.GONE);
+//                            }
+//                            else{
+//                                // snapshot does not exist
+//                                // so attendance is not yet taken
+//                                ((AllClassesViewHolder) holder).status.setImageResource(R.drawable.circle_red);
+//
+//                                // making the notify image visible, because the attendance is not yet taken
+//                                ((AllClassesViewHolder) holder).notify.setVisibility(View.VISIBLE);
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
 
             // notify image
             ((AllClassesViewHolder) holder).notify.setOnClickListener(new View.OnClickListener() {

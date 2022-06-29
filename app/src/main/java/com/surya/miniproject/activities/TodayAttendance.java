@@ -302,11 +302,13 @@ public class TodayAttendance extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(! (getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).getBoolean(TODAY_IS_A_LEAVE, false))){
-                    // directing the class advisor to the AttendanceMarking activity
-                    Intent intent = new Intent(TodayAttendance.this, AttendanceMarking.class);
-                    intent.putExtra(CLASS_NAME, className);
-                    intent.putExtra(CLASS_DEPARTMENT, department);
-                    startActivity(intent);
+                    if(facultyIsTheClassAdvisor){
+                        // directing the class advisor to the AttendanceMarking activity
+                        Intent intent = new Intent(TodayAttendance.this, AttendanceMarking.class);
+                        intent.putExtra(CLASS_NAME, className);
+                        intent.putExtra(CLASS_DEPARTMENT, department);
+                        startActivity(intent);
+                    }
                 }
             }
         });

@@ -147,6 +147,7 @@ public class StaffsDetailsAdapter extends RecyclerView.Adapter {
                 public void onClick(View v) {
                     if(purpose == 1){
                         // Removing a staff
+                        // removing the staff from the class
                         class alert {
                             private final AlertDialog.Builder builder;
                             private final String staffName;
@@ -173,9 +174,11 @@ public class StaffsDetailsAdapter extends RecyclerView.Adapter {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 // removing the staff
+                                                CurrentClass.currentClassFacultyMember.remove(faculty);
+
                                                 Map<String, Object> map = new HashMap<String, Object>(){
                                                     {
-                                                        put("facultyMembers", facultyMembers);
+                                                        put("facultyMembers", CurrentClass.currentClassFacultyMember);
                                                     }
                                                 };
 
@@ -219,6 +222,7 @@ public class StaffsDetailsAdapter extends RecyclerView.Adapter {
                     }
                     else if(purpose == 2){
                         // purpose is 2
+                        // adding a staff
                         class alert{
                             private final AlertDialog.Builder builder;
 

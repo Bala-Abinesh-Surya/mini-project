@@ -69,9 +69,7 @@ public class MainActivity extends AppCompatActivity {
     private File file;
 
     private int adminImageClicked = 0;
-
     public static boolean folderCreated = false;
-
     private int backButtonPressed = 0;
 
     // Back Button

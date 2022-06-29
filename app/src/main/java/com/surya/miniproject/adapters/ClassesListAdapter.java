@@ -72,6 +72,7 @@ public class ClassesListAdapter extends RecyclerView.Adapter{
                 @Override
                 public void onClick(View view) {
                     studentsArrayList = classx.getStudents();
+                    CurrentClass.currentClassFacultyMember = classx.getFacultyMembers();
 
                     // passing the user to the ClassAttendance activity
                     Intent intent = new Intent(context, TodayAttendance.class);
