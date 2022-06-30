@@ -376,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // method to ask the permissions that are needed for the application to perform
+    // method to ask the permissions that are needed for the application to read/write data from/to the internal storage
     private void askPermission(){
         ActivityCompat.requestPermissions(
                 this,

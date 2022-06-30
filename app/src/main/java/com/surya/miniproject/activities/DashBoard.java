@@ -250,7 +250,7 @@ public class DashBoard extends AppCompatActivity implements RequestsFragment.Bot
             }
         });
 
-        // checking if today is leave
+        // checking if today is leave in the background
         new IsTodayALeaveAsyncTask(getSharedPreferences(APP_DEFAULTS, Context.MODE_PRIVATE).edit()).execute(FirebaseDatabase.getInstance());
     }
 

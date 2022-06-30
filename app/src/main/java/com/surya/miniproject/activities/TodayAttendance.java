@@ -104,7 +104,7 @@ public class TodayAttendance extends AppCompatActivity {
                 startActivity(intent);
             }
             else{
-                // faculty is not a class advisor and also not an hod
+                // faculty is neither the class advisor nor the HOD
                 // so faculty has no permission to edit the faculty members for this class
                 Toast.makeText(this, "Sorry! You got no permission to view", Toast.LENGTH_SHORT).show();
             }

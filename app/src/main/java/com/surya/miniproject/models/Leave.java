@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class Leave{
     // class that holds the attributes for the leaves in a month
+    // array list's index is the date of the month
+    // value in the index is the indicator
+    // 0 - Leave
+    // 1 - Working Day
     private ArrayList<Integer> leaves;
 
     // Constructor

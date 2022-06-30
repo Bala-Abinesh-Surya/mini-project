@@ -123,11 +123,11 @@ public class StaffsDetailsAdapter extends RecyclerView.Adapter {
                  *
                  * */
                 private void setImage(ImageView imageView, int purpose){
-                    if(purpose == 1 || purpose == 3){
+                    if((purpose == 1) || (purpose == 3)){
                         imageView.setImageResource(R.drawable.ic_edit);
                     }
                     else{
-                        // purpose is 2
+                        // purpose is 2 or 4
                         imageView.setImageResource(R.drawable.ic_add);
                     }
                 }
